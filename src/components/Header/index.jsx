@@ -11,7 +11,6 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,22 +25,45 @@ const Navbar = () => {
   };
 
   return (
-    <Box className={styles.navbarContainer}>
-      {/* Contact and Profile */}
-      <Typography className={styles.navbarTitle}>Contact</Typography>
-      <Typography className={styles.navbarLink}>Book</Typography>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        maxWidth: '100vw',
+        height: '70px',
+        backgroundColor: '#000',
+        padding: '0px',
+      }}
+    >
+      {/* Logo or Brand */}
+      <Typography variant="h6" sx={{ color: '#fde8c9' }}>
+        MyLogo
+      </Typography>
+
+      {/* Contact */}
+      <Typography variant="h6" sx={{ color: '#fde8c9' }}>
+        Contact
+      </Typography>
 
       {/* Account Settings Button */}
       <Tooltip title="Account settings">
         <IconButton
-          className={styles.avatarButton}
           onClick={handleClick}
           size="small"
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
+          sx={{
+            color: '#01333e', // Button text color
+            backgroundColor: '#fde8c9', // Button background color
+            '&:hover': {
+              backgroundColor: '#0056b3', // Hover background color
+            },
+          }}
         >
-          <Avatar className={styles.avatarIcon}>M</Avatar>
+          <Avatar sx={{ backgroundColor: '#01333e', color: '#fde8c9' }}>P</Avatar>
         </IconButton>
       </Tooltip>
 
@@ -51,38 +73,38 @@ const Navbar = () => {
         id="account-menu"
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
         PaperProps={{
           elevation: 0,
-          className: styles.menuItems,
+          sx: {
+            backgroundColor: '#0056b3', // Menu background color
+            minWidth: '150px', // Adjust menu width as needed
+          },
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         {/* Menu Items */}
-        <MenuItem className={styles.menuItem} onClick={handleClose}>
-          <Avatar className={styles.menuItemIcon} />
-          Profile
+        <MenuItem onClick={handleClose}>
+          <Avatar /> Profile
         </MenuItem>
-        <MenuItem className={styles.menuItem} onClick={handleClose}>
-          <Avatar className={styles.menuItemIcon} />
-          My account
+        <MenuItem onClick={handleClose}>
+          <Avatar /> My account
         </MenuItem>
         <Divider />
-        <MenuItem className={styles.menuItem} onClick={handleClose}>
-          <ListItemIcon className={styles.menuItemIcon}>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
             <PersonAddIcon fontSize="small" />
           </ListItemIcon>
           Add another account
         </MenuItem>
-        <MenuItem className={styles.menuItem} onClick={handleClose}>
-          <ListItemIcon className={styles.menuItemIcon}>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
             <SettingsIcon fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem className={styles.menuItem} onClick={handleClose}>
-          <ListItemIcon className={styles.menuItemIcon}>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
           Logout
