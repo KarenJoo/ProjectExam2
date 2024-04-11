@@ -1,13 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&family=Poppins&display=swap');
+
+:root {
+  --primary-color: #01333e;
+  --secondary-color: #fde8c9;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-color: var(--primary-color);
+  font-family: 'Poppins', sans-serif; /* Use Poppins as the default body font */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Header styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Yeseva One', cursive; /* Use Yeseva One for headings */
 }
