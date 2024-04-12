@@ -57,13 +57,22 @@ const Navbar = () => {
           aria-expanded={open ? 'true' : undefined}
           sx={{
             color: '#01333e',
-            backgroundColor: '#fde8c9',
+            backgroundColor: '#01333e',
             '&:hover': {
-              backgroundColor: '#0056b3',
+              backgroundColor: '#01333e',
             },
           }}
         >
-          <Avatar sx={{ backgroundColor: '#01333e', color: '#fde8c9' }}>
+          <Avatar
+            sx={{
+              backgroundColor: '#01333e',
+              color: '#fde8c9',
+              boxShadow: '0 0 0 1px #fde8c9',
+              '&:hover': {
+                boxShadow: '0 0 0 3px #fde8c9',
+              },
+            }}
+          >
             P
           </Avatar>
         </IconButton>
