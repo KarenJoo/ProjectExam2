@@ -1,7 +1,7 @@
 import React from 'react'
-import Navbar from '../Header'
-import { ThemeProvider } from '@emotion/react'
-import theme from '../../themes/index'
+import Navbar from '../Header/index'
+import { ThemeProvider } from '@mui/material'
+import theme from '../../themes/muiTheme'
 
 export default function Layout(props) {
   const { children } = props

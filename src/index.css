@@ -9,20 +9,9 @@ body {
   margin: 0;
   background-image: url('./assets/img/bg-small.png');
   background-repeat: no-repeat;
-  background-position: 40% 10%;
-  background-size: 100% auto;
+  background-position: center left;
   background-size: cover;
   background-attachment: fixed;
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
-}
-
-/* Header styles */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Yeseva One', cursive;
 }
