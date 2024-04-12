@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../Header/index'
 import { ThemeProvider } from '@mui/material'
 import theme from '../../themes/muiTheme'
+import Footer from '../Footer'
 
 export default function Layout(props) {
   const { children } = props
@@ -11,6 +12,7 @@ export default function Layout(props) {
       <ThemeProvider theme={theme}>
         <Navbar />
         {children}
+        <Footer />
       </ThemeProvider>
     </>
   )
