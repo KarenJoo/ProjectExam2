@@ -4,12 +4,17 @@
   --primary-color: #01333e;
   --secondary-color: #fde8c9;
 }
+
 body {
   margin: 0;
-  background-color: var(--primary-color);
-  font-family: 'Poppins', sans-serif; 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-image: url('./assets/img/bg-small.png');
+  background-repeat: no-repeat;
+  background-position: 40% 10%;
+  background-size: 100% auto;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
 }
 
 /* Header styles */
@@ -19,5 +24,5 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Yeseva One', cursive; 
+  font-family: 'Yeseva One', cursive;
 }

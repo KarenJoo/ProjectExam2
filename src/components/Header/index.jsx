@@ -32,14 +32,14 @@ const Navbar = () => {
         justifyContent: 'space-between',
         maxWidth: '100%',
         height: '70px',
-        backgroundColor: '#000',
+        backgroundColor: 'rgba(1, 51, 62, 0.4)',
         padding: '0 10px',
         overflowX: 'hidden',
       }}
     >
-      {/* Contact */}
+      {/* menu */}
       <Typography variant='body1' sx={{ color: '#fde8c9' }}>
-        Contact
+        menu
       </Typography>
 
       {/* Logo or Brand */}
@@ -78,36 +78,64 @@ const Navbar = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            backgroundColor: '#0056b3',
+            backgroundColor: 'rgba(1, 51, 62, 0.5)',
             minWidth: '150px',
+            marginTop: '10px',
+            marginLeft: '20px',
           },
         }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
       >
         {/* Menu Items */}
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+        <MenuItem
+          onClick={handleClose}
+          sx={{ fontSize: '12px', color: '#fde8c9' }}
+        >
+          <Avatar
+            sx={{
+              width: 25,
+              height: 25,
+              mr: 1,
+              color: '#01333e',
+              backgroundColor: '#fde8c9',
+            }}
+          >
+            P
+          </Avatar>
+          Profile
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{ fontSize: '12px', color: '#fde8c9' }}
+        >
           <ListItemIcon>
-            <PersonAddIcon fontSize='small' />
+            <PersonAddIcon fontSize='small' sx={{ color: '#fde8c9' }} />
           </ListItemIcon>
-          Add another account
+          Book
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
+        <MenuItem
+          onClick={handleClose}
+          sx={{ fontSize: '12px', color: '#fde8c9' }}
+        >
+          <ListItemIcon sx={{ color: '#fde8c9' }}>
             <SettingsIcon fontSize='small' />
           </ListItemIcon>
-          Settings
+          Create
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{ fontSize: '12px', color: '#fde8c9' }}
+        >
           <ListItemIcon>
-            <LogoutIcon fontSize='small' />
+            <LogoutIcon fontSize='small' sx={{ color: '#fde8c9' }} />
           </ListItemIcon>
           Logout
         </MenuItem>
