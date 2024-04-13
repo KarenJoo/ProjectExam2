@@ -19,12 +19,16 @@ const VenueCard = ({ venue }) => {
           Max Guests: {maxGuests} | Location: {location.city},{' '}
           {location.country}
         </Typography>
-        <ul>
-          <li>WiFi: {meta.wifi ? 'Available' : 'Not Available'}</li>
-          <li>Parking: {meta.parking ? 'Available' : 'Not Available'}</li>
-          <li>Breakfast: {meta.breakfast ? 'Included' : 'Not Included'}</li>
-          <li>Pets: {meta.pets ? 'Allowed' : 'Not Allowed'}</li>
-        </ul>
+        <div className={styles.contentList}>
+          <li key='wifi'>WiFi: {meta.wifi ? 'Available' : 'Not Available'}</li>
+          <li key='parking'>
+            Parking: {meta.parking ? 'Available' : 'Not Available'}
+          </li>
+          <li key='breakfast'>
+            Breakfast: {meta.breakfast ? 'Included' : 'Not Included'}
+          </li>
+          <li key='pets'>Pets: {meta.pets ? 'Allowed' : 'Not Allowed'}</li>
+        </div>
       </CardContent>
       <div className={styles.cardFootContent}>
         <Typography variant='h4'>{price} NOK</Typography>
