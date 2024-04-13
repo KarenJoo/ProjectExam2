@@ -1,22 +1,31 @@
 import React from 'react'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import StyleSheet from './Homepage.module.css'
-
-const ButtonUsage = () => {
-  return (
-    <Button variant='outlined' color='primary'>
-      Book
-    </Button>
-  )
-}
+import useFetch from '../hooks/useFetch'
+import { VENUES_URL } from '../utils/api'
+import VenueCard from '../components/venueCard'
 
 const Homepage = () => {
+  const { data: venuesData, loading, error } = useFetch(VENUES_URL)
+
+  if (loading) {
+    return <div className='contentContainer'>Loading...</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
+  const venues = venuesData.data
+
   return (
-    <div className={StyleSheet.container}>
+    <div className='container'>
       <Typography variant='h1'>Holidaze</Typography>
       <Typography variant='h5'>Book and dayze away</Typography>
-      <ButtonUsage />
+      <div className='contentContainer'>
+        {venues.map((venue) => (
+          <VenueCard key={venue._id} venue={venue} />
+        ))}
+      </div>
     </div>
   )
 }
