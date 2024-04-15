@@ -20,9 +20,10 @@ const theme = createTheme({
     },
     h2: {
       fontFamily: 'Poppins, sans-serif',
-      fontSize: '2rem',
+      fontSize: '1.5rem',
       fontWeight: 600,
-      color: '#fde8c9',
+      color: '#01333e',
+      marginBottom: '10px'
     },
     h3: {
       fontFamily: 'Poppins, sans-serif',
