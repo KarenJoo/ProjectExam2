@@ -1,8 +1,9 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout'
 import Homepage from './pages/Homepage'
 import VenueDetails from './pages/VenueDetails'
-import Layout from './components/Layout'
+import Login from './pages/Login'
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Homepage />} />
         <Route path='/venue/:id' element={<VenueDetails />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
       </Layout>
     </div>

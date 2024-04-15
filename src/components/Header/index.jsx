@@ -11,6 +11,8 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import SettingsIcon from '@mui/icons-material/Settings'
 import LogoutIcon from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
+import { Link } from 'react-router-dom'
+import { useTheme } from '@mui/material/styles'
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -44,7 +46,9 @@ const Navbar = () => {
 
       {/* Logo or Brand */}
       <Typography variant='h1' sx={{ color: '#fde8c9' }}>
-        Holidaze
+        <Link to={`/`} className='link'>
+          Holidaze
+        </Link>
       </Typography>
 
       {/* Account Settings Button */}
