@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextField, Button, MenuItem, Typography } from '@mui/material'
 import { registerUser } from '../../utils/registerFetch'
 
 function BaseForm({ variant }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [role, setRole] = useState(
+    variant === 'manager' ? 'manager' : 'customer'
+  )
+  const [createPassword, setCreatePassword] = useState('')
+  const [createAvatar, setCreateAvatar] = useState('')
+  const [createUsername, setCreateUsername] = useState('')
+  const [email, setEmail] = useState('')
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // Retrieve form data
-    const formData = new FormData(e.target)
-    const username = formData.get('username')
-    const password = formData.get('password')
-    const role = formData.get('role')
-    const createUsername = formData.get('createUsername')
-    const email = formData.get('email')
-    const createPassword = formData.get('createPassword')
-    const createAvatar = formData.get('createAvatar')
 
     console.log({
       username,
@@ -47,8 +47,7 @@ function BaseForm({ variant }) {
     }
   }
 
-  const roleValue = variant === 'manager' ? 'customer' : ''
-
+  const roleValue = variant === 'manager' ? 'manager' : 'customer'
   const inputStyles = {
     color: '#01333e',
     '& .MuiOutlinedInput-root': {
@@ -99,6 +98,8 @@ function BaseForm({ variant }) {
             label='Username'
             variant='filled'
             fullWidth
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
           <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
@@ -110,6 +111,8 @@ function BaseForm({ variant }) {
             type='password'
             variant='filled'
             fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
           <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
@@ -122,6 +125,8 @@ function BaseForm({ variant }) {
             variant='filled'
             defaultValue={roleValue}
             fullWidth
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
             InputProps={{ sx: inputStyles }}
           >
             <MenuItem value='customer'>Customer</MenuItem>
@@ -140,6 +145,8 @@ function BaseForm({ variant }) {
             label='Create Username'
             variant='filled'
             fullWidth
+            value={createUsername}
+            onChange={(e) => setCreateUsername(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
           <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
@@ -151,6 +158,8 @@ function BaseForm({ variant }) {
             type='email'
             variant='filled'
             fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
           <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
@@ -162,6 +171,8 @@ function BaseForm({ variant }) {
             type='password'
             variant='filled'
             fullWidth
+            value={createPassword}
+            onChange={(e) => setCreatePassword(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
           <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
@@ -172,6 +183,8 @@ function BaseForm({ variant }) {
             label='URL here..'
             variant='filled'
             fullWidth
+            value={createAvatar}
+            onChange={(e) => setCreateAvatar(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
           <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
