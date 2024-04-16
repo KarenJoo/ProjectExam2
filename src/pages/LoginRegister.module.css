@@ -2,8 +2,11 @@
     margin: 0 auto;
     align-items: center;
     text-align: center;
+    height: auto;
+    margin-bottom: 100px;
 }
 
 .link {
     color: var(--secondary-color);
 }
+

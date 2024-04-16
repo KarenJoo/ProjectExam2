@@ -18,13 +18,17 @@ function BaseForm({ variant }) {
   const roleValue = variant === 'manager' ? 'customer' : ''
 
   const inputStyles = {
-    color: '#fff', // Text color of input
-    '& .MuiInputBase-input': {
-      color: '#fff',
-      backgroundColor: '#fff',
-    },
+    color: '#01333e',
     '& .MuiOutlinedInput-root': {
-      borderColor: '#fff',
+      borderColor: '#000',
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#fff',
+      },
+    },
+    '& .MuiInputBase-input': {
+      color: '#000',
+      backgroundColor: '#fff',
+              fontSize: '12px',
     },
     '& .MuiOutlinedInput-input': {
       '&::placeholder': {
@@ -41,42 +45,49 @@ function BaseForm({ variant }) {
         flexDirection: 'column',
         width: '80%',
         padding: '20px',
-        margin: '100px auto',
+        margin: '30px auto',
         color: '#01333e',
         borderRadius: '10px',
-        backgroundColor: '#ffffff90',
-        marginBottom: '20px',
+        backgroundColor: '#fff',
+        marginBottom: '50px',
+        textAlign: 'left',
       }}
     >
-      <Typography variant='h1'>
+      <Typography variant='h1' style={{ color: '#01333e' }}>
         {variant === 'login' ? 'Log in' : 'Register'}
       </Typography>
 
       {variant === 'login' && (
         <>
-          <Typography variant='p'>Username</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Username
+          </Typography>
           <TextField
             name='username'
             label='Username'
-            variant='outlined'
+            variant='filled'
             fullWidth
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='p'>Password</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Password
+          </Typography>
           <TextField
             name='password'
             label='Password'
             type='password'
-            variant='outlined'
+            variant='filled'
             fullWidth
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='p'>Set user role</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Set user role
+          </Typography>
           <TextField
             name='role'
             select
             label='User'
-            variant='outlined'
+            variant='filled'
             defaultValue={roleValue}
             fullWidth
             InputProps={{ sx: inputStyles }}
@@ -89,46 +100,56 @@ function BaseForm({ variant }) {
 
       {variant === 'register' && (
         <>
-          <Typography variant='p'>Create Username</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Create Username
+          </Typography>
           <TextField
             name='createUsername'
             label='Create Username'
-            variant='outlined'
+            variant='filled'
             fullWidth
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='p'>Email</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Email
+          </Typography>
           <TextField
             name='email'
             label='Email'
             type='email'
-            variant='outlined'
+            variant='filled'
             fullWidth
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='p'>Create Password</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Create Password
+          </Typography>
           <TextField
             name='createPassword'
             label='********'
             type='password'
-            variant='outlined'
+            variant='filled'
             fullWidth
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='p'>Profile Image URL</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Profile Image URL
+          </Typography>
           <TextField
             name='createAvatar'
             label='URL here..'
-            variant='outlined'
+            variant='filled'
             fullWidth
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='p'>Set user role</Typography>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+            Set user role
+          </Typography>
           <TextField
             name='role'
             select
             label='User'
-            variant='outlined'
+            variant='filled'
             defaultValue={roleValue}
             fullWidth
             InputProps={{ sx: inputStyles }}
@@ -139,7 +160,12 @@ function BaseForm({ variant }) {
         </>
       )}
 
-      <Button type='submit' variant='contained' color='secondary'>
+      <Button
+        type='submit'
+        variant='contained'
+        color='secondary'
+        style={{ marginTop: '20px' }}
+      >
         {variant === 'login' ? 'Login' : 'Register'}
       </Button>
     </form>
