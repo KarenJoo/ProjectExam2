@@ -1,18 +1,50 @@
 import React from 'react'
 import { TextField, Button, MenuItem, Typography } from '@mui/material'
+import { registerUser } from '../../utils/registerFetch'
 
 function BaseForm({ variant }) {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+
+    // Retrieve form data
     const formData = new FormData(e.target)
     const username = formData.get('username')
     const password = formData.get('password')
     const role = formData.get('role')
+    const createUsername = formData.get('createUsername')
+    const email = formData.get('email')
     const createPassword = formData.get('createPassword')
     const createAvatar = formData.get('createAvatar')
-    console.log({ username, password, role, createPassword, createAvatar })
 
-    // Add your form submission logic here (e.g., API call, state update, etc.)
+    console.log({
+      username,
+      password,
+      role,
+      createUsername,
+      email,
+      createPassword,
+      createAvatar,
+    })
+
+    const userData = {
+      name: variant === 'register' ? createUsername : username,
+      email: email,
+      password: variant === 'register' ? createPassword : password,
+      avatar: {
+        url: createAvatar || '',
+        alt: '',
+      },
+      venueManager: role === 'manager',
+    }
+
+    try {
+      const registeredUser = await registerUser(userData)
+      console.log('User registered successfully:', registeredUser)
+      // Handle successful registration (e.g., redirect to login page)
+    } catch (error) {
+      console.error('Registration failed:', error.message)
+      // Handle registration error (e.g., display error message to user)
+    }
   }
 
   const roleValue = variant === 'manager' ? 'customer' : ''
@@ -28,7 +60,7 @@ function BaseForm({ variant }) {
     '& .MuiInputBase-input': {
       color: '#000',
       backgroundColor: '#fff',
-              fontSize: '12px',
+      fontSize: '12px',
     },
     '& .MuiOutlinedInput-input': {
       '&::placeholder': {
