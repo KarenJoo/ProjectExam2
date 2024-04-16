@@ -24,13 +24,16 @@ function BaseForm({ variant }) {
     color: '#fff', // Text color of input
     '& .MuiInputBase-input': {
       color: '#fff', 
+      backgroundColor: '#fff',
     },
     '& .MuiOutlinedInput-root': {
-      borderColor: '#fff',  
+      borderColor: '#fff',
+        
     },
     '& .MuiOutlinedInput-input': {
       '&::placeholder': {
         color: '#ccc',
+        
       },
     },
   };
@@ -44,9 +47,10 @@ function BaseForm({ variant }) {
         width: '80%',
         padding: '20px',
         margin: '100px auto',
-        color: '#fde8c9',
+        color: '#01333e',
         borderRadius: '10px',
-        backgroundColor: '#fff',
+        backgroundColor: '#ffffff90',
+        marginBottom: '20px',
    }}
     >      <Typography variant="h1">Log in</Typography>
       <TextField
