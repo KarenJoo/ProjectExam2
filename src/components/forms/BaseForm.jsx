@@ -3,18 +3,16 @@ import { TextField, Button, MenuItem, Typography } from '@mui/material'
 import { registerUser } from '../../utils/registerFetch'
 
 const BaseForm = ({ variant }) => {
-  const isManager = variant === 'manager'
-  const userData = {
-    username: '',
-    password: '',
+  const isRegister = variant === 'register'
+
+  const [formData, setFormData] = useState({
     createUsername: '',
     createPassword: '',
     email: '',
     avatarUrl: '',
     venueManager: true,
-  }
+  })
 
-  const [formData, setFormData] = useState(userData)
   const [errors, setErrors] = useState({})
 
   const handleInputChange = (e) => {
@@ -25,42 +23,20 @@ const BaseForm = ({ variant }) => {
   const validateForm = () => {
     const inputErrors = {}
 
-    // Validate Username
-    if (
-      !formData.createUsername ||
-      formData.createUsername.length < 4 ||
-      !/^[a-zA-Z0-9_]+$/.test(formData.createUsername)
-    ) {
-      inputErrors.username =
-        'Username must be at least 4 characters and contain only letters, numbers, and underscores'
+    if (!formData.createUsername) {
+      inputErrors.createUsername = 'Create Username is required'
     }
 
-    // Validate Password
-    if (!formData.createPassword || formData.createPassword.length < 8) {
-      inputErrors.createPassword = 'Password must be at least 8 characters long'
+    if (!formData.createPassword) {
+      inputErrors.createPassword = 'Create Password is required'
     }
 
-    // Validate email
-    const emailRegex = /^[a-zA-Z0-9._-]+@stud\.noroff\.no$/
-    if (!emailRegex.test(formData.email)) {
-      inputErrors.email = 'Invalid email format (e.g., example@stud.noroff.no)'
-    }
-
-    // Validate Avatar URL
-    if (formData.avatarUrl && !isValidUrl(formData.avatarUrl)) {
-      inputErrors.avatarUrl = 'Please enter a valid URL for the avatar'
+    if (!formData.email) {
+      inputErrors.email = 'Email is required'
     }
 
     setErrors(inputErrors)
     return Object.keys(inputErrors).length === 0
-  }
-  const isValidUrl = (url) => {
-    try {
-      new URL(url)
-      return true
-    } catch (error) {
-      return false
-    }
   }
 
   const handleSubmit = async (e) => {
@@ -76,36 +52,41 @@ const BaseForm = ({ variant }) => {
           venueManager,
         } = formData
 
-        // Prepare the data object to be sent in the request
-        const requestData = {
-          name: createUsername,
-          email,
-          password: createPassword,
-          avatar: {
-            url: avatarUrl,
-          },
-          venueManager, // Send boolean value directly
+        if (isRegister) {
+          const requestData = {
+            name: createUsername,
+            email,
+            password: createPassword,
+            avatar: {
+              url: avatarUrl,
+            },
+            venueManager,
+          }
+
+          const registeredUser = await registerUser(requestData)
+          console.log('User registered successfully:', registeredUser)
+        } else {
+          // Handle login logic here (not implemented in this example)
+          console.log(
+            'Logging in with email:',
+            email,
+            'and password:',
+            createPassword
+          )
         }
-
-        // Call the registerUser function with requestData
-        const registeredUser = await registerUser(requestData)
-
-        console.log('User registered successfully:', registeredUser)
-        // Handle successful registration (e.g., redirect to login page)
       } catch (error) {
-        console.error('Registration failed:', error.message)
-        // Handle registration error (e.g., display error message to user)
-        alert('Registration failed. Please try again.')
+        console.error('Registration/login failed:', error.message)
+        alert('Registration/login failed. Please try again.')
       }
     }
   }
 
-  const { createUsername, createPassword, email, avatarUrl, isVenueManager } =
+  const { createUsername, createPassword, email, avatarUrl, venueManager } =
     formData
   const {
-    createUsername: usernameError,
-    createPassword: passwordError,
     email: emailError,
+    createUsername: usernameError,
+    createPassword: createPasswordError,
   } = errors
 
   const inputStyles = {
@@ -145,59 +126,86 @@ const BaseForm = ({ variant }) => {
       }}
     >
       <Typography variant='h1' style={{ color: '#01333e' }}>
-        {variant === 'login' ? 'Log in' : 'Register'}
+        {isRegister ? 'Register' : 'Log in'}
       </Typography>
 
-      <TextField
-        name='createUsername'
-        label='Create Username'
-        variant='filled'
-        fullWidth
-        value={createUsername}
-        onChange={handleInputChange}
-        error={!!usernameError}
-        helperText={usernameError}
-        InputProps={{ sx: inputStyles }}
-      />
-
-      <TextField
-        name='email'
-        label='Email'
-        type='email'
-        variant='filled'
-        fullWidth
-        value={email}
-        onChange={handleInputChange}
-        error={!!emailError}
-        helperText={emailError}
-        InputProps={{ sx: inputStyles }}
-      />
-
-      <TextField
-        name='createPassword'
-        label='Create Password'
-        type='password'
-        variant='filled'
-        fullWidth
-        value={createPassword}
-        onChange={handleInputChange}
-        error={!!passwordError}
-        helperText={passwordError}
-        InputProps={{ sx: inputStyles }}
-      />
-
-      {variant === 'register' && (
+      {isRegister && (
         <>
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Profile Image
-          </Typography>
+          <TextField
+            name='createUsername'
+            label='Create Username'
+            variant='filled'
+            fullWidth
+            value={createUsername}
+            onChange={handleInputChange}
+            error={!!usernameError}
+            helperText={usernameError}
+            InputProps={{ sx: inputStyles }}
+          />
+
+          <TextField
+            name='createPassword'
+            label='Create Password'
+            type='password'
+            variant='filled'
+            fullWidth
+            value={createPassword}
+            onChange={handleInputChange}
+            error={!!createPasswordError}
+            helperText={createPasswordError}
+            InputProps={{ sx: inputStyles }}
+          />
+
+          <TextField
+            name='email'
+            label='Email'
+            type='email'
+            variant='filled'
+            fullWidth
+            value={email}
+            onChange={handleInputChange}
+            error={!!emailError}
+            helperText={emailError}
+            InputProps={{ sx: inputStyles }}
+          />
+
           <TextField
             name='avatarUrl'
-            label='URL here..'
+            label='Avatar URL'
             variant='filled'
             fullWidth
             value={avatarUrl}
             onChange={handleInputChange}
+            InputProps={{ sx: inputStyles }}
+          />
+        </>
+      )}
+
+      {!isRegister && (
+        <>
+          <TextField
+            name='email'
+            label='Email'
+            type='email'
+            variant='filled'
+            fullWidth
+            value={email}
+            onChange={handleInputChange}
+            error={!!emailError}
+            helperText={emailError}
+            InputProps={{ sx: inputStyles }}
+          />
+
+          <TextField
+            name='createPassword'
+            label='Password'
+            type='password'
+            variant='filled'
+            fullWidth
+            value={createPassword}
+            onChange={handleInputChange}
+            error={!!createPasswordError}
+            helperText={createPasswordError}
             InputProps={{ sx: inputStyles }}
           />
         </>
@@ -209,7 +217,7 @@ const BaseForm = ({ variant }) => {
         label='User role'
         variant='filled'
         fullWidth
-        value={formData.venueManager ? 'manager' : 'customer'}
+        value={venueManager ? 'manager' : 'customer'}
         onChange={(e) =>
           setFormData({
             ...formData,
@@ -223,13 +231,14 @@ const BaseForm = ({ variant }) => {
         <MenuItem value='customer'>Customer</MenuItem>
         <MenuItem value='manager'>Manager</MenuItem>
       </TextField>
+
       <Button
         type='submit'
         variant='contained'
         color='secondary'
         style={{ marginTop: '20px' }}
       >
-        {variant === 'login' ? 'Login' : 'Register'}
+        {isRegister ? 'Register' : 'Login'}
       </Button>
     </form>
   )
