@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Typography } from '@mui/material';
-import { registerUser } from '../../utils/registerFetch';
+import React, { useState } from 'react'
+import { TextField, Button, MenuItem, Typography } from '@mui/material'
+import { registerUser } from '../../utils/registerFetch'
 
 const BaseForm = ({ variant }) => {
   const [formData, setFormData] = useState({
@@ -11,48 +11,86 @@ const BaseForm = ({ variant }) => {
     createAvatar: '',
     createUsername: '',
     email: '',
-  });
+    avatarURL: '',
+    avatarAlt: '',
+  })
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({})
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
   const validateForm = () => {
-    const inputErrors = {};
+    const inputErrors = {}
+
+    // Validate Username
+    if (!formData.username || !/^[a-zA-Z0-9_]+$/.test(formData.username)) {
+      inputErrors.username =
+        'Username must only contain letters, numbers, and underscores'
+    }
+
+    // Validate Password
+    if (!formData.password || formData.password.length < 8) {
+      inputErrors.password = 'Password must be at least 8 characters long'
+    }
+
+    // validate email
+    const emailRegex = /^[a-zA-Z0-9._-]+@stud\.noroff\.no$/
+    if (!emailRegex.test(formData.email)) {
+      inputErrors.email = 'Invalid email format (e.g., example@stud.noroff.no)'
+    }
+
+    // Validate Avatar URL
+    if (formData.avatarUrl && !isValidUrl(formData.avatarUrl)) {
+      inputErrors.avatarUrl = 'Please enter a valid URL for the avatar'
+    }
+
+    // Validate Alt Text
+    if (formData.avatarUrl && formData.avatarAlt.length > 120) {
+      inputErrors.avatarAlt = 'Alt text must be less than 120 characters'
+    }
+
     if (formData.createUsername.length < 3) {
-      inputErrors.createUsername = 'Username must be at least 3 characters';
+      inputErrors.createUsername = 'Username must be at least 3 characters'
     }
     if (formData.createPassword.length < 8) {
-      inputErrors.createPassword = 'Password must be at least 8 characters';
+      inputErrors.createPassword = 'Password must be at least 8 characters'
     }
-    const emailRegex = /^[a-zA-Z0-9._-]+@stud\.noroff\.no$/;
-    if (!emailRegex.test(formData.email)) {
-      inputErrors.email = 'Invalid email format (e.g., example@stud.noroff.no)';
+    setErrors(inputErrors)
+    return Object.keys(inputErrors).length === 0
+  }
+  const isValidUrl = (url) => {
+    try {
+      new URL(url)
+      return true
+    } catch (error) {
+      return false
     }
-    setErrors(inputErrors);
-    return Object.keys(inputErrors).length === 0;
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (validateForm()) {
       try {
-        const registeredUser = await registerUser(formData);
-        console.log('User registered successfully:', registeredUser);
+        const registeredUser = await registerUser(formData)
+        console.log('User registered successfully:', registeredUser)
         // Handle successful registration (e.g., redirect to login page)
       } catch (error) {
-        console.error('Registration failed:', error.message);
+        console.error('Registration failed:', error.message)
         // Handle registration error (e.g., display error message to user)
       }
     }
-  };
+  }
 
-  const { createUsername, createPassword, email, createAvatar, role } = formData;
-  const { createUsername: usernameError, createPassword: passwordError, email: emailError } = errors;
+  const { createUsername, createPassword, email, createAvatar, role } = formData
+  const {
+    createUsername: usernameError,
+    createPassword: passwordError,
+    email: emailError,
+  } = errors
 
   const inputStyles = {
     color: '#01333e',
@@ -72,7 +110,7 @@ const BaseForm = ({ variant }) => {
         color: '#ccc',
       },
     },
-  };
+  }
 
   return (
     <form
@@ -90,14 +128,14 @@ const BaseForm = ({ variant }) => {
         textAlign: 'left',
       }}
     >
-      <Typography variant="h1" style={{ color: '#01333e' }}>
+      <Typography variant='h1' style={{ color: '#01333e' }}>
         {variant === 'login' ? 'Log in' : 'Register'}
       </Typography>
 
       <TextField
-        name="createUsername"
-        label="Create Username"
-        variant="filled"
+        name='createUsername'
+        label='Create Username'
+        variant='filled'
         fullWidth
         value={createUsername}
         onChange={handleInputChange}
@@ -107,10 +145,10 @@ const BaseForm = ({ variant }) => {
       />
 
       <TextField
-        name="email"
-        label="Email"
-        type="email"
-        variant="filled"
+        name='email'
+        label='Email'
+        type='email'
+        variant='filled'
         fullWidth
         value={email}
         onChange={handleInputChange}
@@ -120,10 +158,10 @@ const BaseForm = ({ variant }) => {
       />
 
       <TextField
-        name="createPassword"
-        label="Create Password"
-        type="password"
-        variant="filled"
+        name='createPassword'
+        label='Create Password'
+        type='password'
+        variant='filled'
         fullWidth
         value={createPassword}
         onChange={handleInputChange}
@@ -134,13 +172,13 @@ const BaseForm = ({ variant }) => {
 
       {variant === 'register' && (
         <>
-          <Typography variant="subtitle1" style={{ marginTop: '20px' }}>
+          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
             Profile Image
           </Typography>
           <TextField
-            name="createAvatar"
-            label="URL here.."
-            variant="filled"
+            name='createAvatar'
+            label='URL here..'
+            variant='filled'
             fullWidth
             value={createAvatar}
             onChange={handleInputChange}
@@ -150,10 +188,10 @@ const BaseForm = ({ variant }) => {
       )}
 
       <TextField
-        name="role"
+        name='role'
         select
-        label="User Role"
-        variant="filled"
+        label='User Role'
+        variant='filled'
         fullWidth
         value={role}
         onChange={handleInputChange}
@@ -161,20 +199,20 @@ const BaseForm = ({ variant }) => {
         helperText={errors.role}
         InputProps={{ sx: inputStyles }}
       >
-        <MenuItem value="customer">Customer</MenuItem>
-        <MenuItem value="manager">Manager</MenuItem>
+        <MenuItem value='customer'>Customer</MenuItem>
+        <MenuItem value='manager'>Manager</MenuItem>
       </TextField>
 
       <Button
-        type="submit"
-        variant="contained"
-        color="secondary"
+        type='submit'
+        variant='contained'
+        color='secondary'
         style={{ marginTop: '20px' }}
       >
         {variant === 'login' ? 'Login' : 'Register'}
       </Button>
     </form>
-  );
-};
+  )
+}
 
-export default BaseForm;
+export default BaseForm
