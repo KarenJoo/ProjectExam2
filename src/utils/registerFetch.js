@@ -1,16 +1,16 @@
 import { API_REGISTER_URL } from "./api";
 
-const method = "post";
+const method = "POST";
 
 export const registerUser = async (userData) => {
   const registerURL = API_REGISTER_URL;
   const body = JSON.stringify(userData);
     try {
       const response = await fetch(registerURL, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
-        method,
         body
       });
   

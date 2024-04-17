@@ -1,53 +1,59 @@
-import React, { useState } from 'react'
-import { TextField, Button, MenuItem, Typography } from '@mui/material'
-import { registerUser } from '../../utils/registerFetch'
+import React, { useState } from 'react';
+import { TextField, Button, MenuItem, Typography } from '@mui/material';
+import { registerUser } from '../../utils/registerFetch';
 
-function BaseForm({ variant }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [role, setRole] = useState(
-    variant === 'manager' ? 'manager' : 'customer'
-  )
-  const [createPassword, setCreatePassword] = useState('')
-  const [createAvatar, setCreateAvatar] = useState('')
-  const [createUsername, setCreateUsername] = useState('')
-  const [email, setEmail] = useState('')
+const BaseForm = ({ variant }) => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    role: variant === 'manager' ? 'manager' : 'customer',
+    createPassword: '',
+    createAvatar: '',
+    createUsername: '',
+    email: '',
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const validateForm = () => {
+    const inputErrors = {};
+    if (formData.createUsername.length < 3) {
+      inputErrors.createUsername = 'Username must be at least 3 characters';
+    }
+    if (formData.createPassword.length < 8) {
+      inputErrors.createPassword = 'Password must be at least 8 characters';
+    }
+    const emailRegex = /^[a-zA-Z0-9._-]+@stud\.noroff\.no$/;
+    if (!emailRegex.test(formData.email)) {
+      inputErrors.email = 'Invalid email format (e.g., example@stud.noroff.no)';
+    }
+    setErrors(inputErrors);
+    return Object.keys(inputErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    console.log({
-      username,
-      password,
-      role,
-      createUsername,
-      email,
-      createPassword,
-      createAvatar,
-    })
-
-    const userData = {
-      name: variant === 'register' ? createUsername : username,
-      email: email,
-      password: variant === 'register' ? createPassword : password,
-      avatar: {
-        url: createAvatar || '',
-        alt: '',
-      },
-      venueManager: role === 'manager',
+    if (validateForm()) {
+      try {
+        const registeredUser = await registerUser(formData);
+        console.log('User registered successfully:', registeredUser);
+        // Handle successful registration (e.g., redirect to login page)
+      } catch (error) {
+        console.error('Registration failed:', error.message);
+        // Handle registration error (e.g., display error message to user)
+      }
     }
+  };
 
-    try {
-      const registeredUser = await registerUser(userData)
-      console.log('User registered successfully:', registeredUser)
-      // Handle successful registration (e.g., redirect to login page)
-    } catch (error) {
-      console.error('Registration failed:', error.message)
-      // Handle registration error (e.g., display error message to user)
-    }
-  }
+  const { createUsername, createPassword, email, createAvatar, role } = formData;
+  const { createUsername: usernameError, createPassword: passwordError, email: emailError } = errors;
 
-  const roleValue = variant === 'manager' ? 'manager' : 'customer'
   const inputStyles = {
     color: '#01333e',
     '& .MuiOutlinedInput-root': {
@@ -66,7 +72,7 @@ function BaseForm({ variant }) {
         color: '#ccc',
       },
     },
-  }
+  };
 
   return (
     <form
@@ -84,128 +90,91 @@ function BaseForm({ variant }) {
         textAlign: 'left',
       }}
     >
-      <Typography variant='h1' style={{ color: '#01333e' }}>
+      <Typography variant="h1" style={{ color: '#01333e' }}>
         {variant === 'login' ? 'Log in' : 'Register'}
       </Typography>
 
-      {variant === 'login' && (
-        <>
-          <TextField
-            name='username'
-            label='Username'
-            variant='filled'
-            fullWidth
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            InputProps={{ sx: inputStyles }}
-          />
-          <div style={{ marginBottom: '10px' }}></div>
+      <TextField
+        name="createUsername"
+        label="Create Username"
+        variant="filled"
+        fullWidth
+        value={createUsername}
+        onChange={handleInputChange}
+        error={!usernameError}
+        helperText={usernameError}
+        InputProps={{ sx: inputStyles }}
+      />
 
-          <TextField
-            name='password'
-            label='Password'
-            type='password'
-            variant='filled'
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            InputProps={{ sx: inputStyles }}
-          />
-          <div style={{ marginBottom: '10px' }}></div>
-          <TextField
-            name='role'
-            select
-            label='User'
-            variant='filled'
-            defaultValue={roleValue}
-            fullWidth
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            InputProps={{ sx: inputStyles }}
-          >
-            <MenuItem value='customer'>Customer</MenuItem>
-            <MenuItem value='manager'>Manager</MenuItem>
-          </TextField>
-          <div style={{ marginBottom: '30px' }}></div>
-        </>
-      )}
+      <TextField
+        name="email"
+        label="Email"
+        type="email"
+        variant="filled"
+        fullWidth
+        value={email}
+        onChange={handleInputChange}
+        error={!emailError}
+        helperText={emailError}
+        InputProps={{ sx: inputStyles }}
+      />
+
+      <TextField
+        name="createPassword"
+        label="Create Password"
+        type="password"
+        variant="filled"
+        fullWidth
+        value={createPassword}
+        onChange={handleInputChange}
+        error={!passwordError}
+        helperText={passwordError}
+        InputProps={{ sx: inputStyles }}
+      />
 
       {variant === 'register' && (
         <>
-          <div style={{ marginBottom: '10px' }}></div>
-
-          <TextField
-            name='createUsername'
-            label='Create Username'
-            variant='filled'
-            fullWidth
-            value={createUsername}
-            onChange={(e) => setCreateUsername(e.target.value)}
-            InputProps={{ sx: inputStyles }}
-          />
-          <div style={{ marginBottom: '10px' }}></div>
-
-          <TextField
-            name='email'
-            label='Email'
-            type='email'
-            variant='filled'
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            InputProps={{ sx: inputStyles }}
-          />
-          <div style={{ marginBottom: '10px' }}></div>
-
-          <TextField
-            name='createPassword'
-            label='Create Password'
-            type='password'
-            variant='filled'
-            fullWidth
-            value={createPassword}
-            onChange={(e) => setCreatePassword(e.target.value)}
-            InputProps={{ sx: inputStyles }}
-          />
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
+          <Typography variant="subtitle1" style={{ marginTop: '20px' }}>
             Profile Image
           </Typography>
           <TextField
-            name='createAvatar'
-            label='URL here..'
-            variant='filled'
+            name="createAvatar"
+            label="URL here.."
+            variant="filled"
             fullWidth
             value={createAvatar}
-            onChange={(e) => setCreateAvatar(e.target.value)}
+            onChange={handleInputChange}
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Set user role
-          </Typography>
-          <TextField
-            name='role'
-            select
-            variant='filled'
-            defaultValue={roleValue}
-            fullWidth
-            InputProps={{ sx: inputStyles }}
-          >
-            <MenuItem value='customer'>Customer</MenuItem>
-            <MenuItem value='manager'>Manager</MenuItem>
-          </TextField>
         </>
       )}
 
+      <TextField
+        name="role"
+        select
+        label="User Role"
+        variant="filled"
+        fullWidth
+        value={role}
+        onChange={handleInputChange}
+        error={!errors.role}
+        helperText={errors.role}
+        InputProps={{ sx: inputStyles }}
+      >
+        <MenuItem value="customer">Customer</MenuItem>
+        <MenuItem value="manager">Manager</MenuItem>
+      </TextField>
+
       <Button
-        type='submit'
-        variant='contained'
-        color='secondary'
+        type="submit"
+        variant="contained"
+        color="secondary"
         style={{ marginTop: '20px' }}
       >
         {variant === 'login' ? 'Login' : 'Register'}
       </Button>
     </form>
-  )
-}
+  );
+};
 
-export default BaseForm
+export default BaseForm;
