@@ -1,84 +1,112 @@
-import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Typography } from '@mui/material';
-import { registerUser } from '../../utils/registerFetch';
+import React, { useState } from 'react'
+import { TextField, Button, MenuItem, Typography } from '@mui/material'
+import { registerUser } from '../../utils/registerFetch'
 
 const BaseForm = ({ variant }) => {
-    const isManager = variant === 'manager'; 
-  const initialFormData = {
+  const isManager = variant === 'manager'
+  const userData = {
     username: '',
     password: '',
     createUsername: '',
     createPassword: '',
     email: '',
     avatarUrl: '',
-    role: isManager,
-  };
+    venueManager: true,
+  }
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState(userData)
+  const [errors, setErrors] = useState({})
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
   const validateForm = () => {
-    const inputErrors = {};
-  
+    const inputErrors = {}
+
     // Validate Username
-    if (!formData.createUsername || formData.createUsername.length < 4 || !/^[a-zA-Z0-9_]+$/.test(formData.createUsername)) {
-      inputErrors.username = 'Username must be at least 4 characters and contain only letters, numbers, and underscores';
+    if (
+      !formData.createUsername ||
+      formData.createUsername.length < 4 ||
+      !/^[a-zA-Z0-9_]+$/.test(formData.createUsername)
+    ) {
+      inputErrors.username =
+        'Username must be at least 4 characters and contain only letters, numbers, and underscores'
     }
-  
+
     // Validate Password
     if (!formData.createPassword || formData.createPassword.length < 8) {
-      inputErrors.createPassword = 'Password must be at least 8 characters long';
+      inputErrors.createPassword = 'Password must be at least 8 characters long'
     }
-  
+
     // Validate email
-    const emailRegex = /^[a-zA-Z0-9._-]+@stud\.noroff\.no$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@stud\.noroff\.no$/
     if (!emailRegex.test(formData.email)) {
-      inputErrors.email = 'Invalid email format (e.g., example@stud.noroff.no)';
+      inputErrors.email = 'Invalid email format (e.g., example@stud.noroff.no)'
     }
-  
+
     // Validate Avatar URL
     if (formData.avatarUrl && !isValidUrl(formData.avatarUrl)) {
-      inputErrors.avatarUrl = 'Please enter a valid URL for the avatar';
+      inputErrors.avatarUrl = 'Please enter a valid URL for the avatar'
     }
-  
-    setErrors(inputErrors);
-    return Object.keys(inputErrors).length === 0;
-  };
+
+    setErrors(inputErrors)
+    return Object.keys(inputErrors).length === 0
+  }
   const isValidUrl = (url) => {
     try {
-      new URL(url);
-      return true;
+      new URL(url)
+      return true
     } catch (error) {
-      return false;
+      return false
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (validateForm()) {
       try {
-        const registeredUser = await registerUser({
-          ...formData,
-          role: formData.role ? 'manager' : 'customer', // Convert boolean role to string
-        });
-        console.log('User registered successfully:', registeredUser);
+        const {
+          createUsername,
+          email,
+          createPassword,
+          avatarUrl,
+          venueManager,
+        } = formData
+
+        // Prepare the data object to be sent in the request
+        const requestData = {
+          name: createUsername,
+          email,
+          password: createPassword,
+          avatar: {
+            url: avatarUrl,
+          },
+          venueManager, // Send boolean value directly
+        }
+
+        // Call the registerUser function with requestData
+        const registeredUser = await registerUser(requestData)
+
+        console.log('User registered successfully:', registeredUser)
         // Handle successful registration (e.g., redirect to login page)
       } catch (error) {
-        console.error('Registration failed:', error.message);
+        console.error('Registration failed:', error.message)
         // Handle registration error (e.g., display error message to user)
-        alert('Registration failed. Please try again.');
+        alert('Registration failed. Please try again.')
       }
     }
-  };
+  }
 
-  const { createUsername, createPassword, email, avatarUrl, role } = formData;
-  const { createUsername: usernameError,createPassword: passwordError, email: emailError } = errors;
+  const { createUsername, createPassword, email, avatarUrl, isVenueManager } =
+    formData
+  const {
+    createUsername: usernameError,
+    createPassword: passwordError,
+    email: emailError,
+  } = errors
 
   const inputStyles = {
     color: '#01333e',
@@ -98,7 +126,7 @@ const BaseForm = ({ variant }) => {
         color: '#ccc',
       },
     },
-  };
+  }
 
   return (
     <form
@@ -175,22 +203,26 @@ const BaseForm = ({ variant }) => {
         </>
       )}
 
-<TextField
-  name='role'
-  select
-  label='User Role'
-  variant='filled'
-  fullWidth
-  value={role ? 'manager' : 'customer'}
-  onChange={(e) => setFormData({ ...formData, role: e.target.value === 'manager' })}
-  error={!errors.role}
-  helperText={errors.role}
-  InputProps={{ sx: inputStyles }}
->
-  <MenuItem value='manager'>Manager</MenuItem>
-  <MenuItem value='customer'>Customer</MenuItem>
-</TextField>
-
+      <TextField
+        name='venueManager'
+        select
+        label='User role'
+        variant='filled'
+        fullWidth
+        value={formData.venueManager ? 'manager' : 'customer'}
+        onChange={(e) =>
+          setFormData({
+            ...formData,
+            venueManager: e.target.value === 'manager',
+          })
+        }
+        error={!errors.venueManager}
+        helperText={errors.venueManager}
+        InputProps={{ sx: inputStyles }}
+      >
+        <MenuItem value='customer'>Customer</MenuItem>
+        <MenuItem value='manager'>Manager</MenuItem>
+      </TextField>
       <Button
         type='submit'
         variant='contained'
@@ -200,7 +232,7 @@ const BaseForm = ({ variant }) => {
         {variant === 'login' ? 'Login' : 'Register'}
       </Button>
     </form>
-  );
-};
+  )
+}
 
-export default BaseForm;
+export default BaseForm
