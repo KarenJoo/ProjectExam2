@@ -90,9 +90,6 @@ function BaseForm({ variant }) {
 
       {variant === 'login' && (
         <>
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Username
-          </Typography>
           <TextField
             name='username'
             label='Username'
@@ -102,9 +99,8 @@ function BaseForm({ variant }) {
             onChange={(e) => setUsername(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Password
-          </Typography>
+          <div style={{ marginBottom: '10px' }}></div>
+
           <TextField
             name='password'
             label='Password'
@@ -115,9 +111,7 @@ function BaseForm({ variant }) {
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Set user role
-          </Typography>
+          <div style={{ marginBottom: '10px' }}></div>
           <TextField
             name='role'
             select
@@ -132,14 +126,14 @@ function BaseForm({ variant }) {
             <MenuItem value='customer'>Customer</MenuItem>
             <MenuItem value='manager'>Manager</MenuItem>
           </TextField>
+          <div style={{ marginBottom: '30px' }}></div>
         </>
       )}
 
       {variant === 'register' && (
         <>
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Create Username
-          </Typography>
+          <div style={{ marginBottom: '10px' }}></div>
+
           <TextField
             name='createUsername'
             label='Create Username'
@@ -149,9 +143,8 @@ function BaseForm({ variant }) {
             onChange={(e) => setCreateUsername(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Email
-          </Typography>
+          <div style={{ marginBottom: '10px' }}></div>
+
           <TextField
             name='email'
             label='Email'
@@ -162,12 +155,11 @@ function BaseForm({ variant }) {
             onChange={(e) => setEmail(e.target.value)}
             InputProps={{ sx: inputStyles }}
           />
-          <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Create Password
-          </Typography>
+          <div style={{ marginBottom: '10px' }}></div>
+
           <TextField
             name='createPassword'
-            label='********'
+            label='Create Password'
             type='password'
             variant='filled'
             fullWidth
@@ -176,7 +168,7 @@ function BaseForm({ variant }) {
             InputProps={{ sx: inputStyles }}
           />
           <Typography variant='subtitle1' style={{ marginTop: '20px' }}>
-            Profile Image URL
+            Profile Image
           </Typography>
           <TextField
             name='createAvatar'
@@ -193,7 +185,6 @@ function BaseForm({ variant }) {
           <TextField
             name='role'
             select
-            label='User'
             variant='filled'
             defaultValue={roleValue}
             fullWidth
