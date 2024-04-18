@@ -17,7 +17,6 @@ const BaseForm = ({ variant }) => {
   })
 
   const [errors, setErrors] = useState({})
-  const [apiKey, setApiKey] = useState('')
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -77,7 +76,6 @@ const BaseForm = ({ variant }) => {
             const apiKeyData = await createApiKey(accessToken);
             const apiKey = apiKeyData.data.key;
   
-            setApiKey(apiKey);
             storage.saveApiKey(apiKey);
             storage.saveUserData(registeredUser.data);
   
