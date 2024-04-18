@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { TextField, Button, MenuItem, Typography } from '@mui/material'
 import { registerUser } from '../../utils/registerFetch'
+import useStorage from '../../utils/useStorage'
 
 const BaseForm = ({ variant }) => {
   const isRegister = variant === 'register'
+  const storage = useStorage()
 
   const [formData, setFormData] = useState({
     createUsername: '',
@@ -64,9 +66,11 @@ const BaseForm = ({ variant }) => {
           }
 
           const registeredUser = await registerUser(requestData)
+
+          storage.saveUserData(registeredUser.data)
+
           console.log('User registered successfully:', registeredUser)
         } else {
-          // Handle login logic here (not implemented in this example)
           console.log(
             'Logging in with email:',
             email,
