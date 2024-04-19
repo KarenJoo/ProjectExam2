@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { TextField, Button, MenuItem, Typography } from '@mui/material'
-import { registerUser } from '../../utils/registerFetch'
+import { registerUser, loginUser } from '../../utils/registerFetch'
 import useStorage from '../../utils/useStorage'
 
 const BaseForm = ({ variant }) => {
@@ -25,17 +25,18 @@ const BaseForm = ({ variant }) => {
   const validateForm = () => {
     const inputErrors = {}
 
-    if (!formData.createUsername) {
-      inputErrors.createUsername = 'Create Username is required'
-    }
-
-    if (!formData.createPassword) {
-      inputErrors.createPassword = 'Create Password is required'
-    }
-
-    if (!formData.email) {
-      inputErrors.email = 'Email is required'
-    }
+    if (isRegister && !formData.createUsername) {
+        inputErrors.createUsername = 'Create Username is required';
+      }
+  
+      if (!formData.createPassword) {
+        inputErrors.createPassword = 'Create Password is required';
+      }
+  
+      if (!formData.email) {
+        inputErrors.email = 'Email is required';
+      }
+  
 
     setErrors(inputErrors)
     return Object.keys(inputErrors).length === 0
@@ -55,7 +56,7 @@ const BaseForm = ({ variant }) => {
         } = formData
 
         if (isRegister) {
-          const requestData = {
+          const registerData = {
             name: createUsername,
             email,
             password: createPassword,
@@ -65,25 +66,39 @@ const BaseForm = ({ variant }) => {
             venueManager,
           }
 
-          const registeredUser = await registerUser(requestData)
+          const registeredUser = await registerUser(registerData);
+          console.log('User registered successfully:', registeredUser);
 
           storage.saveUserData(registeredUser.data)
 
-          console.log('User registered successfully:', registeredUser)
         } else {
-          console.log(
-            'Logging in with email:',
-            email,
-            'and password:',
-            createPassword
-          )
+            const loggedInUser = await loginUser({ email, password: createPassword });
+  
+            if (loggedInUser.data.accessToken) {
+              // Save logged-in user data to local storage
+              storage.saveToken(loggedInUser.data.accessToken);
+              storage.saveUserData({
+                username: loggedInUser.data.name,
+                email: loggedInUser.data.email,
+                avatarUrl: loggedInUser.data.avatar.url,
+                venueManager: loggedInUser.data.venueManager,
+              });
+    
+              console.log('Logged In User:', loggedInUser.data);
+          
+  
+              // Redirect to profile page (replace '/profile' with your desired route)
+              window.location.href = '/register';
+            } else {
+              alert('Login failed. Please check your credentials.');
+            }
+          }
+        } catch (error) {
+          console.error('Registration/Login failed:', error.message);
+          alert('Registration/Login failed. Please try again.');
         }
-      } catch (error) {
-        console.error('Registration/login failed:', error.message)
-        alert('Registration/login failed. Please try again.')
       }
-    }
-  }
+    };
 
   const { createUsername, createPassword, email, avatarUrl, venueManager } =
     formData
