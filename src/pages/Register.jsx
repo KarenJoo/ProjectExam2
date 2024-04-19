@@ -7,7 +7,7 @@ import StyleSheet from './LoginRegister.module.css'
 function RegisterPage() {
   return (
     <div className={StyleSheet.container}>
-      <BaseForm variant='register' />
+      <BaseForm variant='register'/>
       <Link to={`/login`} className={StyleSheet.link}>
         {' '}
         <Typography variant='h5'>Log in</Typography>

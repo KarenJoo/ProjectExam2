@@ -1,105 +1,55 @@
 import React, { useState } from 'react'
 import { TextField, Button, MenuItem, Typography } from '@mui/material'
-import { registerUser } from '../../utils/registerFetch'
+import {registerUser, loginUser } from '../../utils/registerFetch'
 import useStorage from '../../utils/useStorage'
 import { createApiKey } from '../../utils/createApiKey'
 
 const BaseForm = ({ variant }) => {
-  const isRegister = variant === 'register'
-  const storage = useStorage()
-
-  const [formData, setFormData] = useState({
-    createUsername: '',
-    createPassword: '',
-    email: '',
-    avatarUrl: '',
-    venueManager: true,
-  })
-
-  const [errors, setErrors] = useState({})
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
-
-  const validateForm = () => {
-    const inputErrors = {}
-
-    if (!formData.createUsername) {
-      inputErrors.createUsername = 'Create Username is required'
-    }
-
-    if (!formData.createPassword) {
-      inputErrors.createPassword = 'Create Password is required'
-    }
-
-    if (!formData.email) {
-      inputErrors.email = 'Email is required'
-    }
-
-    setErrors(inputErrors)
-    return Object.keys(inputErrors).length === 0
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    if (validateForm()) {
-      try {
-        const {
-          createUsername,
-          email,
-          createPassword,
-          avatarUrl,
-          venueManager,
-        } = formData
-
-        if (isRegister) {
-          const registerData = {
-            name: createUsername,
-            email,
-            password: createPassword,
-            avatar: {
-              url: avatarUrl,
-            },
-            venueManager,
-          }
-
-          const registeredUser = await registerUser(registerData)
-          console.log('Registered User:', registeredUser)
-
-          if (registeredUser && registeredUser.data) {
-            const accessToken = registeredUser.data.accessToken
-            console.log('Access Token:', accessToken)
-
-            const apiKeyData = await createApiKey(accessToken)
-            const apiKey = apiKeyData.data.key
-
-            storage.save('apiKey', apiKey)
-            storage.save('userData', registeredUser.data)
-
-            console.log('User registered successfully:', registeredUser)
-          } else {
-            console.error(
-              'Failed to retrieve access token from registered user.'
-            )
-            alert('Registration failed. Please try again.')
-          }
-        } else {
-          console.log(
-            'Logging in with email:',
-            email,
-            'and password:',
-            createPassword
-          )
+    const isRegister = variant === 'register';
+    const storage = useStorage();
+  
+    const [formData, setFormData] = useState({
+      username: '',
+      password: '',
+      email: '',
+      avatarUrl: '',
+      venueManager: true,
+    });
+  
+    const [errors, setErrors] = useState({});
+  
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+  
+  
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+    try {
+      if (isRegister) {
+        const registeredUser = await registerUser(formData);
+        console.log('Registered User:', registeredUser);
+        // Handle registration success
+      } else {
+        const loggedInUser = await loginUser(formData);
+        console.log('Logged In User:', loggedInUser);
+        // Handle login success
+        if (loggedInUser.accessToken) {
+          const apiKeyData = await createApiKey(loggedInUser.accessToken);
+          const apiKey = apiKeyData.key;
+          storage.save('apiKey', apiKey);
+          storage.save('userData', loggedInUser);
+          // Redirect to profile page or desired location after successful login
         }
-      } catch (error) {
-        console.error('Registration/login failed:', error.message)
-        alert('Registration/login failed. Please try again.')
       }
+    } catch (error) {
+      console.error('Registration/login failed:', error.message);
+      // Handle registration/login failure
     }
-  }
+  };
 
   const { createUsername, createPassword, email, avatarUrl, venueManager } =
     formData
