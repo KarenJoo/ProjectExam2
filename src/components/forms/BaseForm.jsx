@@ -26,17 +26,16 @@ const BaseForm = ({ variant }) => {
     const inputErrors = {}
 
     if (isRegister && !formData.createUsername) {
-        inputErrors.createUsername = 'Create Username is required';
-      }
-  
-      if (!formData.createPassword) {
-        inputErrors.createPassword = 'Create Password is required';
-      }
-  
-      if (!formData.email) {
-        inputErrors.email = 'Email is required';
-      }
-  
+      inputErrors.createUsername = 'Create Username is required'
+    }
+
+    if (!formData.createPassword) {
+      inputErrors.createPassword = 'Create Password is required'
+    }
+
+    if (!formData.email) {
+      inputErrors.email = 'Email is required'
+    }
 
     setErrors(inputErrors)
     return Object.keys(inputErrors).length === 0
@@ -66,39 +65,40 @@ const BaseForm = ({ variant }) => {
             venueManager,
           }
 
-          const registeredUser = await registerUser(registerData);
-          console.log('User registered successfully:', registeredUser);
+          const registeredUser = await registerUser(registerData)
+          console.log('User registered successfully:', registeredUser)
 
           storage.saveUserData(registeredUser.data)
-
         } else {
-            const loggedInUser = await loginUser({ email, password: createPassword });
-  
-            if (loggedInUser.data.accessToken) {
-              // Save logged-in user data to local storage
-              storage.saveToken(loggedInUser.data.accessToken);
-              storage.saveUserData({
-                username: loggedInUser.data.name,
-                email: loggedInUser.data.email,
-                avatarUrl: loggedInUser.data.avatar.url,
-                venueManager: loggedInUser.data.venueManager,
-              });
-    
-              console.log('Logged In User:', loggedInUser.data);
-          
-  
-              // Redirect to profile page (replace '/profile' with your desired route)
-              window.location.href = '/register';
-            } else {
-              alert('Login failed. Please check your credentials.');
-            }
+          const loggedInUser = await loginUser({
+            email,
+            password: createPassword,
+          })
+
+          if (loggedInUser.data.accessToken) {
+            // Save logged-in user data to local storage
+            storage.saveToken(loggedInUser.data.accessToken)
+            storage.saveUserData({
+              username: loggedInUser.data.name,
+              email: loggedInUser.data.email,
+              avatarUrl: loggedInUser.data.avatar.url,
+              venueManager: loggedInUser.data.venueManager,
+            })
+
+            console.log('Logged In User:', loggedInUser.data)
+
+            // Redirect to profile page (replace '/profile' with your desired route)
+            window.location.href = '/register'
+          } else {
+            alert('Login failed. Please check your credentials.')
           }
-        } catch (error) {
-          console.error('Registration/Login failed:', error.message);
-          alert('Registration/Login failed. Please try again.');
         }
+      } catch (error) {
+        console.error('Registration/Login failed:', error.message)
+        alert('Registration/Login failed. Please try again.')
       }
-    };
+    }
+  }
 
   const { createUsername, createPassword, email, avatarUrl, venueManager } =
     formData
