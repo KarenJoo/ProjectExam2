@@ -16,23 +16,7 @@ const useStorage = () => {
     localStorage.clear()
   }
 
-  const saveApiKey = (apiKey) => {
-    save('apiKey', apiKey)
-  }
-
-  const loadApiKey = () => {
-    return load('apiKey')
-  }
-
-  const saveUserData = (userData) => {
-    save('userData', userData)
-  }
-
-  const loadUserData = () => {
-    return load('userData')
-  }
-
-  return { saveApiKey, loadApiKey, saveUserData, loadUserData, remove, clear }
+  return { save, load, remove, clear }
 }
 
 export default useStorage

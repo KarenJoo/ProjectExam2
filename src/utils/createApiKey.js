@@ -19,7 +19,7 @@ export const createApiKey = async (accessToken) => {
     }
 
     const data = await response.json();
-    return data;
+    return data.data; 
   } catch (error) {
     throw new Error(`Failed to create API key: ${error.message}`);
   }

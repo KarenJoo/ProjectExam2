@@ -56,7 +56,7 @@ const BaseForm = ({ variant }) => {
         } = formData
 
         if (isRegister) {
-          const requestData = {
+          const registerData = {
             name: createUsername,
             email,
             password: createPassword,
@@ -66,23 +66,25 @@ const BaseForm = ({ variant }) => {
             venueManager,
           }
 
-          const registeredUser = await registerUser(requestData);
-          console.log('Registered User:', registeredUser);
-  
-          if (registeredUser && registeredUser.data && registeredUser.data.accessToken) {
-            const accessToken = registeredUser.data.accessToken;
-            console.log('Access Token:', accessToken); // Debug: Log the access token
-  
-            const apiKeyData = await createApiKey(accessToken);
-            const apiKey = apiKeyData.data.key;
-  
-            storage.saveApiKey(apiKey);
-            storage.saveUserData(registeredUser.data);
-  
-            console.log('User registered successfully:', registeredUser);
+          const registeredUser = await registerUser(registerData)
+          console.log('Registered User:', registeredUser)
+
+          if (registeredUser && registeredUser.data) {
+            const accessToken = registeredUser.data.accessToken
+            console.log('Access Token:', accessToken)
+
+            const apiKeyData = await createApiKey(accessToken)
+            const apiKey = apiKeyData.data.key
+
+            storage.save('apiKey', apiKey)
+            storage.save('userData', registeredUser.data)
+
+            console.log('User registered successfully:', registeredUser)
           } else {
-            console.error('Failed to retrieve access token from registered user.');
-            alert('Registration failed. Please try again.');
+            console.error(
+              'Failed to retrieve access token from registered user.'
+            )
+            alert('Registration failed. Please try again.')
           }
         } else {
           console.log(
@@ -90,14 +92,14 @@ const BaseForm = ({ variant }) => {
             email,
             'and password:',
             createPassword
-          );
+          )
         }
       } catch (error) {
-        console.error('Registration/login failed:', error.message);
-        alert('Registration/login failed. Please try again.');
+        console.error('Registration/login failed:', error.message)
+        alert('Registration/login failed. Please try again.')
       }
     }
-  };
+  }
 
   const { createUsername, createPassword, email, avatarUrl, venueManager } =
     formData
