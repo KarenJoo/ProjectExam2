@@ -14,7 +14,7 @@ const BaseForm = ({ variant }) => {
     createPassword: '',
     email: '',
     avatarUrl: '',
-    venueManager: true,
+    venueManager: false,
   })
 
   const [errors, setErrors] = useState({})
@@ -70,7 +70,13 @@ const BaseForm = ({ variant }) => {
 
           const registeredUser = await registerUser(registerData)
           console.log('User registered successfully:', registeredUser)
-          storage.saveUserData(registeredUser.data)
+
+         // Store registered user data in localStorage
+         storage.saveUserData({
+          ...registeredUser.data,
+          venueManager, // Store venueManager in localStorage
+        });
+        
           setRegistrationSuccess(true)
 
           // window.location.href = '/login'
@@ -81,13 +87,12 @@ const BaseForm = ({ variant }) => {
           })
 
           if (loggedInUser.data.accessToken) {
-            storage.saveToken(loggedInUser.data.accessToken)
+            // Store logged-in user data in localStorage
             storage.saveUserData({
-              username: loggedInUser.data.name,
-              email: loggedInUser.data.email,
-              avatarUrl: loggedInUser.data.avatar.url,
+              ...loggedInUser.data,
               venueManager: loggedInUser.data.venueManager,
-            })
+            });
+
 
             console.log('Logged In User:', loggedInUser.data)
 
