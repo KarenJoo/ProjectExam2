@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { TextField, Button, MenuItem, Typography } from '@mui/material'
 import { registerUser, loginUser } from '../../utils/registerFetch'
 import useStorage from '../../utils/useStorage'
+import Alert from '@mui/material/Alert'
+import CheckIcon from '@mui/icons-material/Check'
 
 const BaseForm = ({ variant }) => {
   const isRegister = variant === 'register'
@@ -16,6 +18,7 @@ const BaseForm = ({ variant }) => {
   })
 
   const [errors, setErrors] = useState({})
+  const [registrationSuccess, setRegistrationSuccess] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -67,8 +70,10 @@ const BaseForm = ({ variant }) => {
 
           const registeredUser = await registerUser(registerData)
           console.log('User registered successfully:', registeredUser)
-
           storage.saveUserData(registeredUser.data)
+          setRegistrationSuccess(true)
+
+          // window.location.href = '/login'
         } else {
           const loggedInUser = await loginUser({
             email,
@@ -76,7 +81,6 @@ const BaseForm = ({ variant }) => {
           })
 
           if (loggedInUser.data.accessToken) {
-            // Save logged-in user data to local storage
             storage.saveToken(loggedInUser.data.accessToken)
             storage.saveUserData({
               username: loggedInUser.data.name,
@@ -87,8 +91,7 @@ const BaseForm = ({ variant }) => {
 
             console.log('Logged In User:', loggedInUser.data)
 
-            // Redirect to profile page (replace '/profile' with your desired route)
-            window.location.href = '/register'
+            window.location.href = '/profile'
           } else {
             alert('Login failed. Please check your credentials.')
           }
@@ -129,137 +132,143 @@ const BaseForm = ({ variant }) => {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '80%',
-        padding: '20px',
-        margin: '30px auto',
-        color: '#01333e',
-        borderRadius: '10px',
-        backgroundColor: '#fff',
-        marginBottom: '50px',
-        textAlign: 'left',
-      }}
-    >
-      <Typography variant='h1' style={{ color: '#01333e' }}>
-        {isRegister ? 'Register' : 'Log in'}
-      </Typography>
-
-      {isRegister && (
-        <>
-          <TextField
-            name='createUsername'
-            label='Create Username'
-            variant='filled'
-            fullWidth
-            value={createUsername}
-            onChange={handleInputChange}
-            error={!!usernameError}
-            helperText={usernameError}
-            InputProps={{ sx: inputStyles }}
-          />
-
-          <TextField
-            name='createPassword'
-            label='Create Password'
-            type='password'
-            variant='filled'
-            fullWidth
-            value={createPassword}
-            onChange={handleInputChange}
-            error={!!createPasswordError}
-            helperText={createPasswordError}
-            InputProps={{ sx: inputStyles }}
-          />
-
-          <TextField
-            name='email'
-            label='Email'
-            type='email'
-            variant='filled'
-            fullWidth
-            value={email}
-            onChange={handleInputChange}
-            error={!!emailError}
-            helperText={emailError}
-            InputProps={{ sx: inputStyles }}
-          />
-
-          <TextField
-            name='avatarUrl'
-            label='Avatar URL'
-            variant='filled'
-            fullWidth
-            value={avatarUrl}
-            onChange={handleInputChange}
-            InputProps={{ sx: inputStyles }}
-          />
-        </>
-      )}
-
-      {!isRegister && (
-        <>
-          <TextField
-            name='email'
-            label='Email'
-            type='email'
-            variant='filled'
-            fullWidth
-            value={email}
-            onChange={handleInputChange}
-            error={!!emailError}
-            helperText={emailError}
-            InputProps={{ sx: inputStyles }}
-          />
-
-          <TextField
-            name='createPassword'
-            label='Password'
-            type='password'
-            variant='filled'
-            fullWidth
-            value={createPassword}
-            onChange={handleInputChange}
-            error={!!createPasswordError}
-            helperText={createPasswordError}
-            InputProps={{ sx: inputStyles }}
-          />
-        </>
-      )}
-
-      <TextField
-        name='venueManager'
-        select
-        label='User role'
-        variant='filled'
-        fullWidth
-        value={venueManager ? 'manager' : 'customer'}
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            venueManager: e.target.value === 'manager',
-          })
-        }
-        error={!errors.venueManager}
-        helperText={errors.venueManager}
-        InputProps={{ sx: inputStyles }}
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '80%',
+          padding: '20px',
+          margin: '30px auto',
+          color: '#01333e',
+          borderRadius: '10px',
+          backgroundColor: '#fff',
+          marginBottom: '50px',
+          textAlign: 'left',
+        }}
       >
-        <MenuItem value='customer'>Customer</MenuItem>
-        <MenuItem value='manager'>Manager</MenuItem>
-      </TextField>
+        <Typography variant='h1' style={{ color: '#01333e' }}>
+          {isRegister ? 'Register' : 'Log in'}
+        </Typography>
 
-      <Button
-        type='submit'
-        variant='contained'
-        color='secondary'
-        style={{ marginTop: '20px' }}
-      >
-        {isRegister ? 'Register' : 'Login'}
-      </Button>
-    </form>
+        {isRegister && (
+          <>
+            <TextField
+              name='createUsername'
+              label='Create Username'
+              variant='filled'
+              fullWidth
+              value={createUsername}
+              onChange={handleInputChange}
+              error={!!usernameError}
+              helperText={usernameError}
+              InputProps={{ sx: inputStyles }}
+            />
+
+            <TextField
+              name='createPassword'
+              label='Create Password'
+              type='password'
+              variant='filled'
+              fullWidth
+              value={createPassword}
+              onChange={handleInputChange}
+              error={!!createPasswordError}
+              helperText={createPasswordError}
+              InputProps={{ sx: inputStyles }}
+            />
+
+            <TextField
+              name='email'
+              label='Email'
+              type='email'
+              variant='filled'
+              fullWidth
+              value={email}
+              onChange={handleInputChange}
+              error={!!emailError}
+              helperText={emailError}
+              InputProps={{ sx: inputStyles }}
+            />
+
+            <TextField
+              name='avatarUrl'
+              label='Avatar URL'
+              variant='filled'
+              fullWidth
+              value={avatarUrl}
+              onChange={handleInputChange}
+              InputProps={{ sx: inputStyles }}
+            />
+          </>
+        )}
+
+        {!isRegister && (
+          <>
+            <TextField
+              name='email'
+              label='Email'
+              type='email'
+              variant='filled'
+              fullWidth
+              value={email}
+              onChange={handleInputChange}
+              error={!!emailError}
+              helperText={emailError}
+              InputProps={{ sx: inputStyles }}
+            />
+
+            <TextField
+              name='createPassword'
+              label='Password'
+              type='password'
+              variant='filled'
+              fullWidth
+              value={createPassword}
+              onChange={handleInputChange}
+              error={!!createPasswordError}
+              helperText={createPasswordError}
+              InputProps={{ sx: inputStyles }}
+            />
+          </>
+        )}
+
+        <TextField
+          name='venueManager'
+          select
+          label='User role'
+          variant='filled'
+          fullWidth
+          value={venueManager ? 'manager' : 'customer'}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              venueManager: e.target.value === 'manager',
+            })
+          }
+          error={!errors.venueManager}
+          helperText={errors.venueManager}
+          InputProps={{ sx: inputStyles }}
+        >
+          <MenuItem value='customer'>Customer</MenuItem>
+          <MenuItem value='manager'>Manager</MenuItem>
+        </TextField>
+        {registrationSuccess && (
+          <Alert icon={<CheckIcon fontSize='inherit' />} severity='success'>
+            User registered successfully!
+          </Alert>
+        )}
+        <Button
+          type='submit'
+          variant='contained'
+          color='secondary'
+          style={{ marginTop: '20px' }}
+        >
+          {isRegister ? 'Register' : 'Login'}
+        </Button>
+      </form>
+    </div>
   )
 }
 

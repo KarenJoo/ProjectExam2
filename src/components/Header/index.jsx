@@ -12,7 +12,6 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import LogoutIcon from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import { Link } from 'react-router-dom'
-import { useTheme } from '@mui/material/styles'
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -110,6 +109,7 @@ const Navbar = () => {
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
+          component={Link} to="/profile"
         >
           <Avatar
             sx={{
