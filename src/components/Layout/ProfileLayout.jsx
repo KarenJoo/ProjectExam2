@@ -1,29 +1,32 @@
 import React from 'react'
 import { Avatar, Typography, Grid } from '@mui/material'
+import styles from './ProfileLayout.module.css'
 
 const ProfileLayout = ({ userData }) => {
   const { name, avatar, bookedVenues, venueManager } = userData
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={3}>
-        {avatar && (
-          <Avatar
-            alt={name || 'User Avatar'}
-            src={avatar.url}
-            sx={{ width: 120, height: 120 }}
-          />
-        )}
+    <div className={styles.profileContainer}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={3}>
+          {avatar && (
+            <Avatar
+              alt={name || 'User Avatar'}
+              src={avatar.url}
+              sx={{ width: 120, height: 120 }}
+            />
+          )}
+        </Grid>
+        <Grid item xs={12} md={9}>
+          <Typography variant='h2'>{name || 'Unknown User'}</Typography>
+          <Typography variant='body1'>
+            Venue Manager: {venueManager ? 'Yes' : 'No'}
+          </Typography>
+        </Grid>
       </Grid>
+
       <Grid item xs={12} md={9}>
-        <Typography variant='h1'>{name || 'Unknown User'}</Typography>
-        <Typography variant='body1'>Username: {name || 'Unknown'}</Typography>
-        <Typography variant='body1'>
-          Venue Manager: {venueManager ? 'Yes' : 'No'}
-        </Typography>
-        <Typography variant='h2' gutterBottom>
-          Booked Venues Overview
-        </Typography>
+        <Typography variant='h2'>Booked Venues</Typography>
         <ul>
           {bookedVenues &&
             bookedVenues.map((venue) => (
@@ -36,7 +39,7 @@ const ProfileLayout = ({ userData }) => {
             ))}
         </ul>
       </Grid>
-    </Grid>
+    </div>
   )
 }
 

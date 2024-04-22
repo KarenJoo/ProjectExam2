@@ -45,45 +45,50 @@ const VenueDetails = () => {
 
   return (
     <div className={styles.container}>
-<Card className={styles.venueCard} style={{ marginBottom: '100px' }}>      <div className={styles.imageContainer}>
-        <img src={media && media.length > 0 ? media[0].url : ''} alt={name} />
-      </div>
-      <CardContent>
-        <Typography variant='h2'>{name}</Typography>
-        <Typography variant='body1'>{description}</Typography>
-        <Typography variant='body2'>
-          Address: {location.address}, {location.city}, {location.country} | Max
-          Guests: {maxGuests}
-        </Typography>
-        <Typography variant='body2'>Rating: {rating}</Typography>
-        <Typography variant='body2'>
-          Owner: {owner && owner.name ? owner.name : 'Unknown Owner'}
-        </Typography>
-        <div className={styles.contentList}>
-          <li key='wifi'>WiFi: {meta.wifi ? 'Available' : 'Not Available'}</li>
-          <li key='parking'>
-            Parking: {meta.parking ? 'Available' : 'Not Available'}
-          </li>
-          <li key='breakfast'>
-            Breakfast: {meta.breakfast ? 'Included' : 'Not Included'}
-          </li>
-          <li key='pets'>Pets: {meta.pets ? 'Allowed' : 'Not Allowed'}</li>
+      <Card className={styles.venueCard} style={{ marginBottom: '100px' }}>
+        {' '}
+        <div className={styles.imageContainer}>
+          <img src={media && media.length > 0 ? media[0].url : ''} alt={name} />
         </div>
-        <Typography variant='h3'>Bookers:</Typography>
-        <ul>
-          {bookings && bookings.length > 0 ? (
-            bookings.map((booking) => (
-              <li key={booking.id}>{booking.customer.name}</li>
-            ))
-          ) : (
-            <li>No bookings found for this venue.</li>
-          )}
-        </ul>
-      </CardContent>
-      <div className={styles.cardFootContent}>
-        <Typography variant='h4'>{price} NOK</Typography>
-      </div>
-    </Card></div>
+        <CardContent>
+          <Typography variant='h2'>{name}</Typography>
+          <Typography variant='body1'>{description}</Typography>
+          <Typography variant='body2'>
+            Address: {location.address}, {location.city}, {location.country} |
+            Max Guests: {maxGuests}
+          </Typography>
+          <Typography variant='body2'>Rating: {rating}</Typography>
+          <Typography variant='body2'>
+            Owner: {owner && owner.name ? owner.name : 'Unknown Owner'}
+          </Typography>
+          <div className={styles.contentList}>
+            <li key='wifi'>
+              WiFi: {meta.wifi ? 'Available' : 'Not Available'}
+            </li>
+            <li key='parking'>
+              Parking: {meta.parking ? 'Available' : 'Not Available'}
+            </li>
+            <li key='breakfast'>
+              Breakfast: {meta.breakfast ? 'Included' : 'Not Included'}
+            </li>
+            <li key='pets'>Pets: {meta.pets ? 'Allowed' : 'Not Allowed'}</li>
+          </div>
+          <Typography variant='h3'>Bookers:</Typography>
+          <ul>
+            {bookings && bookings.length > 0 ? (
+              bookings.map((booking) => (
+                <li key={booking.id}>{booking.customer.name}</li>
+              ))
+            ) : (
+              <li>No bookings found for this venue.</li>
+            )}
+          </ul>
+        </CardContent>
+        <div className={styles.cardFootContent}>
+          <Typography variant='h4'>{price} NOK</Typography>
+        </div>
+      </Card>
+    </div>
   )
 }
 
