@@ -7,23 +7,35 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const loadedUserData = storage.loadUserData();
-    setUserData(loadedUserData);
-    console.log('userdata:', loadedUserData);
-
-    // Ensure that this effect runs only once on component mount
-    // Provide an empty dependency array to the useEffect hook
-  }, []); // Empty dependency array
+    const getUserData = storage.loadUserData();
+    if (getUserData) {
+      setUserData(getUserData);
+      console.log('User data loaded:', getUserData);
+    } else {
+      console.error('Failed to load user data from local storage.');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
 
   if (!userData) {
-    return <div>Loading...</div>; // Handle loading state while data is being fetched
+    return <div>Loading...</div>;
   }
+
+  console.log('Avatar URL:', userData.avatar && userData.avatar.url);
 
   return (
     <div>
-      <Typography variant='h2'>{userData.name}</Typography>
-      <p>Avatar URL: {userData.avatar && userData.avatar.url}</p>
-      <p>Venue Manager: {userData.venueManager ? 'Yes' : 'No'}</p>
+      <Typography variant='h1'>{userData.name || 'Unknown User'}</Typography>
+      {userData.avatar && (
+        <img
+          src={userData.avatar.url}
+          alt={userData.name || 'User Image'}
+          style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+          onLoad={() => console.log('Image loaded successfully')}
+          onError={(e) => console.error('Image failed to load:', e)}
+        />
+      )}
+      <Typography variant='h1'>Venue Manager: {userData.venueManager ? 'Yes' : 'No'}</Typography>
     </div>
   );
 };

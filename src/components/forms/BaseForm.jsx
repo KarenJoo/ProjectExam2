@@ -74,7 +74,7 @@ const BaseForm = ({ variant }) => {
          // Store registered user data in localStorage
          storage.saveUserData({
           ...registeredUser.data,
-          venueManager, // Store venueManager in localStorage
+          venueManager, 
         });
         
           setRegistrationSuccess(true)
@@ -206,6 +206,26 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               InputProps={{ sx: inputStyles }}
             />
+          <TextField
+            name='venueManager'
+            select
+            label='User role'
+            variant='filled'
+            fullWidth
+            value={formData.venueManager ? 'manager' : 'customer'}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                venueManager: e.target.value === 'manager',
+              })
+            }
+            error={!errors.venueManager}
+            helperText={errors.venueManager}
+            InputProps={{ sx: inputStyles }}
+          >
+            <MenuItem value='customer'>Customer</MenuItem>
+            <MenuItem value='manager'>Manager</MenuItem>
+          </TextField>
           </>
         )}
 
@@ -239,26 +259,8 @@ const BaseForm = ({ variant }) => {
           </>
         )}
 
-        <TextField
-          name='venueManager'
-          select
-          label='User role'
-          variant='filled'
-          fullWidth
-          value={venueManager ? 'manager' : 'customer'}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              venueManager: e.target.value === 'manager',
-            })
-          }
-          error={!errors.venueManager}
-          helperText={errors.venueManager}
-          InputProps={{ sx: inputStyles }}
-        >
-          <MenuItem value='customer'>Customer</MenuItem>
-          <MenuItem value='manager'>Manager</MenuItem>
-        </TextField>
+        
+
         {registrationSuccess && (
           <Alert icon={<CheckIcon fontSize='inherit' />} severity='success'>
             User registered successfully!
