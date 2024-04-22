@@ -14,7 +14,6 @@ const Profile = () => {
     } else {
       console.error('Failed to load user data from local storage.');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
 
   if (!userData) {

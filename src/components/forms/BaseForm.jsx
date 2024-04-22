@@ -43,21 +43,21 @@ const BaseForm = ({ variant }) => {
     setErrors(inputErrors)
     return Object.keys(inputErrors).length === 0
   }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (validateForm()) {
       try {
-        const {
-          createUsername,
-          email,
-          createPassword,
-          avatarUrl,
-          venueManager,
-        } = formData
+        const { email, createPassword } = formData
 
         if (isRegister) {
+          const {
+            createUsername,
+            email,
+            createPassword,
+            avatarUrl,
+            venueManager,
+          } = formData
           const registerData = {
             name: createUsername,
             email,
@@ -71,15 +71,12 @@ const BaseForm = ({ variant }) => {
           const registeredUser = await registerUser(registerData)
           console.log('User registered successfully:', registeredUser)
 
-         // Store registered user data in localStorage
-         storage.saveUserData({
-          ...registeredUser.data,
-          venueManager, 
-        });
-        
-          setRegistrationSuccess(true)
+          storage.saveUserData({
+            ...registeredUser.data,
+            venueManager,
+          })
 
-          // window.location.href = '/login'
+          setRegistrationSuccess(true)
         } else {
           const loggedInUser = await loginUser({
             email,
@@ -87,14 +84,17 @@ const BaseForm = ({ variant }) => {
           })
 
           if (loggedInUser.data.accessToken) {
-            // Store logged-in user data in localStorage
+            const storedUserData = storage.loadUserData()
+            const venueManager = storedUserData?.venueManager || false
+            console.log('venueManager from loggedInUser:', venueManager)
+
             storage.saveUserData({
               ...loggedInUser.data,
-              venueManager: loggedInUser.data.venueManager,
-            });
-
+              venueManager,
+            })
 
             console.log('Logged In User:', loggedInUser.data)
+            console.log('venueManager stored in localStorage:', venueManager)
 
             window.location.href = '/profile'
           } else {
@@ -108,8 +108,7 @@ const BaseForm = ({ variant }) => {
     }
   }
 
-  const { createUsername, createPassword, email, avatarUrl, venueManager } =
-    formData
+  const { createUsername, createPassword, email, avatarUrl } = formData
   const {
     email: emailError,
     createUsername: usernameError,
@@ -206,26 +205,26 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               InputProps={{ sx: inputStyles }}
             />
-          <TextField
-            name='venueManager'
-            select
-            label='User role'
-            variant='filled'
-            fullWidth
-            value={formData.venueManager ? 'manager' : 'customer'}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                venueManager: e.target.value === 'manager',
-              })
-            }
-            error={!errors.venueManager}
-            helperText={errors.venueManager}
-            InputProps={{ sx: inputStyles }}
-          >
-            <MenuItem value='customer'>Customer</MenuItem>
-            <MenuItem value='manager'>Manager</MenuItem>
-          </TextField>
+            <TextField
+              name='venueManager'
+              select
+              label='User role'
+              variant='filled'
+              fullWidth
+              value={formData.venueManager ? 'manager' : 'customer'}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  venueManager: e.target.value === 'manager',
+                })
+              }
+              error={!errors.venueManager}
+              helperText={errors.venueManager}
+              InputProps={{ sx: inputStyles }}
+            >
+              <MenuItem value='customer'>Customer</MenuItem>
+              <MenuItem value='manager'>Manager</MenuItem>
+            </TextField>
           </>
         )}
 
@@ -258,8 +257,6 @@ const BaseForm = ({ variant }) => {
             />
           </>
         )}
-
-        
 
         {registrationSuccess && (
           <Alert icon={<CheckIcon fontSize='inherit' />} severity='success'>
