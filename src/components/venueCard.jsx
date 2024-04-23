@@ -1,10 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Card, CardContent, Typography } from '@mui/material'
-import styles from './VenueCard.module.css'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Card, CardContent, Typography } from '@mui/material';
+import styles from './VenueCard.module.css';
 
 const VenueCard = ({ venue }) => {
-  const { name, description, media, price, maxGuests, meta, location } = venue
+  const { name, description, media, price, maxGuests, meta, location } = venue;
+
+  // Check if meta is defined before accessing its properties
+  const wifiStatus = meta?.wifi ? 'Available' : 'Not Available';
+  const parkingStatus = meta?.parking ? 'Available' : 'Not Available';
+  const breakfastStatus = meta?.breakfast ? 'Included' : 'Not Included';
+  const petsStatus = meta?.pets ? 'Allowed' : 'Not Allowed';
 
   return (
     <Card className={styles.venueCard} style={{ backgroundColor: '#fff' }}>
@@ -15,18 +21,14 @@ const VenueCard = ({ venue }) => {
         <Typography variant='h2'>{name}</Typography>
         <Typography variant='body1'>{description}</Typography>
         <Typography variant='body2'>
-          Max Guests: {maxGuests} | Location: {location.city},{' '}
-          {location.country}
+          Max Guests: {maxGuests} | Location: {location && location.city},{' '}
+          {location && location.country}
         </Typography>
         <div className={styles.contentList}>
-          <li key='wifi'>WiFi: {meta.wifi ? 'Available' : 'Not Available'}</li>
-          <li key='parking'>
-            Parking: {meta.parking ? 'Available' : 'Not Available'}
-          </li>
-          <li key='breakfast'>
-            Breakfast: {meta.breakfast ? 'Included' : 'Not Included'}
-          </li>
-          <li key='pets'>Pets: {meta.pets ? 'Allowed' : 'Not Allowed'}</li>
+          <li key='wifi'>WiFi: {wifiStatus}</li>
+          <li key='parking'>Parking: {parkingStatus}</li>
+          <li key='breakfast'>Breakfast: {breakfastStatus}</li>
+          <li key='pets'>Pets: {petsStatus}</li>
         </div>
       </CardContent>
       <div className={styles.cardFootContent}>
@@ -36,7 +38,7 @@ const VenueCard = ({ venue }) => {
         </Link>
       </div>
     </Card>
-  )
-}
+  );
+};
 
-export default VenueCard
+export default VenueCard;

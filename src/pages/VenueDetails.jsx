@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useFetch from '../hooks/useFetch';
-import { VENUES_URL } from '../utils/api';
-import { Card, CardContent, Typography } from '@mui/material';
-import styles from '../components/VenueCard.module.css';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import useFetch from '../hooks/useFetch'
+import { VENUES_URL } from '../utils/api'
+import { Card, CardContent, Typography } from '@mui/material'
+import styles from '../components/VenueCard.module.css'
 
 const VenueDetails = () => {
-  const { id } = useParams();
-  const API_URL = `${VENUES_URL}/${id}`;
+  const { id } = useParams()
+  const API_URL = `${VENUES_URL}/${id}`
 
-  const { data: venueData, loading, error } = useFetch(API_URL);
-  const [venueDetails, setVenueDetails] = useState(null);
+  const { data: venueData, loading, error } = useFetch(API_URL)
+  const [venueDetails, setVenueDetails] = useState(null)
 
   useEffect(() => {
     if (venueData && venueData.data) {
-      setVenueDetails(venueData.data);
+      setVenueDetails(venueData.data)
     }
-  }, [venueData]);
+  }, [venueData])
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   if (error) {
-    return <div>Error: Unable to load venue details.</div>;
+    return <div>Error: Unable to load venue details.</div>
   }
 
   if (!venueDetails) {
-    return <div>Error: Venue details not found.</div>;
+    return <div>Error: Venue details not found.</div>
   }
 
   const {
@@ -41,16 +41,16 @@ const VenueDetails = () => {
     rating,
     owner,
     bookings,
-  } = venueDetails;
+  } = venueDetails
 
-  // Define meta properties with default values if meta is undefined
-  const wifiAvailable = meta?.wifi ? 'Available' : 'Not Available';
-  const parkingAvailable = meta?.parking ? 'Available' : 'Not Available';
-  const breakfastIncluded = meta?.breakfast ? 'Included' : 'Not Included';
-  const petsAllowed = meta?.pets ? 'Allowed' : 'Not Allowed';
+  const wifiAvailable = meta?.wifi ? 'Available' : 'Not Available'
+  const parkingAvailable = meta?.parking ? 'Available' : 'Not Available'
+  const breakfastIncluded = meta?.breakfast ? 'Included' : 'Not Included'
+  const petsAllowed = meta?.pets ? 'Allowed' : 'Not Allowed'
 
-  // Construct address string with location details if location is defined
-  const address = location ? `${location.address}, ${location.city}, ${location.country}` : 'Address not available';
+  const address = location
+    ? `${location.address}, ${location.city}, ${location.country}`
+    : 'Address not available'
 
   return (
     <div className={styles.container}>
@@ -90,7 +90,7 @@ const VenueDetails = () => {
         </div>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default VenueDetails;
+export default VenueDetails
