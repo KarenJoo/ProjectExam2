@@ -6,7 +6,6 @@ import styles from './VenueCard.module.css';
 const VenueCard = ({ venue }) => {
   const { name, description, media, price, maxGuests, meta, location } = venue;
 
-  // Check if meta is defined before accessing its properties
   const wifiStatus = meta?.wifi ? 'Available' : 'Not Available';
   const parkingStatus = meta?.parking ? 'Available' : 'Not Available';
   const breakfastStatus = meta?.breakfast ? 'Included' : 'Not Included';
