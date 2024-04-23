@@ -7,7 +7,7 @@ import styles from '../components/VenueCard.module.css'
 
 const VenueDetails = () => {
   const { id } = useParams()
-  const API_URL = `${VENUES_URL}/${id}`
+  const API_URL = `${VENUES_URL}/${id}?_owner=true`
 
   const { data: venueData, loading, error } = useFetch(API_URL)
   const [venueDetails, setVenueDetails] = useState(null)
