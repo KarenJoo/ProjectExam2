@@ -1,48 +1,20 @@
-import { useState } from 'react';
-
-// Define roles as constants for better readability and scalability
-const ROLES = {
-  VENUE_MANAGER: 'venueManager',
-  CUSTOMER: 'customer',
-};
-
-// Mock initial user state
-const initialUser = {
-  username: '',
-  role: null, // Initially set the role to null
-};
+import { useState, useEffect } from 'react'
 
 const useAuth = () => {
-  const [user, setUser] = useState(initialUser);
+  const [isVenueManager, setIsVenueManager] = useState(false)
 
-  const login = (username, role) => {
-    // Simulate successful login by setting the user state
-    setUser({ username, role });
-  };
+  useEffect(() => {
+    // Retrieve venue manager status from local storage
+    const venueManager = localStorage.getItem('venueManager')
 
-  const logout = () => {
-    // Simulate logout by resetting the user state
-    setUser(initialUser);
-  };
+    if (venueManager === 'true') {
+      setIsVenueManager(true)
+    } else {
+      setIsVenueManager(false)
+    }
+  }, []) 
 
-  const isAuthenticated = () => {
-    // Check if the user is authenticated (based on the role)
-    return user.role !== null;
-  };
+  return { isVenueManager }
+}
 
-  const isVenueManager = () => {
-    // Check if the user is a venue manager
-    return user.role === ROLES.VENUE_MANAGER;
-  };
-
-  const registerUser = (userData) => {
-    // Simulate user registration logic
-    const { name, email, password, venueManager } = userData;
-    const role = venueManager ? ROLES.VENUE_MANAGER : ROLES.CUSTOMER;
-    login(name, role); // Log in the user after successful registration
-  };
-
-  return { user, login, logout, isAuthenticated, isVenueManager, registerUser };
-};
-
-export default useAuth;
+export default useAuth

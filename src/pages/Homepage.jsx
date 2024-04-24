@@ -5,7 +5,6 @@ import { VENUES_URL } from '../utils/api'
 import VenueCard from '../components/venueCard'
 import styles from '../components/VenueCard.module.css'
 
-
 const Homepage = () => {
   const { data: venuesData, loading, error, refetch } = useFetch(VENUES_URL)
 
@@ -17,14 +16,13 @@ const Homepage = () => {
     return <div>{error}</div>
   }
 
-  console.log('Fetched venues:', venuesData);
+  console.log('Fetched venues:', venuesData)
 
   const venues = venuesData.data
 
   venues.sort((a, b) => {
-    // Sort in descending order by createdAt
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
+    return new Date(b.createdAt) - new Date(a.createdAt)
+  })
 
   return (
     <div className={styles.container}>

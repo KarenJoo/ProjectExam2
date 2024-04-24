@@ -13,8 +13,10 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import { Link } from 'react-router-dom'
 import Logout from './Logout'
+import useAuth from '../../hooks/useAuth'
 
 const Navbar = () => {
+  const { isVenueManager } = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -25,6 +27,9 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const venueManager = localStorage.getItem('venueManager')
+  console.log('Venue Manager status in local storage:', venueManager)
 
   return (
     <Box
@@ -128,6 +133,7 @@ const Navbar = () => {
         </MenuItem>
 
         {/* book venue */}
+
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
@@ -139,18 +145,19 @@ const Navbar = () => {
         </MenuItem>
 
         {/* create venue */}
-        <MenuItem
-          onClick={handleClose}
-          sx={{ fontSize: '12px', color: '#fde8c9' }}
-          component={Link}
-          to='/create'
-        >
-          <ListItemIcon sx={{ color: '#fde8c9' }}>
-            <SettingsIcon fontSize='small' />
-          </ListItemIcon>
-          Create venue
-        </MenuItem>
-
+        {isVenueManager && (
+          <MenuItem
+            onClick={handleClose}
+            sx={{ fontSize: '12px', color: '#fde8c9' }}
+            component={Link}
+            to='/create'
+          >
+            <ListItemIcon sx={{ color: '#fde8c9' }}>
+              <SettingsIcon fontSize='small' />
+            </ListItemIcon>
+            Create venue
+          </MenuItem>
+        )}
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
