@@ -6,6 +6,7 @@ import VenueDetails from './pages/VenueDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
+import CreateVenue from './pages/manager/CreateVenue'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/create' element={<CreateVenue />} />
       </Routes>
       </Layout>
     </div>

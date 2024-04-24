@@ -106,11 +106,12 @@ const Navbar = () => {
           horizontal: 'right',
         }}
       >
-        {/* Menu Items */}
+        {/* profile */}
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
-          component={Link} to="/profile"
+          component={Link}
+          to='/profile'
         >
           <Avatar
             sx={{
@@ -125,7 +126,8 @@ const Navbar = () => {
           </Avatar>
           Profile
         </MenuItem>
-        <Divider />
+
+        {/* book venue */}
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
@@ -135,23 +137,28 @@ const Navbar = () => {
           </ListItemIcon>
           Book
         </MenuItem>
+
+        {/* create venue */}
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
+          component={Link}
+          to='/create'
         >
           <ListItemIcon sx={{ color: '#fde8c9' }}>
             <SettingsIcon fontSize='small' />
           </ListItemIcon>
-          Create
+          Create venue
         </MenuItem>
+
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
         >
+          {/* logout  */}
           <ListItemIcon>
             <LogoutIcon fontSize='small' sx={{ color: '#fde8c9' }} />
           </ListItemIcon>
-          Logout
           <Logout />
         </MenuItem>
       </Menu>
