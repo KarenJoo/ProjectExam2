@@ -12,6 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import LogoutIcon from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import { Link } from 'react-router-dom'
+import Logout from './Logout'
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -151,6 +152,7 @@ const Navbar = () => {
             <LogoutIcon fontSize='small' sx={{ color: '#fde8c9' }} />
           </ListItemIcon>
           Logout
+          <Logout />
         </MenuItem>
       </Menu>
     </Box>
