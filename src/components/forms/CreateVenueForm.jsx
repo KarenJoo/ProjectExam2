@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Checkbox, Button, FormControlLabel, Grid } from '@mui/material';
+import useAuth from '../../hooks/useAuth';
 
 const CreateVenueForm = ({ onSubmit }) => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
+    
     name: '',
     description: '',
     price: 0,
@@ -16,27 +19,52 @@ const CreateVenueForm = ({ onSubmit }) => {
       city: '',
       country: '',
     },
+    media: [
+      {
+        url: '', 
+        alt: '',
+      },
+    ],
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === 'checkbox') {
-      setFormData((prev) => ({
-        ...prev,
+      setFormData((state) => ({
+        ...state,
         [name]: checked,
       }));
+    } else if (name === 'url') {
+      // Handle image URL change
+      setFormData((state) => ({
+        ...state,
+        media: [
+          {
+            ...state.media[0], // Keep other media properties unchanged
+            url: value, // Update the URL property
+          },
+        ],
+      }));
     } else {
-      setFormData((prev) => ({
-        ...prev,
+      setFormData((state) => ({
+        ...state,
         [name]: value,
       }));
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    if (user && user.venueManager) {
+      // User is authenticated and is a venue manager
+      onSubmit(formData); // Proceed with venue creation
+    } else {
+      // User is not authenticated or is not a venue manager
+      alert('You are not authorized to create a venue.');
+    }
   };
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -92,7 +120,7 @@ const CreateVenueForm = ({ onSubmit }) => {
                 checked={formData.wifi}
                 onChange={handleChange}
                 name="wifi"
-                color="primary"
+                color="secondary"
               />
             }
             label="WiFi Available"
@@ -103,7 +131,7 @@ const CreateVenueForm = ({ onSubmit }) => {
                 checked={formData.parking}
                 onChange={handleChange}
                 name="parking"
-                color="primary"
+                color="secondary"
               />
             }
             label="Parking Available"
@@ -114,7 +142,7 @@ const CreateVenueForm = ({ onSubmit }) => {
                 checked={formData.breakfast}
                 onChange={handleChange}
                 name="breakfast"
-                color="primary"
+                color="secondary"
               />
             }
             label="Breakfast Included"
@@ -125,7 +153,7 @@ const CreateVenueForm = ({ onSubmit }) => {
                 checked={formData.pets}
                 onChange={handleChange}
                 name="pets"
-                color="primary"
+                color="secondary"
               />
             }
             label="Pets Allowed"
@@ -138,10 +166,10 @@ const CreateVenueForm = ({ onSubmit }) => {
             name="address"
             value={formData.location.address}
             onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
+              setFormData((state) => ({
+                ...state,
                 location: {
-                  ...prev.location,
+                  ...state.location,
                   address: e.target.value,
                 },
               }))
@@ -155,10 +183,10 @@ const CreateVenueForm = ({ onSubmit }) => {
             name="city"
             value={formData.location.city}
             onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
+              setFormData((state) => ({
+                ...state,
                 location: {
-                  ...prev.location,
+                  ...state.location,
                   city: e.target.value,
                 },
               }))
@@ -172,10 +200,10 @@ const CreateVenueForm = ({ onSubmit }) => {
             name="country"
             value={formData.location.country}
             onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
+              setFormData((state) => ({
+                ...state,
                 location: {
-                  ...prev.location,
+                  ...state.location,
                   country: e.target.value,
                 },
               }))
@@ -183,7 +211,18 @@ const CreateVenueForm = ({ onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary">
+          <TextField
+            fullWidth
+            label="Image URL"
+            name="url"
+            value={formData.media[0].url}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          
+          <Button type="submit" variant="outlined" color="secondary">
             Create Venue
           </Button>
         </Grid>
