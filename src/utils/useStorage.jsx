@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 const useStorage = () => {
+  const [userData, setUserData] = useState(null);
+
   const save = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
   }
@@ -16,13 +20,35 @@ const useStorage = () => {
     localStorage.clear()
   }
 
+  const clearUserData = () => {
+    localStorage.removeItem('userData');
+    setUserData(null);
+  };
+
   const saveUserData = (userData) => {
-    save('userData', userData)
-  }
+    localStorage.setItem('userData', JSON.stringify(userData));
+    setUserData(userData);
+  };
 
   const loadUserData = () => {
-    return load('userData')
-  }
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      setUserData(userData);
+      return userData;
+    }
+    return null;
+  };
+
+
+  const isUserLoggedIn = () => {
+    return userData !== null;
+  };
+
+  const getUserRole = () => {
+    return userData?.role || 'customer'; // Default role is customer
+  };
+
 
   const saveToken = (accessToken) => {
     save('accessToken', accessToken)
@@ -32,7 +58,7 @@ const useStorage = () => {
     return load('accessToken')
   }
 
-  return { saveUserData, loadUserData, remove, clear, saveToken, loadToken }
+  return { saveUserData, loadUserData, isUserLoggedIn, remove, clear, saveToken, loadToken, getUserRole, clearUserData }
 }
 
 export default useStorage

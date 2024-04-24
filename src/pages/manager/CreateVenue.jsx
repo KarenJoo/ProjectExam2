@@ -6,7 +6,6 @@ const CreateVenue = () => {
 
 
   const handleSubmit = (formData) => {
-    // Simulate form submission logic (replace with actual API call)
     console.log("Submitted form data:", formData);
     alert("Venue created successfully!");
     // Add logic here to handle venue creation (e.g., API call)

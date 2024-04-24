@@ -58,6 +58,7 @@ const BaseForm = ({ variant }) => {
             avatarUrl,
             venueManager,
           } = formData
+
           const registerData = {
             name: createUsername,
             email,
@@ -95,6 +96,8 @@ const BaseForm = ({ variant }) => {
 
             console.log('Logged In User:', loggedInUser.data)
             console.log('venueManager stored in localStorage:', venueManager)
+            
+            localStorage.setItem('userLoggedIn', 'true')
 
             window.location.href = '/profile'
           } else {

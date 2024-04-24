@@ -3,17 +3,17 @@ import ProfileLayout from '../components/Layout/ProfileLayout'
 import useStorage from '../utils/useStorage'
 
 const Profile = () => {
-  const storage = useStorage()
+  const {loadUserData} = useStorage();
   const [userData, setUserData] = useState(null)
 
   useEffect(() => {
-    const getUserData = storage.loadUserData()
+    const getUserData = loadUserData()
     if (getUserData) {
       setUserData(getUserData)
     } else {
       console.error('Failed to load user data from local storage.')
     }
-  }, [])
+  }, [loadUserData]);
 
   if (!userData) {
     return <div>Loading...</div>

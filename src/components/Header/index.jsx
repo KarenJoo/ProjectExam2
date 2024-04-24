@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
@@ -13,10 +12,8 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import { Link } from 'react-router-dom'
 import Logout from './Logout'
-import useAuth from '../../hooks/useAuth'
 
 const Navbar = () => {
-  const { isVenueManager } = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -28,8 +25,6 @@ const Navbar = () => {
     setAnchorEl(null)
   }
 
-  const venueManager = localStorage.getItem('venueManager')
-  console.log('Venue Manager status in local storage:', venueManager)
 
   return (
     <Box
@@ -133,19 +128,18 @@ const Navbar = () => {
         </MenuItem>
 
         {/* book venue */}
-
-        <MenuItem
-          onClick={handleClose}
-          sx={{ fontSize: '12px', color: '#fde8c9' }}
-        >
-          <ListItemIcon>
-            <PersonAddIcon fontSize='small' sx={{ color: '#fde8c9' }} />
-          </ListItemIcon>
-          Book
-        </MenuItem>
+          <MenuItem
+            onClick={handleClose}
+            sx={{ fontSize: '12px', color: '#fde8c9' }}
+          >
+            <ListItemIcon>
+              <PersonAddIcon fontSize='small' sx={{ color: '#fde8c9' }} />
+            </ListItemIcon>
+            Book
+          </MenuItem>
+        
 
         {/* create venue */}
-        {isVenueManager && (
           <MenuItem
             onClick={handleClose}
             sx={{ fontSize: '12px', color: '#fde8c9' }}
@@ -157,7 +151,8 @@ const Navbar = () => {
             </ListItemIcon>
             Create venue
           </MenuItem>
-        )}
+     
+
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}

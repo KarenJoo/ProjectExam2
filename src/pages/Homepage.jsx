@@ -6,7 +6,7 @@ import VenueCard from '../components/venueCard'
 import styles from '../components/VenueCard.module.css'
 
 const Homepage = () => {
-  const { data: venuesData, loading, error, refetch } = useFetch(VENUES_URL)
+  const { data: venuesData, loading, error } = useFetch(VENUES_URL)
 
   if (loading) {
     return <div className='contentContainer'>Loading...</div>
