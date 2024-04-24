@@ -7,7 +7,7 @@ import styles from '../components/VenueCard.module.css'
 
 
 const Homepage = () => {
-  const { data: venuesData, loading, error } = useFetch(VENUES_URL)
+  const { data: venuesData, loading, error, refetch } = useFetch(VENUES_URL)
 
   if (loading) {
     return <div className='contentContainer'>Loading...</div>
@@ -17,7 +17,14 @@ const Homepage = () => {
     return <div>{error}</div>
   }
 
+  console.log('Fetched venues:', venuesData);
+
   const venues = venuesData.data
+
+  venues.sort((a, b) => {
+    // Sort in descending order by createdAt
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   return (
     <div className={styles.container}>

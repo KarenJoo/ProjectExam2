@@ -8,19 +8,18 @@ import Register from './pages/Register'
 import Profile from './pages/Profile'
 import CreateVenue from './pages/manager/CreateVenue'
 
-
 function App() {
   return (
     <div className='App'>
       <Layout>
-      <Routes>
-        <Route exact path='/' element={<Homepage />} />
-        <Route path='/venue/:id' element={<VenueDetails />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/create' element={<CreateVenue />} />
-      </Routes>
+        <Routes>
+          <Route exact path='/' element={<Homepage />} />
+          <Route path='/venue/:id' element={<VenueDetails />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/create' element={<CreateVenue />} />
+        </Routes>
       </Layout>
     </div>
   )
