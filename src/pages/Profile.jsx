@@ -13,7 +13,7 @@ const Profile = () => {
     } else {
       console.error('Failed to load user data from local storage.')
     }
-  }, [loadUserData]);
+  }, []);
 
   if (!userData) {
     return <div>Loading...</div>

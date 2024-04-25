@@ -7,21 +7,34 @@ import {
   Grid,
 } from '@mui/material'
 import { VENUES_URL } from '../../utils/api'
+import useStorage from '../../utils/useStorage'
 
 const CreateVenueForm = ({ onSubmit }) => {
+
+  const storage = useStorage();
+  const accessToken = storage.load();
+  console.log('Access Token:', accessToken); 
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: 0,
     maxGuests: 0,
-    wifi: false,
-    parking: false,
-    breakfast: false,
-    pets: false,
+    rating: 0,
+    meta: {
+      wifi: false,
+      parking: false,
+      breakfast: false,
+      pets: false,
+    },
     location: {
       address: '',
       city: '',
+      zip: '',
       country: '',
+      continent: '',
+      lat: 0,
+      lng: 0,
     },
     media: [
       {
@@ -29,15 +42,18 @@ const CreateVenueForm = ({ onSubmit }) => {
         alt: '',
       },
     ],
-  })
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     if (type === 'checkbox') {
       setFormData((state) => ({
         ...state,
-        [name]: checked,
-      }))
+        meta: {
+          ...state.meta,
+          [name]: checked,
+        },
+      }));
     } else if (name === 'url') {
       // Handle image URL change
       setFormData((state) => ({
@@ -59,19 +75,21 @@ const CreateVenueForm = ({ onSubmit }) => {
 
   const handleSubmit = async (formData) => {
     try {
+
       const response = await fetch(VENUES_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(formData),
       })
+      const data = await response.json()
 
       if (!response.ok) {
-        throw new Error('Failed to create venue')
+        throw new Error(data.message || 'Failed to create venue')
       }
 
-      const data = await response.json()
       console.log('Venue created successfully:', data)
       alert('Venue created successfully!')
 

@@ -3,8 +3,6 @@ import CreateVenueForm from "../../components/forms/CreateVenueForm";
 import styles from './VenueForm.module.css'
 
 const CreateVenue = () => {
-
-
   const handleSubmit = (formData) => {
     console.log("Submitted form data:", formData);
     alert("Venue created successfully!");

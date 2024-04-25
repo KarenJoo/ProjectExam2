@@ -85,9 +85,12 @@ const BaseForm = ({ variant }) => {
           })
 
           if (loggedInUser.data.accessToken) {
+            const accessToken = loggedInUser.data.accessToken
             const storedUserData = storage.loadUserData()
             const venueManager = storedUserData?.venueManager || false
             console.log('venueManager from loggedInUser:', venueManager)
+
+            storage.saveToken(accessToken)
 
             storage.saveUserData({
               ...loggedInUser.data,
@@ -96,7 +99,7 @@ const BaseForm = ({ variant }) => {
 
             console.log('Logged In User:', loggedInUser.data)
             console.log('venueManager stored in localStorage:', venueManager)
-            
+
             localStorage.setItem('userLoggedIn', 'true')
 
             window.location.href = '/profile'

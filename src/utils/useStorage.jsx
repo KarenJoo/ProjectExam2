@@ -46,19 +46,21 @@ const useStorage = () => {
   };
 
   const getUserRole = () => {
-    return userData?.role || 'customer'; // Default role is customer
+    return userData?.role || 'customer'; 
   };
 
 
   const saveToken = (accessToken) => {
-    save('accessToken', accessToken)
-  }
-
+    localStorage.setItem('accessToken', accessToken);
+  };
+  
   const loadToken = () => {
-    return load('accessToken')
-  }
+    const userData = loadUserData();
+    return userData ? userData.accessToken : null;
+  };
 
-  return { saveUserData, loadUserData, isUserLoggedIn, remove, clear, saveToken, loadToken, getUserRole, clearUserData }
+
+  return { saveUserData, loadUserData, isUserLoggedIn, remove, clear, saveToken, loadToken, getUserRole, clearUserData, load, save }
 }
 
 export default useStorage
