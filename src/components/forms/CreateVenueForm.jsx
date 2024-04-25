@@ -1,28 +1,15 @@
-import React, { useState } from 'react'
-import {
-  TextField,
-  Checkbox,
-  Button,
-  FormControlLabel,
-  Grid,
-} from '@mui/material'
-import { VENUES_URL } from '../../utils/api'
-import useStorage from '../../utils/useStorage'
+import React, { useState, useEffect } from 'react';
+import { TextField, Checkbox, Button, FormControlLabel, Grid } from '@mui/material';
+import { VENUES_URL } from '../../utils/api';
+import useStorage from '../../utils/useStorage';
 
 const CreateVenueForm = ({ onSubmit }) => {
-
   const storage = useStorage();
-
-  const userData = storage.loadUserData();
-  const getAccessToken = userData ? userData.accessToken : null;
-  const [accessToken, setAccessToken] = useState(getAccessToken); 
-  
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: 0,
     maxGuests: 0,
-    rating: 0,
     meta: {
       wifi: false,
       parking: false,
@@ -32,51 +19,46 @@ const CreateVenueForm = ({ onSubmit }) => {
     location: {
       address: '',
       city: '',
-      zip: '',
       country: '',
-      continent: '',
-      lat: 0,
-      lng: 0,
     },
-    media: [
-      {
-        url: '',
-        alt: '',
-      },
-    ],
+    imageUrl: '',
   });
+
+  useEffect(() => {
+    // Load user data (if available) when the component mounts
+    const userData = storage.loadUserData();
+    if (userData) {
+      // Initialize form data based on user data (if available)
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        name: userData.name || '',
+        // Initialize other form fields based on userData
+      }));
+    }
+  }, [storage]); // Re-run effect if storage changes (e.g., userData)
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-  
     if (type === 'checkbox') {
-      setFormData((prevState) => ({
-        ...prevState,
+      setFormData((prevData) => ({
+        ...prevData,
         meta: {
-          ...prevState.meta,
+          ...prevData.meta,
           [name]: checked,
         },
       }));
-    } else if (name === 'url') {
-      setFormData((prevState) => ({
-        ...prevState,
-        media: [
-          {
-            ...prevState.media[0],
-            url: value,
-          },
-        ],
-      }));
     } else {
-      setFormData((prevState) => ({
-        ...prevState,
+      setFormData((prevData) => ({
+        ...prevData,
         [name]: value,
       }));
     }
   };
-  
-  const handleSubmit = async (formData) => {
-    try {
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const accessToken = localStorage.getItem('accessToken');
       const response = await fetch(VENUES_URL, {
         method: 'POST',
         headers: {
@@ -84,34 +66,27 @@ const CreateVenueForm = ({ onSubmit }) => {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(formData),
-      })
-      const data = await response.json()
+      });
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to create venue')
+        throw new Error(data.message || 'Failed to create venue');
       }
 
-      console.log('Venue created successfully:', data)
-      alert('Venue created successfully!')
+      console.log('Venue created successfully:', data);
+      alert('Venue created successfully!');
 
       if (onSubmit) {
-        onSubmit(data)
+        onSubmit(data);
       }
     } catch (error) {
-      console.error('Failed to create venue:', error)
-      alert('Failed to create venue')
+      console.error('Failed to create venue:', error);
+      alert('Failed to create venue');
     }
-  }
-
-  console.log('Access Token:', accessToken);
+  };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        handleSubmit(formData)
-      }}
-    >
+    <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -161,117 +136,34 @@ const CreateVenueForm = ({ onSubmit }) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.wifi}
+                checked={formData.meta.wifi}
                 onChange={handleChange}
                 name='wifi'
-                color='secondary'
+                color='primary'
               />
             }
             label='WiFi Available'
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.parking}
-                onChange={handleChange}
-                name='parking'
-                color='secondary'
-              />
-            }
-            label='Parking Available'
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.breakfast}
-                onChange={handleChange}
-                name='breakfast'
-                color='secondary'
-              />
-            }
-            label='Breakfast Included'
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.pets}
-                onChange={handleChange}
-                name='pets'
-                color='secondary'
-              />
-            }
-            label='Pets Allowed'
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label='Address'
-            name='address'
-            value={formData.location.address}
-            onChange={(e) =>
-              setFormData((state) => ({
-                ...state,
-                location: {
-                  ...state.location,
-                  address: e.target.value,
-                },
-              }))
-            }
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            label='City'
-            name='city'
-            value={formData.location.city}
-            onChange={(e) =>
-              setFormData((state) => ({
-                ...state,
-                location: {
-                  ...state.location,
-                  city: e.target.value,
-                },
-              }))
-            }
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            label='Country'
-            name='country'
-            value={formData.location.country}
-            onChange={(e) =>
-              setFormData((state) => ({
-                ...state,
-                location: {
-                  ...state.location,
-                  country: e.target.value,
-                },
-              }))
-            }
-          />
+          {/* Add other checkboxes for parking, breakfast, pets */}
         </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
             label='Image URL'
-            name='url'
-            value={formData.media[0].url}
+            name='imageUrl'
+            value={formData.imageUrl}
             onChange={handleChange}
             required
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type='submit' variant='outlined' color='secondary'>
+          <Button type='submit' variant='outlined' color='primary'>
             Create Venue
           </Button>
         </Grid>
       </Grid>
     </form>
-  )
-}
+  );
+};
 
-export default CreateVenueForm
+export default CreateVenueForm;
