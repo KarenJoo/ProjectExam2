@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 const useStorage = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(null)
 
   const save = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
@@ -21,46 +21,54 @@ const useStorage = () => {
   }
 
   const clearUserData = () => {
-    localStorage.removeItem('userData');
-    setUserData(null);
-  };
+    remove('userData')
+    setUserData(null)
+  }
 
   const saveUserData = (userData) => {
-    localStorage.setItem('userData', JSON.stringify(userData));
-    setUserData(userData);
-  };
+    save('userData', userData)
+    setUserData(userData)
+  }
 
   const loadUserData = () => {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      const userData = JSON.parse(userDataString);
-      setUserData(userData);
-      return userData;
+    const userData = load('userData')
+    if (userData) {
+      setUserData(userData)
     }
-    return null;
-  };
-
+    return userData
+  }
 
   const isUserLoggedIn = () => {
-    return userData !== null;
-  };
+    return userData !== null
+  }
 
   const getUserRole = () => {
-    return userData?.role || 'customer'; 
-  };
+    return userData?.role || 'customer'
+  }
 
-
+  // stores token
   const saveToken = (accessToken) => {
-    localStorage.setItem('accessToken', accessToken);
-  };
-  
+    save('accessToken', accessToken)
+  }
+
+  // retrieves token
   const loadToken = () => {
-    const userData = loadUserData();
-    return userData ? userData.accessToken : null;
-  };
+    return load('accessToken')
+  }
 
-
-  return { saveUserData, loadUserData, isUserLoggedIn, remove, clear, saveToken, loadToken, getUserRole, clearUserData, load, save }
+  return {
+    saveUserData,
+    loadUserData,
+    isUserLoggedIn,
+    remove,
+    clear,
+    saveToken,
+    loadToken,
+    getUserRole,
+    clearUserData,
+    load,
+    save,
+  }
 }
 
 export default useStorage

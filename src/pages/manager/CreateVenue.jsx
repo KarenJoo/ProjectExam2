@@ -6,7 +6,6 @@ const CreateVenue = () => {
   const handleSubmit = (formData) => {
     console.log("Submitted form data:", formData);
     alert("Venue created successfully!");
-    // Add logic here to handle venue creation (e.g., API call)
   };
   return (
     <div className={styles.form}>

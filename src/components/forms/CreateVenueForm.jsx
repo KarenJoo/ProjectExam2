@@ -12,9 +12,11 @@ import useStorage from '../../utils/useStorage'
 const CreateVenueForm = ({ onSubmit }) => {
 
   const storage = useStorage();
-  const accessToken = storage.load();
-  console.log('Access Token:', accessToken); 
 
+  const userData = storage.loadUserData();
+  const getAccessToken = userData ? userData.accessToken : null;
+  const [accessToken, setAccessToken] = useState(getAccessToken); 
+  
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -43,36 +45,35 @@ const CreateVenueForm = ({ onSubmit }) => {
       },
     ],
   });
-
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type, checked } = e.target;
+  
     if (type === 'checkbox') {
-      setFormData((state) => ({
-        ...state,
+      setFormData((prevState) => ({
+        ...prevState,
         meta: {
-          ...state.meta,
+          ...prevState.meta,
           [name]: checked,
         },
       }));
     } else if (name === 'url') {
-      // Handle image URL change
-      setFormData((state) => ({
-        ...state,
+      setFormData((prevState) => ({
+        ...prevState,
         media: [
           {
-            ...state.media[0],
+            ...prevState.media[0],
             url: value,
           },
         ],
-      }))
+      }));
     } else {
-      setFormData((state) => ({
-        ...state,
+      setFormData((prevState) => ({
+        ...prevState,
         [name]: value,
-      }))
+      }));
     }
-  }
-
+  };
+  
   const handleSubmit = async (formData) => {
     try {
 
@@ -101,6 +102,8 @@ const CreateVenueForm = ({ onSubmit }) => {
       alert('Failed to create venue')
     }
   }
+
+  console.log('Access Token:', accessToken);
 
   return (
     <form
