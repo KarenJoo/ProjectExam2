@@ -31,13 +31,9 @@ const useStorage = () => {
   };
 
   const loadUserData = () => {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      const userData = JSON.parse(userDataString);
+      const userData = JSON.parse(localStorage.getItem('userData'));
       setUserData(userData);
       return userData;
-    }
-    return null;
   };
 
 
@@ -55,7 +51,6 @@ const useStorage = () => {
   };
   
   const loadToken = () => {
-    const userData = loadUserData();
     return userData ? userData.accessToken : null;
   };
 
