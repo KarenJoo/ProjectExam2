@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 const useStorage = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(null)
 
   // const save = (key, value) => {
   //   localStorage.setItem(key, JSON.stringify(value))
@@ -21,48 +21,58 @@ const useStorage = () => {
   }
 
   const clearUserData = () => {
-    localStorage.removeItem('userData');
-    setUserData(null);
-  };
+    localStorage.removeItem('userData')
+    setUserData(null)
+  }
 
   const saveUserData = (userData) => {
-    localStorage.setItem('userData', JSON.stringify(userData));
-    setUserData(userData);
-  };
+    localStorage.setItem('userData', JSON.stringify(userData))
+    setUserData(userData)
+  }
 
   // stores isVenueManager value from register form
   const loadUserData = () => {
-      const userData = JSON.parse(localStorage.getItem('userData'));
-      setUserData(userData);
-      return userData;
-  };
-
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    setUserData(userData)
+    return userData
+  }
 
   const isUserLoggedIn = () => {
-    return userData !== null;
-  };
+    return userData !== null
+  }
 
   const getUserRole = () => {
-    return userData?.role || 'customer'; 
-  };
-
+    return userData?.role || 'customer'
+  }
 
   const saveToken = (accessToken) => {
-    localStorage.setItem('accessToken', accessToken);
-  };
-  
+    localStorage.setItem('accessToken', accessToken)
+  }
+
   const loadToken = () => {
-    return localStorage.getItem('accessToken');
-  };
-  
+    return localStorage.getItem('accessToken')
+  }
+
   const saveApiKey = (apiKey) => {
-    localStorage.setItem('apiKey', apiKey);
-  };
-  
+    localStorage.setItem('apiKey', apiKey)
+  }
+
   const loadApiKey = () => {
-    return localStorage.getItem('apiKey');
-  };
-  return { saveUserData, saveApiKey, loadApiKey, loadUserData, isUserLoggedIn, remove, clear, saveToken, loadToken, getUserRole, clearUserData }
+    return localStorage.getItem('apiKey')
+  }
+  return {
+    saveUserData,
+    saveApiKey,
+    loadApiKey,
+    loadUserData,
+    isUserLoggedIn,
+    remove,
+    clear,
+    saveToken,
+    loadToken,
+    getUserRole,
+    clearUserData,
+  }
 }
 
 export default useStorage

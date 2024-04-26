@@ -23,9 +23,11 @@ export const createApiKey = async (accessToken, saveApiKey) => {
 
     const data = await response.json()
     const apiKey = data.data.key
+
     saveApiKey(apiKey)
-    return apiKey // Return the API key
+    return apiKey
   } catch (error) {
+    console.error('Error creating API key:', error)
     throw new Error(`Failed to create API key: ${error.message}`)
   }
 }

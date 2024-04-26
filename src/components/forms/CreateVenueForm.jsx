@@ -9,9 +9,8 @@ import {
 import { VENUES_URL } from '../../utils/api'
 import useStorage from '../../utils/useStorage'
 import styles from '../../pages/manager/VenueForm.module.css'
-import CheckAuth from '../../utils/CheckAuth'
 import useAuth from '../../hooks/useAuth'
-import { createApiKey } from '../../utils/createApiKey'
+import { createApiKey } from '../../utils/CreateApiKey'
 
 const CreateVenueForm = ({ onSubmit }) => {
   const storage = useStorage()
@@ -60,15 +59,23 @@ const CreateVenueForm = ({ onSubmit }) => {
       const accessToken = storage.loadToken('accessToken')
       console.log('Access Token:', accessToken)
 
+      const apiKey = await createApiKey(accessToken, storage.saveApiKey) // Call createApiKey function
+
+      const storedUserData = storage.loadUserData()
+      const isVenueManagerValue = storedUserData
+        ? storedUserData.venueManager
+        : false
+
+      console.log(storedUserData)
+      console.log(isVenueManager)
       if (!accessToken) {
         throw new Error('Access token not found')
       }
 
-      if (!isVenueManager) {
+      if (!isVenueManagerValue) {
         throw new Error('Only venue managers can create venues')
       }
 
-      const apiKey = await createApiKey(accessToken, storage.saveApiKey)
       console.log('API Key:', apiKey)
 
       const response = await fetch(VENUES_URL, {
@@ -99,7 +106,6 @@ const CreateVenueForm = ({ onSubmit }) => {
 
   return (
     <>
-      <CheckAuth />
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
