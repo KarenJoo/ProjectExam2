@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import {
   TextField,
   Checkbox,
@@ -31,18 +31,6 @@ const CreateVenueForm = ({ onSubmit }) => {
     imageUrl: '',
   })
 
-  useEffect(() => {
-    // Load user data (if available) when the component mounts
-    const userData = storage.loadUserData()
-    if (userData) {
-      // Initialize form data based on user data (if available)
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        name: userData.name || '',
-        // Initialize other form fields based on userData
-      }))
-    }
-  }, [storage]) // Re-run effect if storage changes (e.g., userData)
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
