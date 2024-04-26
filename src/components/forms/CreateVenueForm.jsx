@@ -36,7 +36,7 @@ const CreateVenueForm = ({ onSubmit }) => {
   })
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type, checked } = e.target;
     if (type === 'checkbox') {
       setFormData((prevData) => ({
         ...prevData,
@@ -44,14 +44,15 @@ const CreateVenueForm = ({ onSubmit }) => {
           ...prevData.meta,
           [name]: checked,
         },
-      }))
+      }));
     } else {
       setFormData((prevData) => ({
         ...prevData,
-        [name]: value,
-      }))
+        [name]: name === 'price' || name === 'maxGuests' ? parseInt(value) : value,
+      }));
     }
-  }
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -59,7 +60,7 @@ const CreateVenueForm = ({ onSubmit }) => {
       const accessToken = storage.loadToken('accessToken')
       console.log('Access Token:', accessToken)
 
-      const apiKey = await createApiKey(accessToken, storage.saveApiKey) // Call createApiKey function
+      const apiKey = await createApiKey(accessToken)
 
       const storedUserData = storage.loadUserData()
       const isVenueManagerValue = storedUserData
@@ -76,7 +77,7 @@ const CreateVenueForm = ({ onSubmit }) => {
         throw new Error('Only venue managers can create venues')
       }
 
-      console.log('API Key:', apiKey)
+    
 
       const response = await fetch(VENUES_URL, {
         method: 'POST',
@@ -87,11 +88,11 @@ const CreateVenueForm = ({ onSubmit }) => {
         },
         body: JSON.stringify(formData),
       })
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to create venue')
-      }
 
+      if (!response.ok) {
+        throw new Error('Failed to create venue')
+      }
+      const data = await response.json()
       console.log('Venue created successfully:', data)
       alert('Venue created successfully!')
 
