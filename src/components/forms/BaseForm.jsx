@@ -10,15 +10,15 @@ const BaseForm = ({ variant }) => {
   const storage = useStorage()
 
   const [formData, setFormData] = useState(() => {
-    const userData = storage.loadUserData();
+    const userData = storage.loadUserData()
     return {
       createUsername: '',
       createPassword: '',
       email: '',
       avatarUrl: '',
       venueManager: userData ? userData.venueManager : false,
-    };
-  });
+    }
+  })
 
   const [errors, setErrors] = useState({})
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
@@ -54,12 +54,7 @@ const BaseForm = ({ variant }) => {
         const { email, createPassword } = formData
 
         if (isRegister) {
-          const {
-            createUsername,
-            email,
-            createPassword,
-            avatarUrl,
-          } = formData
+          const { createUsername, email, createPassword, avatarUrl } = formData
 
           const registerData = {
             name: createUsername,
@@ -81,7 +76,6 @@ const BaseForm = ({ variant }) => {
 
           setRegistrationSuccess(true)
         } else {
-
           const loggedInUser = await loginUser({
             email,
             password: createPassword,
@@ -89,7 +83,7 @@ const BaseForm = ({ variant }) => {
 
           if (loggedInUser.data.accessToken) {
             const accessToken = loggedInUser.data.accessToken
-            const venueManager = loggedInUser.data?.venueManager || false;            console.log('venueManager from loggedInUser:', venueManager)
+            
 
             storage.saveToken(accessToken)
 
@@ -99,8 +93,13 @@ const BaseForm = ({ variant }) => {
             })
 
             console.log('Logged In User:', loggedInUser.data)
-            console.log('venueManager stored in localStorage:', venueManager)
-
+            console.log('Access Token:', accessToken);
+            console.log('Venue Manager from loggedInUser:', loggedInUser.data.venueManager);
+            
+            const storedUserData = storage.loadUserData();
+            const storedVenueManager = storedUserData ? storedUserData.venueManager : false;
+            console.log('Venue Manager from localStorage:', storedVenueManager);
+  
             localStorage.setItem('userLoggedIn', 'true')
 
             window.location.href = '/profile'

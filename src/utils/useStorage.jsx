@@ -30,6 +30,7 @@ const useStorage = () => {
     setUserData(userData);
   };
 
+  // stores isVenueManager value from register form
   const loadUserData = () => {
       const userData = JSON.parse(localStorage.getItem('userData'));
       setUserData(userData);
