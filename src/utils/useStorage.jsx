@@ -3,14 +3,14 @@ import { useState } from "react";
 const useStorage = () => {
   const [userData, setUserData] = useState(null);
 
-  const save = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value))
-  }
+  // const save = (key, value) => {
+  //   localStorage.setItem(key, JSON.stringify(value))
+  // }
 
-  const load = (key) => {
-    const value = localStorage.getItem(key)
-    return JSON.parse(value)
-  }
+  // const load = (key) => {
+  //   const value = localStorage.getItem(key)
+  //   return JSON.parse(value)
+  // }
 
   const remove = (key) => {
     localStorage.removeItem(key)
@@ -51,11 +51,17 @@ const useStorage = () => {
   };
   
   const loadToken = () => {
-    return userData ? userData.accessToken : null;
+    return localStorage.getItem('accessToken');
   };
-
-
-  return { saveUserData, loadUserData, isUserLoggedIn, remove, clear, saveToken, loadToken, getUserRole, clearUserData, load, save }
+  
+  const saveApiKey = (apiKey) => {
+    localStorage.setItem('apiKey', apiKey);
+  };
+  
+  const loadApiKey = () => {
+    return localStorage.getItem('apiKey');
+  };
+  return { saveUserData, saveApiKey, loadApiKey, loadUserData, isUserLoggedIn, remove, clear, saveToken, loadToken, getUserRole, clearUserData }
 }
 
 export default useStorage

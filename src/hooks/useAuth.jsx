@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import useStorage from '../utils/useStorage';
 
 const useAuth = () => {
-  const [isVenueManager, setIsVenueManager] = useState(false)
+  const [isVenueManager, setIsVenueManager] = useState(false);
+  const { loadUserData } = useStorage();
 
   useEffect(() => {
-    const venueManager = localStorage.getItem('venueManager')
+    const storedUserData = loadUserData();
+    const venueManager = storedUserData?.venueManager || false; // Retrieve venueManager from stored user data or default to false
 
-    if (venueManager === 'true') {
-      setIsVenueManager(true)
-    } else {
-      setIsVenueManager(false)
-    }
-  }, []) 
+    setIsVenueManager(venueManager);
+  }, []);
 
-  return { isVenueManager }
-}
+  return { isVenueManager };
+};
 
-export default useAuth
+export default useAuth;

@@ -56,7 +56,6 @@ const BaseForm = ({ variant }) => {
             email,
             createPassword,
             avatarUrl,
-            venueManager,
           } = formData
 
           const registerData = {
@@ -66,7 +65,7 @@ const BaseForm = ({ variant }) => {
             avatar: {
               url: avatarUrl,
             },
-            venueManager,
+            venueManager: formData.venueManager,
           }
 
           const registeredUser = await registerUser(registerData)
@@ -74,7 +73,7 @@ const BaseForm = ({ variant }) => {
 
           storage.saveUserData({
             ...registeredUser.data,
-            venueManager,
+            venueManager: formData.venueManager,
           })
 
           setRegistrationSuccess(true)
@@ -86,9 +85,7 @@ const BaseForm = ({ variant }) => {
 
           if (loggedInUser.data.accessToken) {
             const accessToken = loggedInUser.data.accessToken
-            const storedUserData = storage.loadUserData()
-            const venueManager = storedUserData?.venueManager || false
-            console.log('venueManager from loggedInUser:', venueManager)
+            const venueManager = loggedInUser.data?.venueManager || false;            console.log('venueManager from loggedInUser:', venueManager)
 
             storage.saveToken(accessToken)
 
