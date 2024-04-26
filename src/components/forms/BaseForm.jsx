@@ -9,13 +9,16 @@ const BaseForm = ({ variant }) => {
   const isRegister = variant === 'register'
   const storage = useStorage()
 
-  const [formData, setFormData] = useState({
-    createUsername: '',
-    createPassword: '',
-    email: '',
-    avatarUrl: '',
-    venueManager: false,
-  })
+  const [formData, setFormData] = useState(() => {
+    const userData = storage.loadUserData();
+    return {
+      createUsername: '',
+      createPassword: '',
+      email: '',
+      avatarUrl: '',
+      venueManager: userData ? userData.venueManager : false,
+    };
+  });
 
   const [errors, setErrors] = useState({})
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
@@ -78,6 +81,7 @@ const BaseForm = ({ variant }) => {
 
           setRegistrationSuccess(true)
         } else {
+
           const loggedInUser = await loginUser({
             email,
             password: createPassword,
@@ -91,7 +95,7 @@ const BaseForm = ({ variant }) => {
 
             storage.saveUserData({
               ...loggedInUser.data,
-              venueManager,
+              venueManager: formData.venueManager,
             })
 
             console.log('Logged In User:', loggedInUser.data)
