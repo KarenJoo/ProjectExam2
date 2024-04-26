@@ -1,10 +1,10 @@
-import React from 'react'
-import { Avatar, Typography, Grid } from '@mui/material'
-import styles from './ProfileLayout.module.css'
+import React from 'react';
+import { Avatar, Typography, Grid } from '@mui/material';
+import styles from './ProfileLayout.module.css';
 
 const ProfileLayout = ({ userData }) => {
-  const { name, avatar, bookedVenues, venueManager, venues } = userData
-  const venuesCount = venues ? venues.length : 0
+  const { name, avatar, bookedVenues, venueManager, venues } = userData;
+  const venuesCount = venues ? venues.length : 0;
 
   return (
     <div className={styles.profileContainer}>
@@ -48,7 +48,7 @@ const ProfileLayout = ({ userData }) => {
         </Grid>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProfileLayout
+export default ProfileLayout;
