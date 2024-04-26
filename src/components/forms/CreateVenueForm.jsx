@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Checkbox, Button, FormControlLabel, Grid } from '@mui/material';
-import { VENUES_URL } from '../../utils/api';
-import useStorage from '../../utils/useStorage';
+import React, { useState, useEffect } from 'react'
+import {
+  TextField,
+  Checkbox,
+  Button,
+  FormControlLabel,
+  Grid,
+} from '@mui/material'
+import { VENUES_URL } from '../../utils/api'
+import useStorage from '../../utils/useStorage'
+import styles from '../../pages/manager/VenueForm.module.css'
 
 const CreateVenueForm = ({ onSubmit }) => {
-  const storage = useStorage();
+  const storage = useStorage()
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -22,23 +29,23 @@ const CreateVenueForm = ({ onSubmit }) => {
       country: '',
     },
     imageUrl: '',
-  });
+  })
 
   useEffect(() => {
     // Load user data (if available) when the component mounts
-    const userData = storage.loadUserData();
+    const userData = storage.loadUserData()
     if (userData) {
       // Initialize form data based on user data (if available)
       setFormData((prevFormData) => ({
         ...prevFormData,
         name: userData.name || '',
         // Initialize other form fields based on userData
-      }));
+      }))
     }
-  }, [storage]); // Re-run effect if storage changes (e.g., userData)
+  }, [storage]) // Re-run effect if storage changes (e.g., userData)
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target
     if (type === 'checkbox') {
       setFormData((prevData) => ({
         ...prevData,
@@ -46,19 +53,19 @@ const CreateVenueForm = ({ onSubmit }) => {
           ...prevData.meta,
           [name]: checked,
         },
-      }));
+      }))
     } else {
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
-      }));
+      }))
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem('accessToken')
       const response = await fetch(VENUES_URL, {
         method: 'POST',
         headers: {
@@ -66,24 +73,24 @@ const CreateVenueForm = ({ onSubmit }) => {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(formData),
-      });
-      const data = await response.json();
+      })
+      const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to create venue');
+        throw new Error(data.message || 'Failed to create venue')
       }
 
-      console.log('Venue created successfully:', data);
-      alert('Venue created successfully!');
+      console.log('Venue created successfully:', data)
+      alert('Venue created successfully!')
 
       if (onSubmit) {
-        onSubmit(data);
+        onSubmit(data)
       }
     } catch (error) {
-      console.error('Failed to create venue:', error);
-      alert('Failed to create venue');
+      console.error('Failed to create venue:', error)
+      alert('Failed to create venue')
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -132,20 +139,62 @@ const CreateVenueForm = ({ onSubmit }) => {
             required
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.meta.wifi}
-                onChange={handleChange}
-                name='wifi'
-                color='primary'
-              />
-            }
-            label='WiFi Available'
-          />
-          {/* Add other checkboxes for parking, breakfast, pets */}
-        </Grid>
+        <div className={styles.valueForm}>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={formData.meta.wifi}
+                  onChange={handleChange}
+                  name='wifi'
+                  color='primary'
+                />
+              }
+              label='WiFi'
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={formData.meta.parking}
+                  onChange={handleChange}
+                  name='parking'
+                  color='primary'
+                />
+              }
+              label='Parking'
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={formData.meta.breakfast}
+                  onChange={handleChange}
+                  name='breakfast'
+                  color='primary'
+                />
+              }
+              label='Breakfast'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={formData.meta.pets}
+                  onChange={handleChange}
+                  name='pets'
+                  color='primary'
+                />
+              }
+              label='Pets'
+            />
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <TextField
             fullWidth
@@ -157,13 +206,13 @@ const CreateVenueForm = ({ onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type='submit' variant='outlined' color='primary'>
+          <Button type='submit' variant='outlined' color='secondary'>
             Create Venue
           </Button>
         </Grid>
       </Grid>
     </form>
-  );
-};
+  )
+}
 
-export default CreateVenueForm;
+export default CreateVenueForm
