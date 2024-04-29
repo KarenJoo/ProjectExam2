@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const useFetch = (url, options = {}) => {
+const useFetch = (url) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -9,12 +9,22 @@ const useFetch = (url, options = {}) => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const response = await fetch(url, options)
+
+        const cachedData = localStorage.getItem(url)
+        if (cachedData) {
+          setData(JSON.parse(cachedData))
+          setLoading(false)
+          return
+        }
+
+        const response = await fetch(url)
         if (!response.ok) {
           throw new Error('Failed to fetch data')
         }
         const responseData = await response.json()
         setData(responseData)
+
+        localStorage.setItem(url, JSON.stringify(responseData))
         setError(null)
       } catch (error) {
         setError('Failed to get venues. Please try again later.')
@@ -26,7 +36,7 @@ const useFetch = (url, options = {}) => {
     fetchData()
 
     return () => {}
-  }, [url, options])
+  }, [url])
 
   return { data, loading, error };
 }
