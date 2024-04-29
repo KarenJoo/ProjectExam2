@@ -1,0 +1,61 @@
+import React from 'react'
+import {
+  Typography,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
+  Divider,
+} from '@mui/material'
+import { Link } from 'react-router-dom'
+import styles from './VenueList.module.css'
+
+const UserVenuesList = ({ venues }) => {
+  return (
+    <div>
+      <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
+        Users Venues
+      </Typography>
+      <List sx={{ width: '90%', margin: '10px auto' }}>
+        {venues.map((venue) => (
+          <React.Fragment key={venue.id}>
+            <ListItem
+              alignItems='flex-start'
+              sx={{
+                borderRadius: '8px',
+                border: '0.5px solid #fff',
+                backgroundColor: '#ffffffcf',
+                '&:hover': {
+                  backgroundColor: '#fde8c9',
+                },
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar
+                  alt={venue.name}
+                  src={
+                    venue.media && venue.media.length > 0
+                      ? venue.media[0].url
+                      : ''
+                  }
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={venue.name}
+                secondary={
+                  <Link to={`/venue/${venue.id}`} className={styles.viewButton}>
+                    View Venue
+                  </Link>
+                }
+              />
+            </ListItem>
+            <Divider variant='inset' component='li' />
+          </React.Fragment>
+        ))}
+      </List>
+    </div>
+  )
+}
+
+export default UserVenuesList

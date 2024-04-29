@@ -1,0 +1,19 @@
+
+
+/* View Button */
+.viewButton {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #01333e;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out;
+    font-size: 10px;
+  }
+  
+  .viewButton:hover {
+    background-color: #0056b3;
+  }
+  
+  
