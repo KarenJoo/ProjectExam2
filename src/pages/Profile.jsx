@@ -1,22 +1,63 @@
 import React, { useEffect, useState } from 'react'
 import ProfileLayout from '../components/Layout/ProfileLayout'
 import useStorage from '../utils/useStorage'
+import { getUserVenues } from '../utils/getUserVenues'
+import { CREATE_API_KEY } from '../utils/api'
+
 
 const Profile = () => {
-  const storage = useStorage()
-  const [userData, setUserData] = useState(null)
+  const storage = useStorage();
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const getUserData = storage.loadUserData()
-    if (getUserData) {
-      setUserData(getUserData)
-    } else {
-      console.error('Failed to load user data from local storage.')
-    }
-  }, [])
+    const fetchUserData = async () => {
+      try {
+        const storedUserData = storage.loadUserData();
+        const accessToken = storage.loadToken('accessToken');
+        console.log('Access Token:', accessToken);
+
+        // Fetch API key
+        const getApiKey = await fetch(`${CREATE_API_KEY}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({ name: 'API_KEY' }),
+        });
+
+        if (!getApiKey.ok) {
+          throw new Error('Failed to fetch API key');
+        }
+
+        const apiKeyData = await getApiKey.json();
+        const apiKey = apiKeyData.data.key;
+
+        // Fetch user's venues
+        const fetchUsersVenues = await getUserVenues(storedUserData.name, accessToken, apiKey);
+
+        if (!fetchUsersVenues.ok) {
+          throw new Error('Failed to fetch user venues');
+        }
+
+        const userVenuesData = await fetchUsersVenues.json();
+
+        const updatedUserData = {
+          ...storedUserData,
+          venues: userVenuesData.data,
+        };
+
+        setUserData(updatedUserData);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   if (!userData) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -25,7 +66,7 @@ const Profile = () => {
         <ProfileLayout userData={userData} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
