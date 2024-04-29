@@ -13,7 +13,7 @@ const Profile = () => {
     } else {
       console.error('Failed to load user data from local storage.')
     }
-  }, []);
+  }, [])
 
   if (!userData) {
     return <div>Loading...</div>
@@ -21,10 +21,9 @@ const Profile = () => {
 
   return (
     <div>
-            <div className="contentContainer">
-
-      <ProfileLayout userData={userData} />
-    </div>
+      <div className='contentContainer'>
+        <ProfileLayout userData={userData} />
+      </div>
     </div>
   )
 }
