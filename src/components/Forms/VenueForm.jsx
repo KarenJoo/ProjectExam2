@@ -12,9 +12,10 @@ import styles from '../../pages/manager/VenueForm.module.css'
 import useAuth from '../../hooks/useAuth'
 import { createApiKey } from '../../utils/CreateApiKey'
 
-const VenueForm = ({ onSubmit }) => {
+const VenueForm = ({ onSubmit, isUpdate, userId }) => {
   const storage = useStorage()
   const { isVenueManager } = useAuth()
+  const [successMessage, setSuccessMessage] = useState('');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -71,6 +72,9 @@ const VenueForm = ({ onSubmit }) => {
 
       const apiKey = await createApiKey(accessToken)
 
+
+
+
       const storedUserData = storage.loadUserData()
       const isVenueManagerValue = storedUserData
         ? storedUserData.venueManager
@@ -83,11 +87,17 @@ const VenueForm = ({ onSubmit }) => {
       }
 
       if (!isVenueManagerValue) {
-        throw new Error('Only venue managers can create venues')
+        throw new Error('Only venue managers can create or update venues')
       }
 
-      const response = await fetch(VENUES_URL, {
-        method: 'POST',
+      const method = isUpdate ? 'PUT' : 'POST';
+      let url = VENUES_URL;
+      if (isUpdate) {
+        // Append the user's ID for updating
+        url += `/${userId}`;
+      }
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
@@ -97,12 +107,11 @@ const VenueForm = ({ onSubmit }) => {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to create venue')
+        throw new Error('Failed to create or update venue')
       }
       const data = await response.json()
-      console.log('Venue created successfully:', data)
-      alert('Venue created successfully!')
-
+      console.log('Venue created successfully:', data)      
+      setSuccessMessage('Venue ' + (isUpdate ? 'updated' : 'created') + ' successfully');
       if (onSubmit) {
         onSubmit(data)
       }
@@ -258,8 +267,15 @@ const VenueForm = ({ onSubmit }) => {
           </Grid>
           <Grid item xs={12}>
             <Button type='submit' variant='outlined' color='secondary'>
-              Create Venue
+            {isUpdate ? 'Update Venue' : 'Create Venue'}
             </Button>
+            <Grid>
+            {successMessage && (
+            <Grid item xs={12}>
+              <div>{successMessage}</div>
+            </Grid>
+          )}
+            </Grid>
           </Grid>
         </Grid>
       </form>

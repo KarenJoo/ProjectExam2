@@ -12,7 +12,7 @@ const CreateVenue = () => {
     <div className={styles.form}>
       <Typography variant='h2'>Create a venue</Typography>
 
-      <VenueForm onSubmit={handleSubmit} />
+      <VenueForm onSubmit={handleSubmit} isUpdate={false} />
 
       <div></div>
     </div>

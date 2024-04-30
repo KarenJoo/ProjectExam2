@@ -11,7 +11,7 @@ import {
 import { Link } from 'react-router-dom'
 import styles from './VenueList.module.css'
 
-const UserVenuesList = ({ venues }) => {
+const UserVenuesList = ({ venues, userId }) => {
   return (
     <div>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
@@ -44,9 +44,16 @@ const UserVenuesList = ({ venues }) => {
               <ListItemText
                 primary={venue.name}
                 secondary={
+                  <>
+                  {venue.createdBy === userId && (
+                      <Link to={`/update/${venue.id}`} className={styles.updateButton}>
+                        Update Venue
+                      </Link>
+                    )}
                   <Link to={`/venue/${venue.id}`} className={styles.viewButton}>
                     View Venue
                   </Link>
+                  </>
                 }
               />
             </ListItem>
