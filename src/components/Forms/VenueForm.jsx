@@ -12,7 +12,7 @@ import styles from '../../pages/manager/VenueForm.module.css'
 import useAuth from '../../hooks/useAuth'
 import { createApiKey } from '../../utils/CreateApiKey'
 
-const CreateVenueForm = ({ onSubmit }) => {
+const VenueForm = ({ onSubmit }) => {
   const storage = useStorage()
   const { isVenueManager } = useAuth()
 
@@ -267,4 +267,4 @@ const CreateVenueForm = ({ onSubmit }) => {
   )
 }
 
-export default CreateVenueForm
+export default VenueForm
