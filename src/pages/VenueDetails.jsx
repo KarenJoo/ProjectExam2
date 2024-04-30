@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import useFetch from '../hooks/useFetch'
 import { VENUES_URL } from '../utils/api'
 import { Card, CardContent, Typography } from '@mui/material'
-import styles from '../components/VenueCard.module.css'
+import styles from '../components/Layout/VenueCard.module.css'
 
 const VenueDetails = () => {
   const { id } = useParams()

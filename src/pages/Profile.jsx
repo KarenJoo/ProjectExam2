@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ProfileLayout from '../components/Layout/Profile/ProfileLayout'
+import ProfileLayout from '../components/Layout/ProfileLayout'
 import useStorage from '../utils/useStorage'
 import { getUserVenues } from '../utils/getUserVenues'
 import { CREATE_API_KEY } from '../utils/api'
