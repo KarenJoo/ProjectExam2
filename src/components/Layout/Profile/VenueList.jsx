@@ -15,15 +15,15 @@ const UserVenuesList = ({ venues }) => {
   return (
     <div>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
-        Users Venues
+        Your Venues
       </Typography>
-      <List sx={{ width: '90%', margin: '10px auto' }}>
+      <List sx={{ width: '90%', margin: '0px auto' }}>
         {venues.map((venue) => (
           <React.Fragment key={venue.id}>
             <ListItem
               alignItems='flex-start'
               sx={{
-                borderRadius: '8px',
+                borderRadius: '8px', 
                 border: '0.5px solid #fff',
                 backgroundColor: '#ffffffcf',
                 '&:hover': {
@@ -32,7 +32,7 @@ const UserVenuesList = ({ venues }) => {
               }}
             >
               <ListItemAvatar>
-                <Avatar
+                <Avatar sx={{height: '80px', width: '80px', marginRight: '10px'}}
                   alt={venue.name}
                   src={
                     venue.media && venue.media.length > 0
@@ -50,7 +50,7 @@ const UserVenuesList = ({ venues }) => {
                 }
               />
             </ListItem>
-            <Divider variant='inset' component='li' />
+            <Divider variant='inset' component='li' sx={{marginBottom: '10px'}} />
           </React.Fragment>
         ))}
       </List>

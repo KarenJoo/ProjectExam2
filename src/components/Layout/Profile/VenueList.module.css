@@ -10,6 +10,7 @@
     border-radius: 4px;
     transition: background-color 0.3s ease-in-out;
     font-size: 10px;
+    margin-top: 10px;
   }
   
   .viewButton:hover {
