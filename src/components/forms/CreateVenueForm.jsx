@@ -36,7 +36,7 @@ const CreateVenueForm = ({ onSubmit }) => {
   })
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target
     if (type === 'checkbox') {
       setFormData((prevData) => ({
         ...prevData,
@@ -44,15 +44,24 @@ const CreateVenueForm = ({ onSubmit }) => {
           ...prevData.meta,
           [name]: checked,
         },
-      }));
+      }))
+    } else if (name.startsWith('location.')) {
+      const locationKey = name.split('.')[1]
+      setFormData((prevData) => ({
+        ...prevData,
+        location: {
+          ...prevData.location,
+          [locationKey]: value,
+        },
+      }))
     } else {
       setFormData((prevData) => ({
         ...prevData,
-        [name]: name === 'price' || name === 'maxGuests' ? parseInt(value) : value,
-      }));
+        [name]:
+          name === 'price' || name === 'maxGuests' ? parseInt(value) : value,
+      }))
     }
-  };
-  
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -76,8 +85,6 @@ const CreateVenueForm = ({ onSubmit }) => {
       if (!isVenueManagerValue) {
         throw new Error('Only venue managers can create venues')
       }
-
-    
 
       const response = await fetch(VENUES_URL, {
         method: 'POST',
@@ -134,8 +141,8 @@ const CreateVenueForm = ({ onSubmit }) => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label='address'
-              name='address'
+              label='Address'
+              name='location.address'
               value={formData.location.address}
               onChange={handleChange}
             />
@@ -144,7 +151,7 @@ const CreateVenueForm = ({ onSubmit }) => {
             <TextField
               fullWidth
               label='City'
-              name='city'
+              name='location.city'
               value={formData.location.city}
               onChange={handleChange}
             />
@@ -153,7 +160,7 @@ const CreateVenueForm = ({ onSubmit }) => {
             <TextField
               fullWidth
               label='Country'
-              name='country'
+              name='location.country'
               value={formData.location.country}
               onChange={handleChange}
             />

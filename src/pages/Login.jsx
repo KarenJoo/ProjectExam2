@@ -1,5 +1,5 @@
 import React from 'react'
-import BaseForm from '../components/forms/BaseForm'
+import BaseForm from '../components/Forms/BaseForm'
 import { Typography } from '@mui/material'
 import StyleSheet from './LoginRegister.module.css'
 import { Link } from 'react-router-dom'
