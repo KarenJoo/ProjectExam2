@@ -12,13 +12,13 @@ const useStorage = () => {
   //   return JSON.parse(value)
   // }
 
-  const remove = (key) => {
-    localStorage.removeItem(key)
-  }
+  // const remove = (key) => {
+  //   localStorage.removeItem(key)
+  // }
 
-  const clear = () => {
-    localStorage.clear()
-  }
+  // const clear = () => {
+  //   localStorage.clear()
+  // }
 
   const clearUserData = () => {
     localStorage.removeItem('userData')
@@ -26,15 +26,15 @@ const useStorage = () => {
   }
 
   const saveUserData = (userData) => {
-    localStorage.setItem('userData', JSON.stringify(userData))
-    setUserData(userData)
+    localStorage.setItem('userData', JSON.stringify(userData));
+    setUserData(userData);
   }
 
   // stores isVenueManager value from register form
   const loadUserData = () => {
     const userData = JSON.parse(localStorage.getItem('userData'))
     setUserData(userData)
-    return userData
+    return userData;
   }
 
   const isUserLoggedIn = () => {
@@ -66,8 +66,6 @@ const useStorage = () => {
     loadApiKey,
     loadUserData,
     isUserLoggedIn,
-    remove,
-    clear,
     saveToken,
     loadToken,
     getUserRole,

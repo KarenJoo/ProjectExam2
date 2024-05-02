@@ -17,6 +17,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId }) => {
   const { isVenueManager } = useAuth()
   const [successMessage, setSuccessMessage] = useState('');
 
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -35,6 +36,8 @@ const VenueForm = ({ onSubmit, isUpdate, userId }) => {
     },
     imageUrl: '',
   })
+
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -86,6 +89,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId }) => {
       if (!isVenueManagerValue) {
         throw new Error('Only venue managers can create or update venues')
       }
+
 
       const url = isUpdate ? `${VENUES_URL}/${userId}` : VENUES_URL;
       const method = isUpdate ? 'PUT' : 'POST';
