@@ -72,9 +72,6 @@ const VenueForm = ({ onSubmit, isUpdate, userId }) => {
 
       const apiKey = await createApiKey(accessToken)
 
-
-
-
       const storedUserData = storage.loadUserData()
       const isVenueManagerValue = storedUserData
         ? storedUserData.venueManager
@@ -90,12 +87,8 @@ const VenueForm = ({ onSubmit, isUpdate, userId }) => {
         throw new Error('Only venue managers can create or update venues')
       }
 
+      const url = isUpdate ? `${VENUES_URL}/${userId}` : VENUES_URL;
       const method = isUpdate ? 'PUT' : 'POST';
-      let url = VENUES_URL;
-      if (isUpdate) {
-        // Append the user's ID for updating
-        url += `/${userId}`;
-      }
       const response = await fetch(url, {
         method,
         headers: {
