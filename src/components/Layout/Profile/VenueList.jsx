@@ -45,7 +45,7 @@ const UserVenuesList = ({ venues, userId }) => {
                 primary={venue.name}
                 secondary={
                   <>
-                  {venue.createdBy === userId && (
+                   {venue.createdBy === userId && (
                       <Link to={`/update/${venue.id}`} className={styles.updateButton}>
                         Update Venue
                       </Link>

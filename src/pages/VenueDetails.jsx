@@ -1,22 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import useFetch from '../hooks/useFetch'
 import { VENUES_URL } from '../utils/api'
 import { Card, CardContent, Typography } from '@mui/material'
 import styles from '../components/VenueCard.module.css'
 
 const VenueDetails = () => {
-  const { id } = useParams()
-  const API_URL = `${VENUES_URL}/${id}?_owner=true`
+  const { id } = useParams();
+  const API_URL = `${VENUES_URL}/${id}?_owner=true`;
 
-  const { data: venueData, loading, error } = useFetch(API_URL)
-  const [venueDetails, setVenueDetails] = useState(null)
+  const [venueDetails, setVenueDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (venueData && venueData.data) {
-      setVenueDetails(venueData.data)
-    }
-  }, [venueData])
+    const fetchVenueDetails = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch venue details');
+        }
+        const data = await response.json();
+        setVenueDetails(data.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchVenueDetails();
+
+    return () => {
+      setVenueDetails(null);
+      setLoading(true);
+      setError(null);
+    };
+  }, [API_URL]);
+
 
   if (loading) {
     return <div>Loading...</div>
