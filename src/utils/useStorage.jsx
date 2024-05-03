@@ -36,7 +36,9 @@ const useStorage = () => {
     setUserData(userData)
     return userData
   }
-
+  const saveVenueManager = (venueManager) => {
+    save('venueManager', venueManager);
+  };
 
   const isUserLoggedIn = () => {
     return userData !== null
@@ -74,7 +76,8 @@ const useStorage = () => {
     remove,
     clear, 
     save,
-    load
+    load,
+    saveVenueManager
   }
 }
 
