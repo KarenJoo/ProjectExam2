@@ -3,22 +3,22 @@ import { useState } from 'react'
 const useStorage = () => {
   const [userData, setUserData] = useState(null)
 
-  // const save = (key, value) => {
-  //   localStorage.setItem(key, JSON.stringify(value))
-  // }
+  const save = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value))
+  }
 
-  // const load = (key) => {
-  //   const value = localStorage.getItem(key)
-  //   return JSON.parse(value)
-  // }
+  const load = (key) => {
+    const value = localStorage.getItem(key)
+    return JSON.parse(value)
+  }
 
-  // const remove = (key) => {
-  //   localStorage.removeItem(key)
-  // }
+  const remove = (key) => {
+    localStorage.removeItem(key)
+  }
 
-  // const clear = () => {
-  //   localStorage.clear()
-  // }
+  const clear = () => {
+    localStorage.clear()
+  }
 
   const clearUserData = () => {
     localStorage.removeItem('userData')
@@ -70,6 +70,10 @@ const useStorage = () => {
     loadToken,
     getUserRole,
     clearUserData,
+    remove,
+    clear, 
+    save,
+    load
   }
 }
 
