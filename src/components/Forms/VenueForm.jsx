@@ -10,7 +10,7 @@ import { VENUES_URL } from '../../utils/api'
 import useStorage from '../../utils/useStorage'
 import styles from '../../pages/manager/VenueForm.module.css'
 import useAuth from '../../hooks/useAuth'
-import { createApiKey } from '../../utils/CreateApiKey'
+import { createApiKey } from '../../utils/createApiKey'
 
 const VenueForm = ({ onSubmit, isUpdate, userId }) => {
   const storage = useStorage()
