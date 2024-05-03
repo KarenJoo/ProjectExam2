@@ -21,21 +21,22 @@ const useStorage = () => {
   }
 
   const clearUserData = () => {
-    localStorage.removeItem('userData')
+    remove('userData')
     setUserData(null)
   }
 
   const saveUserData = (userData) => {
-    localStorage.setItem('userData', JSON.stringify(userData));
-    setUserData(userData);
+    save('userData', userData)
+    setUserData(userData)
   }
 
   // stores isVenueManager value from register form
   const loadUserData = () => {
-    const userData = JSON.parse(localStorage.getItem('userData'))
+    const userData = load('userData')
     setUserData(userData)
-    return userData;
+    return userData
   }
+
 
   const isUserLoggedIn = () => {
     return userData !== null
