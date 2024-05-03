@@ -6,7 +6,7 @@ import styles from '../components/VenueCard.module.css'
 
 const VenueDetails = () => {
   const { id } = useParams();
-  const API_URL = `${VENUES_URL}/${id}?_owner=true`;
+  const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`;
 
   const [venueDetails, setVenueDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -63,10 +63,10 @@ const VenueDetails = () => {
     bookings,
   } = venueDetails
 
-  const wifiAvailable = meta?.wifi ? 'Available' : 'Not Available'
-  const parkingAvailable = meta?.parking ? 'Available' : 'Not Available'
-  const breakfastIncluded = meta?.breakfast ? 'Included' : 'Not Included'
-  const petsAllowed = meta?.pets ? 'Allowed' : 'Not Allowed'
+  const wifiAvailable = meta?.wifi ? 'Yes' : 'No'
+  const parkingAvailable = meta?.parking ? 'Yes' : 'No'
+  const breakfastIncluded = meta?.breakfast ? 'Yes' : 'No'
+  const petsAllowed = meta?.pets ? 'Allowed' : 'No'
 
   const address = location
     ? `${location.address}, ${location.city}, ${location.country}`
@@ -98,8 +98,7 @@ const VenueDetails = () => {
           <ul>
             {bookings && bookings.length > 0 ? (
               bookings.map((booking) => (
-                <li key={booking.id}>{booking.customer.name}</li>
-              ))
+                <li key={booking.id}>{booking.customer ? booking.customer.name : 'Unknown Customer'}</li>              ))
             ) : (
               <li>No bookings found for this venue.</li>
             )}
