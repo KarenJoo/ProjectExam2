@@ -16,7 +16,7 @@ const Profile = () => {
         const accessToken = storage.loadToken('accessToken')
         console.log('Access Token:', accessToken)
 
-        // Fetch API key
+       
         const getApiKey = await fetch(`${CREATE_API_KEY}`, {
           method: 'POST',
           headers: {
@@ -33,7 +33,6 @@ const Profile = () => {
         const apiKeyData = await getApiKey.json()
         const apiKey = apiKeyData.data.key
 
-        // Fetch user's venues
         const fetchUsersVenues = await getUserVenues(
           storedUserData.name,
           accessToken,
@@ -64,11 +63,18 @@ const Profile = () => {
     return <div>Loading...</div>
   }
 
+  const isVenueManager = userData && userData.venueManager;
+
   return (
     <div>
       <div className='contentContainer'>
         <ProfileLayout userData={userData} />
-        <UserVenuesList venues={userData.venues} />
+        {isVenueManager && (
+          <div>        
+            <UserVenuesList venues={userData.venues} />
+
+          </div>
+        )}
       </div>
     </div>
   )

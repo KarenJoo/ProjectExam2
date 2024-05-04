@@ -5,6 +5,8 @@ import styles from './ProfileLayout.module.css';
 const ProfileLayout = ({ userData }) => {
   const { name, avatar, bookedVenues, venueManager, venues } = userData;
   const venuesCount = venues ? venues.length : 0;
+  const isVenueManager = userData && userData.venueManager;
+
 
   return (
     <div className={styles.profileContainer}>
@@ -23,13 +25,13 @@ const ProfileLayout = ({ userData }) => {
           <Typography variant='body1'>
             Venue Manager: {venueManager ? 'Yes' : 'No'}
           </Typography>
-          <Typography variant='body1'>Total Venues: {venuesCount}</Typography>
         </Grid>
       </Grid>
 
-      {!venueManager && (
+      
+      {!isVenueManager && (
         <Grid item xs={12} md={9}>
-          <Typography variant='h2'>Bookings</Typography>
+          <Typography variant='body1'>Total Venues: {venuesCount}</Typography>
           <Typography variant='body1'>
             Total Bookings: {bookedVenues ? bookedVenues.length : 0}
           </Typography>

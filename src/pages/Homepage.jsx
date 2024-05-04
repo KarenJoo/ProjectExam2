@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography'
 import VenueCard from '../components/venueCard'
 import styles from '../components/VenueCard.module.css'
 import { API_BASE_URL } from '../utils/api'
+import { Link } from 'react-router-dom'
 
 const Homepage = () => {
   const [venues, setVenues] = useState([])
@@ -47,6 +48,9 @@ const Homepage = () => {
     <div className={styles.container}>
       <Typography variant='h1'>Holidaze</Typography>
       <Typography variant='h5'>Book and dayze away</Typography>
+      <Link to={`/booking`}>
+          Book here
+        </Link>
       <div className='contentContainer'>
         {venues.map((venue) => (
           <VenueCard key={venue.id} venue={venue} />

@@ -7,7 +7,7 @@ const useAuth = () => {
 
   useEffect(() => {
     const storedUserData = loadUserData()
-    const venueManager = storedUserData?.venueManager || false // Retrieve venueManager from stored user data or default to false
+    const venueManager = storedUserData?.venueManager || false 
 
     setIsVenueManager(venueManager)
   }, [])

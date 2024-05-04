@@ -53,6 +53,7 @@ const BaseForm = ({ variant }) => {
       try {
         const { email, createPassword } = formData
 
+        // register user
         if (isRegister) {
           const { createUsername, email, createPassword, avatarUrl } = formData
 
@@ -75,6 +76,8 @@ const BaseForm = ({ variant }) => {
           })
 
           setRegistrationSuccess(true)
+
+          // Log in user
         } else {
           const loggedInUser = await loginUser({
             email,
@@ -211,6 +214,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               InputProps={{ sx: inputStyles }}
             />
+            
             <TextField
               name='venueManager'
               select
