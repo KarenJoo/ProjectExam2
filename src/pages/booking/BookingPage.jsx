@@ -1,22 +1,22 @@
 import React from 'react'
-import { Typography, Grid, Paper } from '@mui/material'
+import { Typography, Grid } from '@mui/material'
 import BookingLayout from '../../components/Layout/Booking/BookingLayout';
 
 
 const BookingPage = () => {
   return (
     <div className="contentContainer">
-      <Typography variant="h1">Booking</Typography>
-      <Grid container spacing={3}>
+      <Grid container justifyContent="center">
+        <Typography variant="h1" textAlign="left">Booking</Typography>
+      </Grid>
+      <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <Paper elevation={3} sx={{ padding: 2 }}>
-            <Typography variant="h2">Booking calendar</Typography>
-            <BookingLayout />
-          </Paper>
+          <BookingLayout />
         </Grid>
       </Grid>
     </div>
   );
 };
+
 
 export default BookingPage;
