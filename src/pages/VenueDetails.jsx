@@ -65,6 +65,12 @@ const VenueDetails = () => {
     bookings,
   } = venueDetails
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  }
+
+
   const wifiAvailable = meta?.wifi ? 'Yes' : 'No'
   const parkingAvailable = meta?.parking ? 'Yes' : 'No'
   const breakfastIncluded = meta?.breakfast ? 'Yes' : 'No'
@@ -97,20 +103,21 @@ const VenueDetails = () => {
             <li key='pets'>Pets: {petsAllowed}</li>
           </div>
           <Typography variant='h3'>Bookers:</Typography>
-          <ul>
-          {bookings && bookings.length > 0 ? (
+          <div className={styles.cardContainer}>
+            {bookings && bookings.length > 0 ? (
               bookings.map((booking) => (
-                <li key={booking.id}>
-                  <div>
-                    <Typography variant="subtitle1">Date From: {booking.dateFrom}</Typography>
-                    <Typography variant="subtitle1">Date To: {booking.dateTo}</Typography>
-                  </div>
-                </li>
+                <Card key={booking.id} className={styles.bookingCard}>
+                  <CardContent>
+                    <Typography variant="subtitle1">Date From: {formatDate(booking.dateFrom)}</Typography>
+                    <Typography variant="subtitle1">Date To: {formatDate(booking.dateTo)}</Typography>
+                    <Typography variant="subtitle1">User: {booking.customer && booking.customer.name}</Typography>
+                  </CardContent>
+                </Card>
               ))
             ) : (
-              <li>No bookings found for this venue.</li>
+              <Typography variant='subtitle1'>No bookings found for this venue.</Typography>
             )}
-          </ul>
+          </div>
         </CardContent>
         <div className={styles.cardFootContent}>
           <Typography variant='h4'>{price} NOK</Typography>

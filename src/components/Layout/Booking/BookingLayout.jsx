@@ -41,7 +41,7 @@ const BookingLayout = () => {
       const venueBookings = venuesData.data.map((venue) => {
         return {
           ...venue,
-          bookings: venue.bookings || [], // Ensure bookings array exists
+          bookings: venue.bookings || [], 
         };
       });
       setBookingVenues(venueBookings);
@@ -79,9 +79,6 @@ const BookingLayout = () => {
       </form>
       {/* Booking Venues */}
       <div className={styles.venuesContainer}>
-        <Typography variant='h5' marginBottom='10px'>
-          Booking Venues
-        </Typography>
         {error ? (
           <div>Error: {error}</div>
         ) : (
