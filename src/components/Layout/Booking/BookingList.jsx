@@ -12,6 +12,11 @@ import { Link } from 'react-router-dom';
 import styles from '../../Layout/Profile/VenueList.module.css';
 
 const BookingList = ({ bookings }) => {
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+      }
+    
     return (
       <div>
         <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
@@ -27,7 +32,7 @@ const BookingList = ({ bookings }) => {
                   border: '0.5px solid #fff',
                   backgroundColor: '#ffffffcf',
                   '&:hover': {
-                    backgroundColor: '#fde8c9',
+                    backgroundColor: '#fff',
                   },
                 }}
               >
@@ -46,15 +51,19 @@ const BookingList = ({ bookings }) => {
                   primary={booking.name}
                   secondary={
                     <>
-                      <Typography variant='subtitle1'>
-                        Description: {booking.description}
+                      <Typography variant='h5' color={'#000'} margin={'10px 0px 10px 0px'}>
+                        {booking.description}
                       </Typography>
-                      <Typography variant='subtitle1'>
-                        Date From: {booking.dateFrom}
-                      </Typography>
-                      <Typography variant='subtitle1'>
-                        Date To: {booking.dateTo}
-                      </Typography>
+                      <ListItem>
+                      <ListItemText>
+                        <Typography variant='p' color={'#000'} >
+                          Date From: {formatDate(booking.dateFrom)}
+                        </Typography>
+                        <Typography variant='p' color={'#000'} >
+                          Date To: {formatDate(booking.dateTo)}
+                        </Typography>
+                      </ListItemText>
+                    </ListItem>
                       <Link
                         to={`/venue/${booking.id}`}
                         className={styles.viewButton}

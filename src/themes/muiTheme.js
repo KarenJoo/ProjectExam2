@@ -43,7 +43,7 @@ const theme = createTheme({
     },
     p: {
       fontFamily: 'Poppins, sans-serif',
-      fontSize: '15px',
+      fontSize: '12px',
     },
     body1: {
       fontFamily: 'Poppins, sans-serif',
