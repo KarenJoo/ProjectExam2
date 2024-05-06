@@ -29,6 +29,13 @@ body {
   min-width: 200px;
 }
 
+@media (max-width: 768px) {
+  .contentContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .link {
   text-decoration: none;
   color: var(--secondary-color);
@@ -49,4 +56,3 @@ body {
 .viewButton:hover {
   background-color: #0056b3;
 }
-

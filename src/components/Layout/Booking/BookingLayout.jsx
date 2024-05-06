@@ -4,7 +4,8 @@ import { API_BASE_URL } from '../../../utils/api'
 import dayjs from 'dayjs'
 import useStorage from '../../../utils/useStorage'
 import { createApiKey } from '../../../utils/createApiKey'
-import { Grid, Typography, ListItemText } from '@mui/material'
+import { Typography, ListItem, ListItemText } from '@mui/material'
+import styles from './BookingLayout.module.css'
 
 const BookingLayout = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs())
@@ -20,7 +21,7 @@ const BookingLayout = () => {
 
         const response = await fetch(`${API_BASE_URL}/bookings`, {
           headers: {
-            Authorization: `Bearer ${storage.loadToken('accessToken')}`,
+            Authorization: `Bearer ${accessToken}`,
             'X-Noroff-API-Key': apiKey,
           },
         })
@@ -55,38 +56,37 @@ const BookingLayout = () => {
       alert('Failed to create venue')
     }
   }
-
   return (
     <div className='contentContainer'>
-      <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <form onSubmit={handleSubmit}>
-            <Calendar value={selectedDate} onChange={handleDateChange} />
-            <button type='submit'>Book Venue</button>
-          </form>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant='h5' marginBottom='10px'>
-            Booking Venues
-          </Typography>
-          {error ? (
-            <div>Error: {error}</div>
-          ) : (
-            <ul>
-              {bookingVenues.map((venue) => (
-                <ListItemText key={venue.id}>
+      {/* Calendar */}
+        <form onSubmit={handleSubmit} className={styles.calendarContainer}>
+          <Calendar value={selectedDate} onChange={handleDateChange} />
+          <button type='submit'>Book Venue</button>
+        </form>
+      {/* Booking Venues */}
+        <Typography variant='h5' marginBottom='10px'>
+          Booking Venues
+        </Typography>      <div className={styles.venuesContainer}>
+
+        {error ? (
+          <div>Error: {error}</div>
+        ) : (
+          <ul>
+            {bookingVenues.map((venue) => (
+              <ListItem key={venue.id}>
+                <ListItemText>
                   <div>
                     <strong>{venue.name}</strong>
                   </div>
                   <div>{venue.description}</div>
                 </ListItemText>
-              ))}
-            </ul>
-          )}
-        </Grid>
-      </Grid>
+              </ListItem>
+            ))}
+          </ul>
+        )}
+            </div>
     </div>
-  )
-}
+  );
+};
 
 export default BookingLayout

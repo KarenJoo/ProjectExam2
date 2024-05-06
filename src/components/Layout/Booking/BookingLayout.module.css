@@ -1,0 +1,15 @@
+.calendarContainer {
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.venuesContainer {
+  background-color: #fff;
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .calendarContainer {
+    order: 1; /* Places calendar before booking venues */
+    margin-right: 20px; /* Adjust as needed */
+  }
+}
