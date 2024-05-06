@@ -19,7 +19,6 @@ const Homepage = () => {
           throw new Error('Failed to fetch venues')
         }
         const data = await response.json()
-console.log(data)
         const sortedVenues = data.data.sort((a, b) => {
           return new Date(b.created) - new Date(a.created)
         })
@@ -49,11 +48,13 @@ console.log(data)
       <Typography variant='h1'>Holidaze</Typography>
       <Typography variant='h5'>Book and dayze away</Typography>
       <Link to={`/booking`}>
-          Book here
-        </Link>
-      <div className='contentContainer'>
+        Book here
+      </Link>
+      <div className={styles.cardContainer}>
         {venues.map((venue) => (
-          <VenueCard key={venue.id} venue={venue} />
+          <div className={styles.card} key={venue.id}>
+            <VenueCard venue={venue} />
+          </div>
         ))}
       </div>
     </div>

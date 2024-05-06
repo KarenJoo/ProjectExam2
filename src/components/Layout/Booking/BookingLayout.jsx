@@ -6,6 +6,7 @@ import useStorage from '../../../utils/useStorage'
 import { createApiKey } from '../../../utils/createApiKey'
 import { Typography } from '@mui/material'
 import styles from './BookingLayout.module.css'
+import BookingList from './BookingList'
 
 const BookingLayout = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs())
@@ -35,6 +36,15 @@ const BookingLayout = () => {
         const venuesData = await response.json()
         setBookingVenues(venuesData.data || [])
 
+
+      // Modify venue data to include bookings
+      const venueBookings = venuesData.data.map((venue) => {
+        return {
+          ...venue,
+          bookings: venue.bookings || [], // Ensure bookings array exists
+        };
+      });
+      setBookingVenues(venueBookings);
         console.log('Venues Data:', venuesData)
       } catch (error) {
         console.error('Error fetching booking venues:', error)
@@ -71,24 +81,15 @@ const BookingLayout = () => {
       <div className={styles.venuesContainer}>
         <Typography variant='h5' marginBottom='10px'>
           Booking Venues
-        </Typography>{' '}
+        </Typography>
         {error ? (
           <div>Error: {error}</div>
         ) : (
-          <div className={styles.venues}>
-            {bookingVenues.map((venue) => (
-              <div className={styles.card} key={venue.id}>
-                <div>
-                  <strong>{venue.name}</strong>
-                </div>
-                <div>{venue.description}</div>
-              </div>
-            ))}
-          </div>
+          <BookingList bookings={bookingVenues} />
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default BookingLayout
