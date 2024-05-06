@@ -4,7 +4,7 @@ import { API_BASE_URL } from '../../../utils/api'
 import dayjs from 'dayjs'
 import useStorage from '../../../utils/useStorage'
 import { createApiKey } from '../../../utils/createApiKey'
-import { Typography, ListItem, ListItemText } from '@mui/material'
+import { Typography } from '@mui/material'
 import styles from './BookingLayout.module.css'
 
 const BookingLayout = () => {
@@ -19,12 +19,15 @@ const BookingLayout = () => {
         const accessToken = storage.loadToken('accessToken')
         const apiKey = await createApiKey(accessToken)
 
-        const response = await fetch(`${API_BASE_URL}/bookings`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'X-Noroff-API-Key': apiKey,
-          },
-        })
+        const response = await fetch(
+          `${API_BASE_URL}/venues?_owner=true&_bookings=true`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'X-Noroff-API-Key': apiKey,
+            },
+          }
+        )
 
         if (!response.ok) {
           throw new Error('Failed to fetch booking venues')
@@ -56,37 +59,36 @@ const BookingLayout = () => {
       alert('Failed to create venue')
     }
   }
+
   return (
-    <div className='contentContainer'>
+    <div className={styles.bookingContainer}>
       {/* Calendar */}
-        <form onSubmit={handleSubmit} className={styles.calendarContainer}>
-          <Calendar value={selectedDate} onChange={handleDateChange} />
-          <button type='submit'>Book Venue</button>
-        </form>
+      <form onSubmit={handleSubmit} className={styles.calendarContainer}>
+        <Calendar value={selectedDate} onChange={handleDateChange} />
+        <button type='submit'>Book Venue</button>
+      </form>
       {/* Booking Venues */}
+      <div className={styles.venuesContainer}>
         <Typography variant='h5' marginBottom='10px'>
           Booking Venues
-        </Typography>      <div className={styles.venuesContainer}>
-
+        </Typography>{' '}
         {error ? (
           <div>Error: {error}</div>
         ) : (
-          <ul>
+          <div className={styles.venues}>
             {bookingVenues.map((venue) => (
-              <ListItem key={venue.id}>
-                <ListItemText>
-                  <div>
-                    <strong>{venue.name}</strong>
-                  </div>
-                  <div>{venue.description}</div>
-                </ListItemText>
-              </ListItem>
+              <div className={styles.card} key={venue.id}>
+                <div>
+                  <strong>{venue.name}</strong>
+                </div>
+                <div>{venue.description}</div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
-            </div>
+      </div>
     </div>
-  );
-};
+  )
+}
 
 export default BookingLayout

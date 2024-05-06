@@ -22,6 +22,8 @@ const VenueDetails = () => {
         const data = await response.json();
         setVenueDetails(data.data);
         setLoading(false);
+
+        console.log(data)
       } catch (error) {
         setError(error.message);
         setLoading(false);
@@ -96,9 +98,15 @@ const VenueDetails = () => {
           </div>
           <Typography variant='h3'>Bookers:</Typography>
           <ul>
-            {bookings && bookings.length > 0 ? (
+          {bookings && bookings.length > 0 ? (
               bookings.map((booking) => (
-                <li key={booking.id}>{booking.customer ? booking.customer.name : 'Unknown Customer'}</li>              ))
+                <li key={booking.id}>
+                  <div>
+                    <Typography variant="subtitle1">Date From: {booking.dateFrom}</Typography>
+                    <Typography variant="subtitle1">Date To: {booking.dateTo}</Typography>
+                  </div>
+                </li>
+              ))
             ) : (
               <li>No bookings found for this venue.</li>
             )}

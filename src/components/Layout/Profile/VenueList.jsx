@@ -23,7 +23,7 @@ const UserVenuesList = ({ venues, userId }) => {
             <ListItem
               alignItems='flex-start'
               sx={{
-                borderRadius: '8px', 
+                borderRadius: '8px',
                 border: '0.5px solid #fff',
                 backgroundColor: '#ffffffcf',
                 '&:hover': {
@@ -32,7 +32,8 @@ const UserVenuesList = ({ venues, userId }) => {
               }}
             >
               <ListItemAvatar>
-                <Avatar sx={{height: '80px', width: '80px', marginRight: '10px'}}
+                <Avatar
+                  sx={{ height: '80px', width: '80px', marginRight: '10px' }}
                   alt={venue.name}
                   src={
                     venue.media && venue.media.length > 0
@@ -45,19 +46,29 @@ const UserVenuesList = ({ venues, userId }) => {
                 primary={venue.name}
                 secondary={
                   <>
-                   {venue.createdBy === userId && (
-                      <Link to={`/update/${venue.id}`} className={styles.updateButton}>
+                    {venue.createdBy === userId && (
+                      <Link
+                        to={`/update/${venue.id}`}
+                        className={styles.updateButton}
+                      >
                         Update Venue
                       </Link>
                     )}
-                  <Link to={`/venue/${venue.id}`} className={styles.viewButton}>
-                    View Venue
-                  </Link>
+                    <Link
+                      to={`/venue/${venue.id}`}
+                      className={styles.viewButton}
+                    >
+                      View Venue
+                    </Link>
                   </>
                 }
               />
             </ListItem>
-            <Divider variant='inset' component='li' sx={{marginBottom: '10px'}} />
+            <Divider
+              variant='inset'
+              component='li'
+              sx={{ marginBottom: '10px' }}
+            />
           </React.Fragment>
         ))}
       </List>

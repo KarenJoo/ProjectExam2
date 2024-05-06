@@ -19,7 +19,7 @@ const Homepage = () => {
           throw new Error('Failed to fetch venues')
         }
         const data = await response.json()
-
+console.log(data)
         const sortedVenues = data.data.sort((a, b) => {
           return new Date(b.created) - new Date(a.created)
         })
