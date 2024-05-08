@@ -4,7 +4,6 @@ import { API_BASE_URL } from '../../../utils/api'
 import dayjs from 'dayjs'
 import useStorage from '../../../utils/useStorage'
 import { createApiKey } from '../../../utils/createApiKey'
-import { Typography } from '@mui/material'
 import styles from './BookingLayout.module.css'
 import BookingList from './BookingList'
 
@@ -13,7 +12,7 @@ const BookingLayout = () => {
   const [bookingVenues, setBookingVenues] = useState([])
   const storage = useStorage()
   const [error, setError] = useState(null)
-
+ 
   useEffect(() => {
     const fetchVenues = async () => {
       try {
@@ -33,30 +32,35 @@ const BookingLayout = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch booking venues')
         }
-        const venuesData = await response.json()
-        setBookingVenues(venuesData.data || [])
+    
+ 
 
+        const venuesData = await response.json();
 
-      // Modify venue data to include bookings
-      const venueBookings = venuesData.data.map((venue) => {
-        return {
+        // Modify venue data to include formatted bookings
+        const venueBookings = venuesData.data.map((venue) => ({
           ...venue,
-          bookings: venue.bookings || [], 
-        };
-      });
-      setBookingVenues(venueBookings);
-        console.log('Venues Data:', venuesData)
+          bookings: venue.bookings.map((booking) => ({
+            ...booking,
+            dateFrom: formatDate(booking.dateFrom),
+            dateTo: formatDate(booking.dateTo),
+          })),
+        }));
+
+        setBookingVenues(venueBookings);
       } catch (error) {
-        console.error('Error fetching booking venues:', error)
-        setError(error.message)
+        console.error('Error fetching booking venues:', error);
+        setError(error.message);
       }
-    }
+    };
+
     fetchVenues()
   }, [])
 
   const handleDateChange = (date) => {
     setSelectedDate(date)
   }
+  
   const handleSubmit = async () => {
     try {
       const accessToken = storage.loadToken('accessToken')
@@ -69,6 +73,11 @@ const BookingLayout = () => {
       alert('Failed to create venue')
     }
   }
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
 
   return (
     <div className={styles.bookingContainer}>
@@ -82,7 +91,7 @@ const BookingLayout = () => {
         {error ? (
           <div>Error: {error}</div>
         ) : (
-          <BookingList bookings={bookingVenues} />
+          <BookingList bookings={bookingVenues}  formatDate={formatDate}/>
         )}
       </div>
     </div>
