@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { VENUES_URL } from '../utils/api'
-import { Card, CardContent, Typography, TextField, Button } from '@mui/material'
+import { Card, CardContent, Typography } from '@mui/material'
 import styles from '../components/VenueCard.module.css'
+import BookingForm from '../components/Forms/BookingForm'
 
 const VenueDetails = () => {
   const { id } = useParams()
   const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`
-
   const [venueDetails, setVenueDetails] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -68,6 +68,11 @@ const VenueDetails = () => {
     return date.toLocaleDateString()
   }
 
+  // Function to handle booking submission
+  const handleBookingSubmit = () => {
+    console.log('Booking submitted')
+  }
+
   const wifiAvailable = meta?.wifi ? 'Yes' : 'No'
   const parkingAvailable = meta?.parking ? 'Yes' : 'No'
   const breakfastIncluded = meta?.breakfast ? 'Yes' : 'No'
@@ -101,7 +106,7 @@ const VenueDetails = () => {
             </Typography>
             <Typography key='pets'>Pets: {petsAllowed}</Typography>
           </div>
-
+          <BookingForm onSubmit={handleBookingSubmit} />
           <Typography variant='h3'>Bookings:</Typography>
           <div className={styles.cardContainer}>
             {bookings && bookings.length > 0 ? (
