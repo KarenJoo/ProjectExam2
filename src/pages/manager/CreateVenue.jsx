@@ -14,7 +14,6 @@ const CreateVenue = () => {
 
       <VenueForm onSubmit={handleSubmit} isUpdate={false} />
 
-      <div></div>
     </div>
   )
 }

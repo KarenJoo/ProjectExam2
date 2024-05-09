@@ -16,7 +16,6 @@ const UpdateVenue = () => {
     <div className={styles.form}>
       <Typography variant='h2'>Update your venue</Typography>
       <VenueForm onSubmit={handleSubmit} isUpdate={true} userId={id} />
-      <div></div>
     </div>
   )
 }

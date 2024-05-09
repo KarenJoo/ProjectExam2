@@ -97,10 +97,10 @@ const VenueDetails = () => {
             Owner: {owner && owner.name ? owner.name : 'Unknown Owner'}
           </Typography>
           <div className={styles.contentList}>
-            <li key='wifi'>WiFi: {wifiAvailable}</li>
-            <li key='parking'>Parking: {parkingAvailable}</li>
-            <li key='breakfast'>Breakfast: {breakfastIncluded}</li>
-            <li key='pets'>Pets: {petsAllowed}</li>
+            <Typography key='wifi'>WiFi: {wifiAvailable}</Typography>
+            <Typography key='parking'>Parking: {parkingAvailable}</Typography>
+            <Typography key='breakfast'>Breakfast: {breakfastIncluded}</Typography>
+            <Typography key='pets'>Pets: {petsAllowed}</Typography>
           </div>
           <Typography variant='h3'>Bookers:</Typography>
           <div className={styles.cardContainer}>

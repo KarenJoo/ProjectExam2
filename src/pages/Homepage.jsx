@@ -46,7 +46,7 @@ const Homepage = () => {
   return (
     <div className={styles.container}>
       <Typography variant='h1'>Holidaze</Typography>
-      <Typography variant='h5'>Book and dayze away</Typography>
+      <Typography variant='h2'>Book and dayze away</Typography>
       <Link to={`/booking`}>
         Book here
       </Link>

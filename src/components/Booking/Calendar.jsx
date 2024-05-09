@@ -15,15 +15,21 @@ const Calendar = ({ value, onChange, availableDates, onDateSelect }) => {
           <DateCalendar
             value={value}
             onChange={onChange}
-            renderDay={(day, isSelected, isInCurrentMonth, dayComponent) => {
-                const date = dayjs(day).format('YYYY-MM-DD');
-                const isAvailable = availableDates.includes(date);
-                return React.cloneElement(dayComponent, {
-                  style: {
-                    ...(isAvailable ? {} : { color: 'lightgray', pointerEvents: 'none' }),
-                  },
-                  onClick: isAvailable ? () => onDateSelect(date) : null,
-                });
+            components={{
+                day: (props) => {
+                  const { day, isSelected, isInCurrentMonth, dayComponent: DayComponent } = props;
+                  const date = dayjs(day).format('YYYY-MM-DD');
+                  const isAvailable = availableDates.includes(date);
+                  return (
+                    <DayComponent
+                      {...props}
+                      style={{
+                        ...(isAvailable ? {} : { color: 'lightgray', pointerEvents: 'none' }),
+                      }}
+                      onClick={isAvailable ? () => onDateSelect(date) : null}
+                    />
+                  );
+                },
               }}
             sx={{
               backgroundColor: '#fff',

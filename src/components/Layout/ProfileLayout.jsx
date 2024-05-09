@@ -39,12 +39,12 @@ const ProfileLayout = ({ userData }) => {
           <ul>
             {bookedVenues &&
               bookedVenues.map((venue) => (
-                <li key={venue.id}>
+                <div key={venue.id}>
                   <Typography variant='body1'>{venue.name}</Typography>
                   <Typography variant='body2' color='textSecondary'>
                     Location: {venue.location.city}, {venue.location.country}
                   </Typography>
-                </li>
+                </div>
               ))}
           </ul>
         </Grid>

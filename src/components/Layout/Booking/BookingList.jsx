@@ -49,7 +49,7 @@ const BookingList = ({ bookings }) => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Typography variant='h6' noWrap>
+                  <Typography variant='h5' noWrap>
                     {booking.name}
                   </Typography>
                 }

@@ -24,10 +24,10 @@ const VenueCard = ({ venue }) => {
           {location && location.country}
         </Typography>
         <div className={styles.contentList}>
-          <li key='wifi'>WiFi: {wifiStatus}</li>
-          <li key='parking'>Parking: {parkingStatus}</li>
-          <li key='breakfast'>Breakfast: {breakfastStatus}</li>
-          <li key='pets'>Pets: {petsStatus}</li>
+          <Typography key='wifi'>WiFi: {wifiStatus}</Typography>
+          <Typography key='parking'>Parking: {parkingStatus}</Typography>
+          <Typography key='breakfast'>Breakfast: {breakfastStatus}</Typography>
+          <Typography key='pets'>Pets: {petsStatus}</Typography>
         </div>
       </CardContent>
       <div className={styles.cardFootContent}>
