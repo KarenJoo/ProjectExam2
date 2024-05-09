@@ -1,44 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { VENUES_URL } from '../utils/api'
-import { Card, CardContent, Typography } from '@mui/material'
+import { Card, CardContent, Typography, TextField, Button } from '@mui/material'
 import styles from '../components/VenueCard.module.css'
 
 const VenueDetails = () => {
-  const { id } = useParams();
-  const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`;
+  const { id } = useParams()
+  const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`
 
-  const [venueDetails, setVenueDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [venueDetails, setVenueDetails] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchVenueDetails = async () => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(API_URL)
         if (!response.ok) {
-          throw new Error('Failed to fetch venue details');
+          throw new Error('Failed to fetch venue details')
         }
-        const data = await response.json();
-        setVenueDetails(data.data);
-        setLoading(false);
-
+        const data = await response.json()
+        setVenueDetails(data.data)
+        setLoading(false)
         console.log(data)
       } catch (error) {
-        setError(error.message);
-        setLoading(false);
+        setError(error.message)
+        setLoading(false)
       }
-    };
+    }
 
-    fetchVenueDetails();
+    fetchVenueDetails()
 
     return () => {
-      setVenueDetails(null);
-      setLoading(true);
-      setError(null);
-    };
-  }, [API_URL]);
-
+      setVenueDetails(null)
+      setLoading(true)
+      setError(null)
+    }
+  }, [API_URL])
 
   if (loading) {
     return <div>Loading...</div>
@@ -66,10 +64,9 @@ const VenueDetails = () => {
   } = venueDetails
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
+    const date = new Date(dateString)
+    return date.toLocaleDateString()
   }
-
 
   const wifiAvailable = meta?.wifi ? 'Yes' : 'No'
   const parkingAvailable = meta?.parking ? 'Yes' : 'No'
@@ -99,28 +96,39 @@ const VenueDetails = () => {
           <div className={styles.contentList}>
             <Typography key='wifi'>WiFi: {wifiAvailable}</Typography>
             <Typography key='parking'>Parking: {parkingAvailable}</Typography>
-            <Typography key='breakfast'>Breakfast: {breakfastIncluded}</Typography>
+            <Typography key='breakfast'>
+              Breakfast: {breakfastIncluded}
+            </Typography>
             <Typography key='pets'>Pets: {petsAllowed}</Typography>
           </div>
-          <Typography variant='h3'>Bookers:</Typography>
+
+          <Typography variant='h3'>Bookings:</Typography>
           <div className={styles.cardContainer}>
             {bookings && bookings.length > 0 ? (
               bookings.map((booking) => (
                 <Card key={booking.id} className={styles.bookingCard}>
                   <CardContent>
-                    <Typography variant="subtitle1">Date From: {formatDate(booking.dateFrom)}</Typography>
-                    <Typography variant="subtitle1">Date To: {formatDate(booking.dateTo)}</Typography>
-                    <Typography variant="subtitle1">User: {booking.customer && booking.customer.name}</Typography>
+                    <Typography variant='subtitle1'>
+                      Date From: {formatDate(booking.dateFrom)}
+                    </Typography>
+                    <Typography variant='subtitle1'>
+                      Date To: {formatDate(booking.dateTo)}
+                    </Typography>
+                    <Typography variant='subtitle1'>
+                      User: {booking.customer && booking.customer.name}
+                    </Typography>
                   </CardContent>
                 </Card>
               ))
             ) : (
-              <Typography variant='subtitle1'>No bookings found for this venue.</Typography>
+              <Typography variant='subtitle1'>
+                No bookings found for this venue.
+              </Typography>
             )}
           </div>
         </CardContent>
         <div className={styles.cardFootContent}>
-          <Typography variant='h4'>{price} NOK</Typography>
+          <Typography variant='body2'>{price} NOK</Typography>
         </div>
       </Card>
     </div>

@@ -36,7 +36,7 @@ const ProfileLayout = ({ userData }) => {
             Total Bookings: {bookedVenues ? bookedVenues.length : 0}
           </Typography>
           <Typography variant='h2'>Booked Venues</Typography>
-          <ul>
+         
             {bookedVenues &&
               bookedVenues.map((venue) => (
                 <div key={venue.id}>
@@ -46,7 +46,7 @@ const ProfileLayout = ({ userData }) => {
                   </Typography>
                 </div>
               ))}
-          </ul>
+          
         </Grid>
       )}
     </div>

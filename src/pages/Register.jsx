@@ -10,7 +10,7 @@ function RegisterPage() {
       <BaseForm variant='register'/>
       <Link to={`/login`} className={StyleSheet.link}>
         {' '}
-        <Typography variant='h5'>Log in</Typography>
+        <Typography variant='body2'>Log in</Typography>
       </Link>
     </div>
   )

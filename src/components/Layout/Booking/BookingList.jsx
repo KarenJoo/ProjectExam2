@@ -49,14 +49,14 @@ const BookingList = ({ bookings }) => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Typography variant='h5' noWrap>
+                  <Typography  variant='body1' noWrap>
                     {booking.name}
                   </Typography>
                 }
                 secondary={
                   <>
                     <Typography
-                      variant='h5'
+                      variant='body3'
                       color={'#000'}
                       margin={'10px 0px 10px 0px'}
                     >

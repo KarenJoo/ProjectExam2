@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Calendar from '../../Booking/Calendar'
 import { API_BASE_URL } from '../../../utils/api'
-import dayjs from 'dayjs'
 import useStorage from '../../../utils/useStorage'
 import { createApiKey } from '../../../utils/createApiKey'
 import styles from './BookingLayout.module.css'
 import BookingList from './BookingList'
 
 const BookingLayout = () => {
-  const [selectedDate, setSelectedDate] = useState(dayjs())
   const [bookingVenues, setBookingVenues] = useState([])
   const storage = useStorage()
   const [error, setError] = useState(null)
+  
  
   useEffect(() => {
     const fetchVenues = async () => {
@@ -57,10 +55,7 @@ const BookingLayout = () => {
     fetchVenues()
   }, [])
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date)
-  }
-  
+
   const handleSubmit = async () => {
     try {
       const accessToken = storage.loadToken('accessToken')
@@ -83,7 +78,6 @@ const BookingLayout = () => {
     <div className={styles.bookingContainer}>
       {/* Calendar */}
       <form onSubmit={handleSubmit} className={styles.calendarContainer}>
-        <Calendar value={selectedDate} onChange={handleDateChange} />
         <button type='submit'>Book Venue</button>
       </form>
       {/* Booking Venues */}

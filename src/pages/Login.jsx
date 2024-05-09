@@ -8,9 +8,9 @@ function LoginPage() {
   return (
     <div className={StyleSheet.container}>
       <BaseForm variant='login' />
-      <Typography variant='h5'>If you don't have an account</Typography>
+      <Typography variant='body2'>If you don't have an account</Typography>
       <Link to='/register' className={StyleSheet.link}>
-        <Typography variant='h5'>Register here</Typography>
+        <Typography variant='body2'>Register here</Typography>
       </Link>
     </div>
   )

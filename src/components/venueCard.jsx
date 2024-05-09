@@ -31,7 +31,7 @@ const VenueCard = ({ venue }) => {
         </div>
       </CardContent>
       <div className={styles.cardFootContent}>
-        <Typography variant='h4'>{price} NOK</Typography>
+        <Typography variant='body2'>{price} NOK</Typography>
         <Link to={`/venue/${venue.id}`} className={styles.viewButton}>
           View Venue
         </Link>
