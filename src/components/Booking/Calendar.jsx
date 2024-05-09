@@ -3,8 +3,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import { Typography, Grid } from '@mui/material'
+import dayjs from 'dayjs'
 
-const Calendar = ({ value, onChange }) => {
+const Calendar = ({ value, onChange, availableDates, onDateSelect }) => {
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container direction="column" alignItems="center" justifyContent="center">
@@ -14,6 +15,16 @@ const Calendar = ({ value, onChange }) => {
           <DateCalendar
             value={value}
             onChange={onChange}
+            renderDay={(day, isSelected, isInCurrentMonth, dayComponent) => {
+                const date = dayjs(day).format('YYYY-MM-DD');
+                const isAvailable = availableDates.includes(date);
+                return React.cloneElement(dayComponent, {
+                  style: {
+                    ...(isAvailable ? {} : { color: 'lightgray', pointerEvents: 'none' }),
+                  },
+                  onClick: isAvailable ? () => onDateSelect(date) : null,
+                });
+              }}
             sx={{
               backgroundColor: '#fff',
               border: '1px solid #ccc',

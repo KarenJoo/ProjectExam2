@@ -66,7 +66,6 @@ const UserVenuesList = ({ venues, userId }) => {
             </ListItem>
             <Divider
               variant='inset'
-              component='li'
               sx={{ marginBottom: '10px' }}
             />
           </React.Fragment>

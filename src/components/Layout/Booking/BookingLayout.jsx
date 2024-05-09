@@ -33,10 +33,10 @@ const BookingLayout = () => {
           throw new Error('Failed to fetch booking venues')
         }
     
- 
+
 
         const venuesData = await response.json();
-
+        setBookingVenues(venuesData.data);
         // Modify venue data to include formatted bookings
         const venueBookings = venuesData.data.map((venue) => ({
           ...venue,

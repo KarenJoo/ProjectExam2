@@ -48,7 +48,11 @@ const BookingList = ({ bookings }) => {
                 />
               </ListItemAvatar>
               <ListItemText
-                primary={booking.name}
+                primary={
+                  <Typography variant='h6' noWrap>
+                    {booking.name}
+                  </Typography>
+                }
                 secondary={
                   <>
                     <Typography
@@ -80,7 +84,6 @@ const BookingList = ({ bookings }) => {
             </ListItem>
             <Divider
               variant='inset'
-              component='li'
               sx={{ marginBottom: '10px' }}
             />
           </React.Fragment>
