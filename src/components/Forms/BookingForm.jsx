@@ -11,30 +11,36 @@ const BookingForm = ({ onSubmit }) => {
   }
 
   return (
-    <Card>
+    <Card sx={{ '@media (max-width:600px)': { marginBottom: '20px' } }}>
       <CardContent>
-        <Typography variant='h5'>Create Booking</Typography>
+        <Typography variant='body3'>Book your next stay</Typography>
         <TextField
+          fullWidth
           label='Check-in Date'
           type='date'
+          sx={{ marginBottom: '10px', marginTop: '20px' }}
           value={checkInDate}
           onChange={(e) => setCheckInDate(e.target.value)}
           InputLabelProps={{ shrink: true }}
         />
         <TextField
+          fullWidth
           label='Check-out Date'
           type='date'
+          sx={{ marginBottom: '20px' }}
           value={checkOutDate}
           onChange={(e) => setCheckOutDate(e.target.value)}
           InputLabelProps={{ shrink: true }}
         />
         <TextField
+          fullWidth
           label='Number of Guests'
           type='number'
+          sx={{ marginBottom: '20px' }}
           value={guests}
           onChange={(e) => setGuests(e.target.value)}
         />
-        <Button variant='contained' onClick={handleSubmit}>
+        <Button variant='contained' fullWidth onClick={handleSubmit}>
           Book Venue
         </Button>
       </CardContent>
