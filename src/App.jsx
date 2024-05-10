@@ -8,8 +8,6 @@ import Register from './pages/Register'
 import Profile from './pages/Profile'
 import CreateVenue from './pages/manager/CreateVenue'
 import UpdateVenue from './pages/manager/UpdateVenue'
-import BookingPage from './pages/booking/BookingPage'
-
 
 function App() {
   return (
@@ -23,8 +21,7 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/create' element={<CreateVenue />} />
           <Route path='/update/:id' element={<UpdateVenue />} />
-          <Route path='/booking' element={<BookingPage />} />        
-          </Routes>
+        </Routes>
       </Layout>
     </div>
   )

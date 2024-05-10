@@ -10,28 +10,20 @@ const useFetch = (url) => {
       setLoading(true)
       try {
 
-        const cachedData = localStorage.getItem(url)
-        if (cachedData) {
-          setData(JSON.parse(cachedData))
-          setLoading(false)
-          return
-        }
-
-        const response = await fetch(url)
+        const response = await fetch(url);
         if (!response.ok) {
-          throw new Error('Failed to fetch data')
+          throw new Error('Failed to fetch data');
         }
-        const responseData = await response.json()
-        setData(responseData)
-
-        localStorage.setItem(url, JSON.stringify(responseData))
-        setError(null)
+        const responseData = await response.json();
+        setData(responseData);
+        setError(null);
       } catch (error) {
-        setError('Failed to get venues. Please try again later.')
+        setError('Failed to fetch data. Please try again later.');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
+
 
     fetchData()
 
@@ -41,4 +33,4 @@ const useFetch = (url) => {
   return { data, loading, error };
 }
 
-export default useFetch
+export default useFetch;
