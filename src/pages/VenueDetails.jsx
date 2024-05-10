@@ -11,7 +11,8 @@ const VenueDetails = () => {
   const { id } = useParams()
   const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`
   const { data: venueDetails, loading, error } = useFetch(API_URL)
-  const { isUserLoggedIn, getUserRole } = useStorage()
+  const { isUserLoggedIn, getUserRole, loadToken } = useStorage()
+  const accessToken = loadToken()
 
   if (loading) {
     return <div>Loading...</div>
@@ -84,6 +85,8 @@ const VenueDetails = () => {
 
           <BookingForm
             onSubmit={handleBookingSubmit}
+            accessToken={accessToken}
+            venueId={id}
             isLoggedIn={isUserLoggedIn()}
             isCustomer={!getUserRole() || getUserRole() === 'customer'}
           />
