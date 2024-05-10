@@ -9,28 +9,27 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true)
       try {
-
-        const response = await fetch(url);
+        const response = await fetch(url)
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error('Failed to fetch data')
         }
-        const responseData = await response.json();
-        setData(responseData);
-        setError(null);
+        const data = await response.json()
+        setData(data.data)
+        setLoading(false)
+        console.log(data)
       } catch (error) {
-        setError('Failed to fetch data. Please try again later.');
+        setError('Failed to fetch data. Please try again later.')
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-
+    }
 
     fetchData()
 
     return () => {}
   }, [url])
 
-  return { data, loading, error };
+  return { data, loading, error }
 }
 
-export default useFetch;
+export default useFetch

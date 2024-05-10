@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import { VENUES_URL } from '../utils/api'
+import useFetch from '../hooks/useFetch'
 import { Card, CardContent, Typography } from '@mui/material'
 import styles from '../components/VenueCard.module.css'
 import BookingForm from '../components/Forms/BookingForm'
@@ -9,36 +10,8 @@ import useStorage from '../utils/useStorage'
 const VenueDetails = () => {
   const { id } = useParams()
   const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`
-  const [venueDetails, setVenueDetails] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { data: venueDetails, loading, error } = useFetch(API_URL)
   const { isUserLoggedIn, getUserRole } = useStorage()
-
-  useEffect(() => {
-    const fetchVenueDetails = async () => {
-      try {
-        const response = await fetch(API_URL)
-        if (!response.ok) {
-          throw new Error('Failed to fetch venue details')
-        }
-        const data = await response.json()
-        setVenueDetails(data.data)
-        setLoading(false)
-        console.log(data)
-      } catch (error) {
-        setError(error.message)
-        setLoading(false)
-      }
-    }
-
-    fetchVenueDetails()
-
-    return () => {
-      setVenueDetails(null)
-      setLoading(true)
-      setError(null)
-    }
-  }, [API_URL])
 
   if (loading) {
     return <div>Loading...</div>
