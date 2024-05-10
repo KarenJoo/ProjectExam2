@@ -3,7 +3,9 @@ import { useParams } from 'react-router-dom'
 import { VENUES_URL } from '../utils/api'
 import { Card, CardContent, Typography } from '@mui/material'
 import styles from '../components/VenueCard.module.css'
+import useFetch from '../hooks/useFetch'
 import BookingForm from '../components/Forms/BookingForm'
+import useStorage from '../utils/useStorage'
 
 const VenueDetails = () => {
   const { id } = useParams()
@@ -11,6 +13,7 @@ const VenueDetails = () => {
   const [venueDetails, setVenueDetails] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const { isUserLoggedIn, getUserRole } = useStorage()
 
   useEffect(() => {
     const fetchVenueDetails = async () => {
@@ -106,7 +109,13 @@ const VenueDetails = () => {
             </Typography>
             <Typography key='pets'>Pets: {petsAllowed}</Typography>
           </div>
-          <BookingForm onSubmit={handleBookingSubmit} />
+
+          <BookingForm
+            onSubmit={handleBookingSubmit}
+            isLoggedIn={isUserLoggedIn()}
+            isCustomer={!getUserRole() || getUserRole() === 'customer'}
+          />
+
           <Typography variant='h3'>Bookings:</Typography>
           <div className={styles.cardContainer}>
             {bookings && bookings.length > 0 ? (
