@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Card, CardContent, Typography, TextField, Button } from '@mui/material'
 
 const BookingForm = ({ onSubmit }) => {
-  const [checkInDate, setCheckInDate] = useState(null)
-  const [checkOutDate, setCheckOutDate] = useState(null)
+  const [checkInDate, setCheckInDate] = useState('')
+  const [checkOutDate, setCheckOutDate] = useState('')
   const [guests, setGuests] = useState(1)
 
   const handleSubmit = () => {
@@ -19,7 +19,7 @@ const BookingForm = ({ onSubmit }) => {
           label='Check-in Date'
           type='date'
           sx={{ marginBottom: '10px', marginTop: '20px' }}
-          value={checkInDate}
+          value={checkInDate || ''}
           onChange={(e) => setCheckInDate(e.target.value)}
           InputLabelProps={{ shrink: true }}
         />
@@ -28,7 +28,7 @@ const BookingForm = ({ onSubmit }) => {
           label='Check-out Date'
           type='date'
           sx={{ marginBottom: '20px' }}
-          value={checkOutDate}
+          value={checkOutDate || ''}
           onChange={(e) => setCheckOutDate(e.target.value)}
           InputLabelProps={{ shrink: true }}
         />
