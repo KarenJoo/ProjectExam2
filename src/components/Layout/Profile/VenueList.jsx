@@ -11,7 +11,7 @@ import {
 import { Link } from 'react-router-dom'
 import styles from './VenueList.module.css'
 
-const UserVenuesList = ({ venues, userId }) => {
+const VenuesList = ({ venues, userId }) => {
   return (
     <div>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
@@ -64,10 +64,7 @@ const UserVenuesList = ({ venues, userId }) => {
                 }
               />
             </ListItem>
-            <Divider
-              variant='inset'
-              sx={{ marginBottom: '10px' }}
-            />
+            <Divider variant='inset' sx={{ marginBottom: '10px' }} />
           </React.Fragment>
         ))}
       </List>
@@ -75,4 +72,4 @@ const UserVenuesList = ({ venues, userId }) => {
   )
 }
 
-export default UserVenuesList
+export default VenuesList;

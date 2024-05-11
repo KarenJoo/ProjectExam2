@@ -1,17 +1,16 @@
-import React from 'react';
-import { Avatar, Typography, Grid } from '@mui/material';
-import styles from './ProfileLayout.module.css';
+import React from 'react'
+import { Avatar, Typography, Grid } from '@mui/material'
+import styles from './ProfileLayout.module.css'
 
 const ProfileLayout = ({ userData }) => {
-  const { name, avatar, bookedVenues, venueManager, venues } = userData;
-  const venuesCount = venues ? venues.length : 0;
-  const isVenueManager = userData && userData.venueManager;
-
+  const { name, avatar, bookedVenues, venueManager, venues } = userData
+  const venuesCount = venues ? venues.length : 0
+  const isVenueManager = userData && userData.venueManager
 
   return (
     <div className={styles.profileContainer}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={3}> 
+        <Grid item xs={12} md={3}>
           {avatar && (
             <Avatar
               alt={name || 'User Avatar'}
@@ -28,7 +27,6 @@ const ProfileLayout = ({ userData }) => {
         </Grid>
       </Grid>
 
-      
       {!isVenueManager && (
         <Grid item xs={12} md={9}>
           <Typography variant='body1'>Total Venues: {venuesCount}</Typography>
@@ -36,7 +34,7 @@ const ProfileLayout = ({ userData }) => {
             Total Bookings: {bookedVenues ? bookedVenues.length : 0}
           </Typography>
           <Typography variant='h2'>Booked Venues</Typography>
-         
+          <ul>
             {bookedVenues &&
               bookedVenues.map((venue) => (
                 <div key={venue.id}>
@@ -46,11 +44,11 @@ const ProfileLayout = ({ userData }) => {
                   </Typography>
                 </div>
               ))}
-          
+          </ul>
         </Grid>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ProfileLayout;
+export default ProfileLayout

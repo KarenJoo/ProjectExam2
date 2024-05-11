@@ -31,15 +31,20 @@ const BookingForm = ({ venueId, onSubmit }) => {
         venueId: venueId,
       }
 
+
       const accessToken = storage.loadToken('accessToken')
 
       const newBooking = await createBooking(accessToken, bookingData, apiKey)
       onSubmit(newBooking)
+      console.log('new;', newBooking)
+
     } catch (error) {
       console.error('Error creating booking:', error)
-      // Handle error
+      
     }
+    
   }
+  
   return (
     <Card sx={{ '@media (max-width:600px)': { marginBottom: '20px' } }}>
       <CardContent>

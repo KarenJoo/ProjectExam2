@@ -8,8 +8,8 @@ import UserVenuesList from '../components/Layout/Profile/VenueList'
 const Profile = () => {
   const storage = useStorage()
   const [userData, setUserData] = useState(null)
-
-  useEffect(() => {
+ 
+  useEffect(() => { 
     const fetchUserData = async () => {
       try {
         const storedUserData = storage.loadUserData()
@@ -33,11 +33,17 @@ const Profile = () => {
         const apiKeyData = await getApiKey.json()
         const apiKey = apiKeyData.data.key
 
+        const isVenueManager = userData && userData.venueManager;
+
+
         const fetchUsersVenues = await getUserVenues(
           storedUserData.name,
           accessToken,
-          apiKey
+          apiKey,
+          !isVenueManager
         )
+        console.log('isVenueManager:', isVenueManager);
+        console.log('fetchUsersVenues.ok:', fetchUsersVenues.ok);
 
         if (!fetchUsersVenues.ok) {
           throw new Error('Failed to fetch user venues')
