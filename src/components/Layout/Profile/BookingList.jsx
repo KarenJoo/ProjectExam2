@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 import {
   Typography,
   List,
   ListItem,
   ListItemText,
   Divider,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
-import styles from './VenueList.module.css';
+} from '@mui/material'
+import { Link } from 'react-router-dom'
+import styles from './VenueList.module.css'
 
 const UserBookingsList = ({ bookings }) => {
-    console.log('Bookings:', bookings);
+  console.log('Bookings:', bookings)
   return (
     <div>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
@@ -31,20 +31,20 @@ const UserBookingsList = ({ bookings }) => {
               }}
             >
               <ListItemText
-                primary={`Booking ID: ${booking.id}`}
+                primary={`${booking.name}`}
                 secondary={
                   <>
-                    <Typography variant="subtitle1">
+                    <Typography variant='subtitle1'>
                       Check-in: {booking.dateFrom}
                     </Typography>
-                    <Typography variant="subtitle1">
+                    <Typography variant='subtitle1'>
                       Check-out: {booking.dateTo}
                     </Typography>
-                    <Typography variant="subtitle1">
+                    <Typography variant='subtitle1'>
                       Guests: {booking.guests}
                     </Typography>
                     <Link
-                      to={`/booking/${booking.id}`}
+                      to={`/venue/${booking.id}`}
                       className={styles.viewButton}
                     >
                       View Booking
@@ -53,15 +53,12 @@ const UserBookingsList = ({ bookings }) => {
                 }
               />
             </ListItem>
-            <Divider
-              variant='inset'
-              sx={{ marginBottom: '10px' }}
-            />
+            <Divider variant='inset' sx={{ marginBottom: '10px' }} />
           </React.Fragment>
         ))}
       </List>
     </div>
-  );
-};
+  )
+}
 
-export default UserBookingsList;
+export default UserBookingsList
