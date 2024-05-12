@@ -13,7 +13,7 @@ import styles from './VenueList.module.css'
 
 const VenuesList = ({ venues, userId }) => {
   return (
-    <div>
+    <>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
         Your Venues
       </Typography>
@@ -68,8 +68,8 @@ const VenuesList = ({ venues, userId }) => {
           </React.Fragment>
         ))}
       </List>
-    </div>
+    </>
   )
 }
 
-export default VenuesList;
+export default VenuesList

@@ -12,7 +12,7 @@ import styles from './VenueList.module.css'
 const UserBookingsList = ({ bookings }) => {
   console.log('Bookings:', bookings)
   return (
-    <div>
+    <>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
         Your Bookings
       </Typography>
@@ -31,7 +31,7 @@ const UserBookingsList = ({ bookings }) => {
               }}
             >
               <ListItemText
-                primary={`${booking.name}`}
+                primary={booking.name ? `${booking.name}` : 'Unknown Booking'}
                 secondary={
                   <>
                     <Typography variant='subtitle1'>
@@ -57,7 +57,7 @@ const UserBookingsList = ({ bookings }) => {
           </React.Fragment>
         ))}
       </List>
-    </div>
+    </>
   )
 }
 

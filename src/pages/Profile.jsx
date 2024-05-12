@@ -34,7 +34,7 @@ const Profile = () => {
         const apiKeyData = await getApiKey.json()
         const apiKey = apiKeyData.data.key
 
-        const isVenueManager = userData && userData.venueManager
+        const isVenueManager = storedUserData && storedUserData.venueManager
 
         const userVenuesResponse = await getUserVenues(
           storedUserData.name,
@@ -84,19 +84,12 @@ const Profile = () => {
   const isVenueManager = userData && userData.venueManager
 
   return (
-    <div>
-      <div className='contentContainer'>
-        <ProfileLayout userData={userData} />
-        {isVenueManager && (
-          <div>
-            <UserVenuesList venues={userData.venues} />
-          </div>
-        )}
+    <div className='contentContainer'>
+      <ProfileLayout userData={userData} />
 
-        <div>
-          <UserBookingsList bookings={userBookings} />
-        </div>
-      </div>
+      <UserVenuesList venues={userData.venues} />
+
+      {!isVenueManager && <UserBookingsList bookings={userBookings} />}
     </div>
   )
 }
