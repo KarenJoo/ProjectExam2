@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import styles from './VenueList.module.css';
 
-const BookingList = ({ bookings, userId }) => {
+const UserBookingsList = ({ bookings }) => {
     console.log('Bookings:', bookings);
   return (
     <div>
@@ -64,4 +64,4 @@ const BookingList = ({ bookings, userId }) => {
   );
 };
 
-export default BookingList;
+export default UserBookingsList;
