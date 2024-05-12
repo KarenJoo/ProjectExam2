@@ -26,19 +26,18 @@ const useStorage = () => {
   }
 
   const saveUserData = (userData) => {
-    save('userData', userData)
-    setUserData(userData)
+    if (userData) {
+      save('userData', userData)
+    }
   }
 
-  // stores isVenueManager value from register form
+  // stores isVenueManager value, name, from register form
   const loadUserData = () => {
-    const userData = load('userData')
-    setUserData(userData)
-    return userData
+    return load('userData')
   }
   const saveVenueManager = (venueManager) => {
-    save('venueManager', venueManager);
-  };
+    save('venueManager', venueManager)
+  }
 
   const isUserLoggedIn = () => {
     return userData !== null
@@ -74,10 +73,10 @@ const useStorage = () => {
     getUserRole,
     clearUserData,
     remove,
-    clear, 
+    clear,
     save,
     load,
-    saveVenueManager
+    saveVenueManager,
   }
 }
 

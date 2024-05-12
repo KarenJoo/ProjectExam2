@@ -86,7 +86,6 @@ const BaseForm = ({ variant }) => {
 
           if (loggedInUser.data.accessToken) {
             const accessToken = loggedInUser.data.accessToken
-            
 
             storage.saveToken(accessToken)
 
@@ -96,13 +95,18 @@ const BaseForm = ({ variant }) => {
             })
 
             console.log('Logged In User:', loggedInUser.data)
-            console.log('Access Token:', accessToken);
-            console.log('Venue Manager from loggedInUser:', loggedInUser.data.venueManager);
-            
-            const storedUserData = storage.loadUserData();
-            const storedVenueManager = storedUserData ? storedUserData.venueManager : false;
-            console.log('Venue Manager from localStorage:', storedVenueManager);
-  
+            console.log('Access Token:', accessToken)
+            console.log(
+              'Venue Manager from loggedInUser:',
+              loggedInUser.data.venueManager
+            )
+
+            const storedUserData = storage.loadUserData()
+            const storedVenueManager = storedUserData
+              ? storedUserData.venueManager
+              : false
+            console.log('Venue Manager from localStorage:', storedVenueManager)
+
             localStorage.setItem('userLoggedIn', 'true')
 
             window.location.href = '/profile'
@@ -214,7 +218,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               InputProps={{ sx: inputStyles }}
             />
-            
+
             <TextField
               name='venueManager'
               select

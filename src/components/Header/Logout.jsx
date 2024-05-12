@@ -6,7 +6,6 @@ const Logout = () => {
 
   const handleLogout = () => {
     clearUserData()
-
     window.location.href = '/login'
   }
 
