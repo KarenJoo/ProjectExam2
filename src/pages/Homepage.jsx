@@ -18,8 +18,11 @@ const Homepage = () => {
     return <div>{error}</div>
   }
   const sortedVenues = venues.sort((a, b) => {
-    return new Date(b.created) - new Date(a.created)
+    const dateA = new Date(a.created).getTime()
+    const dateB = new Date(b.created).getTime()
+    return dateB - dateA
   })
+
   return (
     <div className={styles.container}>
       <Typography variant='h1'>Holidaze</Typography>

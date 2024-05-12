@@ -13,7 +13,6 @@ const CreateVenue = () => {
       <Typography variant='h2'>Create a venue</Typography>
 
       <VenueForm onSubmit={handleSubmit} isUpdate={false} />
-
     </div>
   )
 }

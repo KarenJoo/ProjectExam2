@@ -12,7 +12,7 @@ import styles from '../../pages/manager/VenueForm.module.css'
 import useAuth from '../../hooks/useAuth'
 import { createApiKey } from '../../utils/createApiKey'
 
-const VenueForm = ({ onSubmit, isUpdate, userId }) => {
+const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
   const storage = useStorage()
   const { isVenueManager } = useAuth()
   const [successMessage, setSuccessMessage] = useState('');
@@ -112,6 +112,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId }) => {
       if (onSubmit) {
         onSubmit(data)
       }
+      
     } catch (error) {
       console.error('Failed to create venue:', error)
       alert('Failed to create venue')
