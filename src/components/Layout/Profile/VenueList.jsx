@@ -13,6 +13,9 @@ import { Link } from 'react-router-dom'
 import styles from './VenueList.module.css'
 
 const VenuesList = ({ venues, userId, handleDelete }) => {
+  const handleVenueDelete = (venueId) => {
+    handleDelete(venueId)
+  }
   return (
     <>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
@@ -62,7 +65,7 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
                           Update Venue
                         </Link>
                         <Button
-                          onClick={() => handleDelete(venue.id)}
+                          onClick={() => handleVenueDelete(venue.id)}
                           variant='outlined'
                           color='error'
                         >

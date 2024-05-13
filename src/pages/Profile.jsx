@@ -12,6 +12,7 @@ const Profile = () => {
   const storage = useStorage()
   const [userData, setUserData] = useState(null)
   const [userBookings, setUserBookings] = useState([])
+  const [venues, setVenues] = useState([])
 
   const handleDelete = async (venueId) => {
     try {
@@ -34,6 +35,9 @@ const Profile = () => {
       }
 
       console.log('Venue deleted successfully')
+      setVenues((prevVenues) =>
+        prevVenues.filter((venue) => venue.id !== venueId)
+      )
     } catch (error) {
       console.error('Error deleting venue:', error)
     }
@@ -97,6 +101,7 @@ const Profile = () => {
         }
 
         setUserData(updatedUserData)
+        setVenues(userVenuesData.data)
       } catch (error) {
         console.error('Error fetching user data:', error)
       }
@@ -114,10 +119,7 @@ const Profile = () => {
   return (
     <div className='contentContainer'>
       <ProfileLayout userData={userData} />
-      <UserVenuesList
-        venues={userData.venues}
-        handleDelete={handleDelete}
-      />{' '}
+      <UserVenuesList venues={venues} handleDelete={handleDelete} />{' '}
       {!isVenueManager && <UserBookingsList bookings={userBookings} />}
     </div>
   )
