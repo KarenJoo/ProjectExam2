@@ -7,11 +7,12 @@ import {
   ListItemText,
   Avatar,
   Divider,
+  Button,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import styles from './VenueList.module.css'
 
-const VenuesList = ({ venues, userId }) => {
+const VenuesList = ({ venues, userId, handleDelete }) => {
   return (
     <>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
@@ -46,20 +47,29 @@ const VenuesList = ({ venues, userId }) => {
                 primary={venue.name}
                 secondary={
                   <>
-                    {venue.createdBy === userId && (
-                      <Link
-                        to={`/update/${venue.id}`}
-                        className={styles.updateButton}
-                      >
-                        Update Venue
-                      </Link>
-                    )}
                     <Link
                       to={`/venue/${venue.id}`}
                       className={styles.viewButton}
                     >
                       View Venue
                     </Link>
+                    {venue.createdBy === userId && (
+                      <>
+                        <Link
+                          to={`/update/${venue.id}`}
+                          className={styles.updateButton}
+                        >
+                          Update Venue
+                        </Link>
+                        <Button
+                          onClick={() => handleDelete(venue.id)}
+                          variant='outlined'
+                          color='error'
+                        >
+                          Delete Venue
+                        </Button>
+                      </>
+                    )}
                   </>
                 }
               />

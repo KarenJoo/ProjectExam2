@@ -5,11 +5,39 @@ import { getUserVenues, getUserBookings } from '../utils/getUserVenues'
 import { CREATE_API_KEY } from '../utils/api'
 import UserVenuesList from '../components/Layout/Profile/VenueList'
 import UserBookingsList from '../components/Layout/Profile/BookingList'
+import { createApiKey } from '../utils/createApiKey'
+import { VENUES_URL } from '../utils/api'
 
 const Profile = () => {
   const storage = useStorage()
   const [userData, setUserData] = useState(null)
   const [userBookings, setUserBookings] = useState([])
+
+  const handleDelete = async (venueId) => {
+    try {
+      const accessToken = storage.loadToken('accessToken')
+      const apiKey = await createApiKey(accessToken)
+
+      const url = `${VENUES_URL}/${venueId}`
+      const method = 'DELETE'
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+          'X-Noroff-API-Key': apiKey,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to delete venue')
+      }
+
+      console.log('Venue deleted successfully')
+    } catch (error) {
+      console.error('Error deleting venue:', error)
+    }
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -86,9 +114,10 @@ const Profile = () => {
   return (
     <div className='contentContainer'>
       <ProfileLayout userData={userData} />
-
-      <UserVenuesList venues={userData.venues} />
-
+      <UserVenuesList
+        venues={userData.venues}
+        handleDelete={handleDelete}
+      />{' '}
       {!isVenueManager && <UserBookingsList bookings={userBookings} />}
     </div>
   )

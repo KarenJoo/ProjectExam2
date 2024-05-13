@@ -1,15 +1,14 @@
-import useStorage from "./useStorage";
+import useStorage from './useStorage'
 
 const CheckAuth = () => {
-  const { loadToken } = useStorage();
-  const accessToken = loadToken();
+  const { loadToken } = useStorage()
+  const accessToken = loadToken()
 
   if (!accessToken) {
-    return             alert('Auth is required to create venue.')
-
+    return alert('Auth is required to create venue.')
   }
 
-  return null;
-};
+  return null
+}
 
-export default CheckAuth;
+export default CheckAuth
