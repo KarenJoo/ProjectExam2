@@ -24,15 +24,16 @@ const ProfileLayout = ({ userData }) => {
           <Typography variant='body1'>
             Venue Manager: {venueManager ? 'Yes' : 'No'}
           </Typography>
-        </Grid>
-      </Grid>
-
-      {!isVenueManager && (
-        <Grid item xs={12} md={9}>
-          <Typography variant='body1'>Total Venues: {venuesCount}</Typography>
           <Typography variant='body1'>
             Total Bookings: {bookedVenues ? bookedVenues.length : 0}
           </Typography>
+        </Grid>
+      </Grid>
+
+      {isVenueManager && (
+        <Grid item xs={12} md={9}>
+          <Typography variant='body1'>Total Venues: {venuesCount}</Typography>
+
           <Typography variant='h2'>Booked Venues</Typography>
           <ul>
             {bookedVenues &&

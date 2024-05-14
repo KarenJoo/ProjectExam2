@@ -72,7 +72,7 @@ const Profile = () => {
           storedUserData.name,
           accessToken,
           apiKey,
-          !isVenueManager
+          isVenueManager
         )
 
         if (!userVenuesResponse.ok) {
@@ -120,7 +120,7 @@ const Profile = () => {
     <div className='contentContainer'>
       <ProfileLayout userData={userData} />
       <UserVenuesList venues={venues} handleDelete={handleDelete} />{' '}
-      {!isVenueManager && <UserBookingsList bookings={userBookings} />}
+      {isVenueManager && <UserBookingsList bookings={userBookings} />}
     </div>
   )
 }
