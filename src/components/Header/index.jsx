@@ -25,23 +25,20 @@ const Navbar = () => {
     setAnchorEl(null)
   }
 
-
   return (
     <Box
       sx={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        maxWidth: '100%',
         height: '70px',
         backgroundColor: 'rgba(1, 51, 62, 0.8)',
-        padding: '0 10px',
         overflowX: 'hidden',
       }}
     >
       {/* menu */}
-      <Typography variant='body1' sx={{ color: '#fde8c9' }}>
-      <Link to={`/login`} className='link'>
+      <Typography variant='body1' sx={{ color: '#fde8c9', marginLeft: '20px' }}>
+        <Link to={`/login`} className='link'>
           Log in
         </Link>
       </Typography>
@@ -73,6 +70,8 @@ const Navbar = () => {
             sx={{
               backgroundColor: '#01333e',
               color: '#fde8c9',
+              marginRight: '30px',
+
               boxShadow: '0 0 0 1px #fde8c9',
               '&:hover': {
                 boxShadow: '0 0 0 3px #fde8c9',
@@ -94,10 +93,10 @@ const Navbar = () => {
           elevation: 0,
           sx: {
             backgroundColor: 'rgba(1, 51, 62, 0.9)',
-            minWidth: '150px',
-            marginTop: '10px',
+            width: '50%',
             marginLeft: '20px',
-            padding: '20px'
+            marginTop: '10px',
+            padding: '20px',
           },
         }}
         transformOrigin={{
@@ -130,8 +129,8 @@ const Navbar = () => {
           Profile
         </MenuItem>
 
-       {/* book venue */}
-       <MenuItem
+        {/* book venue */}
+        <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
         >
@@ -140,21 +139,19 @@ const Navbar = () => {
           </ListItemIcon>
           Book
         </MenuItem>
-        
 
         {/* create venue */}
-          <MenuItem
-            onClick={handleClose}
-            sx={{ fontSize: '12px', color: '#fde8c9' }}
-            component={Link}
-            to='/create'
-          >
-            <ListItemIcon sx={{ color: '#fde8c9' }}>
-              <CreateIcon fontSize='small' />
-            </ListItemIcon>
-            Create venue
-          </MenuItem>
-     
+        <MenuItem
+          onClick={handleClose}
+          sx={{ fontSize: '12px', color: '#fde8c9' }}
+          component={Link}
+          to='/create'
+        >
+          <ListItemIcon sx={{ color: '#fde8c9' }}>
+            <CreateIcon fontSize='small' />
+          </ListItemIcon>
+          Create venue
+        </MenuItem>
 
         <MenuItem
           onClick={handleClose}
