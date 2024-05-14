@@ -6,12 +6,12 @@ import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
-import PersonAddIcon from '@mui/icons-material/PersonAdd'
-import SettingsIcon from '@mui/icons-material/Settings'
 import LogoutIcon from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import { Link } from 'react-router-dom'
 import Logout from './Logout'
+import CreateIcon from '@mui/icons-material/Create'
+import AddIcon from '@mui/icons-material/Add'
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -34,14 +34,16 @@ const Navbar = () => {
         justifyContent: 'space-between',
         maxWidth: '100%',
         height: '70px',
-        backgroundColor: 'rgba(1, 51, 62, 0.4)',
+        backgroundColor: 'rgba(1, 51, 62, 0.8)',
         padding: '0 10px',
         overflowX: 'hidden',
       }}
     >
       {/* menu */}
       <Typography variant='body1' sx={{ color: '#fde8c9' }}>
-        menu
+      <Link to={`/login`} className='link'>
+          Log in
+        </Link>
       </Typography>
 
       {/* Logo or Brand */}
@@ -91,10 +93,11 @@ const Navbar = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            backgroundColor: 'rgba(1, 51, 62, 0.5)',
+            backgroundColor: 'rgba(1, 51, 62, 0.9)',
             minWidth: '150px',
             marginTop: '10px',
             marginLeft: '20px',
+            padding: '20px'
           },
         }}
         transformOrigin={{
@@ -127,16 +130,16 @@ const Navbar = () => {
           Profile
         </MenuItem>
 
-        {/* book venue */}
-          <MenuItem
-            onClick={handleClose}
-            sx={{ fontSize: '12px', color: '#fde8c9' }}
-          >
-            <ListItemIcon>
-              <PersonAddIcon fontSize='small' sx={{ color: '#fde8c9' }} />
-            </ListItemIcon>
-            Book
-          </MenuItem>
+       {/* book venue */}
+       <MenuItem
+          onClick={handleClose}
+          sx={{ fontSize: '12px', color: '#fde8c9' }}
+        >
+          <ListItemIcon>
+            <AddIcon fontSize='small' sx={{ color: '#fde8c9' }} />
+          </ListItemIcon>
+          Book
+        </MenuItem>
         
 
         {/* create venue */}
@@ -147,7 +150,7 @@ const Navbar = () => {
             to='/create'
           >
             <ListItemIcon sx={{ color: '#fde8c9' }}>
-              <SettingsIcon fontSize='small' />
+              <CreateIcon fontSize='small' />
             </ListItemIcon>
             Create venue
           </MenuItem>

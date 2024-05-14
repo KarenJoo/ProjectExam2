@@ -2,7 +2,7 @@ import React from 'react'
 import useStorage from '../../utils/useStorage'
 
 const Logout = () => {
-  const { clearUserData } = useStorage();
+  const { clearUserData } = useStorage()
 
   const handleLogout = () => {
     clearUserData()
@@ -10,8 +10,11 @@ const Logout = () => {
   }
 
   return (
-    <div>
-      <button onClick={handleLogout}>Logout</button>
+    <div
+      style={{ cursor: 'pointer', color: '#fde8c9', textDecoration: 'none' }}
+      onClick={handleLogout}
+    >
+      Logout
     </div>
   )
 }
