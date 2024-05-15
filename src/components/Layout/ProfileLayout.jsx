@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Avatar, Typography, Grid, Button } from '@mui/material'
 import UpdateAvatarForm from '../Forms/AvatarForm'
 import styles from './ProfileLayout.module.css'
@@ -12,9 +12,9 @@ import { useSelector } from 'react-redux'
 const ProfileLayout = ({ userData }) => {
   const storage = useStorage()
   const [isUpdateAvatarOpen, setIsUpdateAvatarOpen] = useState(false)
-  const { name, bookedVenues, venueManager, venues, avatar } = userData
+  const { name, bookedVenues, venues, avatar } = userData
   const venuesCount = venues ? venues.length : 0
-  const isVenueManager = venueManager
+  const [isVenueManager, setIsVenueManager] = useState(userData.venueManager)
   const dispatch = useDispatch()
   const reduxAvatarUrl = useSelector((state) => state.avatar.url)
 
@@ -37,6 +37,7 @@ const ProfileLayout = ({ userData }) => {
       if (!response.ok) {
         throw new Error('Failed to update avatar')
       }
+
       localStorage.setItem('avatarUrl', avatarUrl)
       dispatch(updateAvatarUrl(avatarUrl))
       setIsUpdateAvatarOpen(false)
@@ -44,6 +45,9 @@ const ProfileLayout = ({ userData }) => {
       console.error('Error updating avatar:', error)
     }
   }
+  useEffect(() => {
+    setIsVenueManager(userData.isVenueManager)
+  }, [userData.isVenueManager])
 
   return (
     <div className={styles.profileContainer}>
@@ -71,7 +75,7 @@ const ProfileLayout = ({ userData }) => {
         <Grid item xs={12} md={9}>
           <Typography variant='h2'>{name || 'Unknown User'}</Typography>
           <Typography variant='body1'>
-            Venue Manager: {venueManager ? 'Yes' : 'No'}
+            Venue Manager: {isVenueManager ? 'Yes' : 'No'}
           </Typography>
         </Grid>
         {!isVenueManager && (

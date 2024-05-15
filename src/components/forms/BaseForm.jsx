@@ -4,65 +4,64 @@ import { registerUser, loginUser } from '../../utils/registerFetch'
 import useStorage from '../../utils/useStorage'
 import Alert from '@mui/material/Alert'
 import CheckIcon from '@mui/icons-material/Check'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
 import { login, setVenueManager } from '../../storage/reducers/authReducer'
 
-
 const BaseForm = ({ variant }) => {
-  const isRegister = variant === 'register';
-  const storage = useStorage();
-  const dispatch = useDispatch();
+  const isRegister = variant === 'register'
+  const storage = useStorage()
+  const dispatch = useDispatch()
 
   const [formData, setFormData] = useState(() => {
-    const userData = storage.loadUserData();
+    const userData = storage.loadUserData()
     return {
       createUsername: '',
       createPassword: '',
       email: '',
       avatarUrl: '',
-      venueManager: userData ? userData.venueManager : false,
-    };
-  });
+      venueManager: userData ? userData.isVenueManager : false,
+    }
+  })
 
-  const [errors, setErrors] = useState({});
-  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [errors, setErrors] = useState({})
+  const [registrationSuccess, setRegistrationSuccess] = useState(false)
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
   const validateForm = () => {
-    const inputErrors = {};
+    const inputErrors = {}
 
     if (isRegister && !formData.createUsername) {
-      inputErrors.createUsername = 'Create Username is required';
+      inputErrors.createUsername = 'Create Username is required'
     }
 
     if (!formData.createPassword) {
-      inputErrors.createPassword = 'Create Password is required';
+      inputErrors.createPassword = 'Create Password is required'
     }
 
     if (!formData.email) {
-      inputErrors.email = 'Email is required';
+      inputErrors.email = 'Email is required'
     }
 
-    setErrors(inputErrors);
-    return Object.keys(inputErrors).length === 0;
-  };
+    setErrors(inputErrors)
+    return Object.keys(inputErrors).length === 0
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (validateForm()) {
       try {
-        const { email, createPassword } = formData;
+        const { email, createPassword } = formData
 
-        let loggedInUser;
+        let loggedInUser
 
         // register user
         if (isRegister) {
-          const { createUsername, email, createPassword, avatarUrl } = formData;
+          const { createUsername, email, createPassword, avatarUrl } = formData
 
           const registerData = {
             name: createUsername,
@@ -72,68 +71,62 @@ const BaseForm = ({ variant }) => {
               url: avatarUrl,
             },
             venueManager: formData.venueManager,
-          };
+          }
 
-          const registeredUser = await registerUser(registerData);
-          console.log('User registered successfully:', registeredUser);
+          const registeredUser = await registerUser(registerData)
+          console.log('User registered successfully:', registeredUser)
 
           storage.saveUserData({
             ...registeredUser.data,
-            venueManager: formData.venueManager,
-          });
+            isVenueManager: formData.venueManager,
+          })
 
-          setRegistrationSuccess(true);
+          setRegistrationSuccess(true)
 
           // Log in user
-          loggedInUser = registeredUser;
+          loggedInUser = registeredUser
         } else {
           loggedInUser = await loginUser({
             email,
             password: createPassword,
-          });
+          })
 
           if (loggedInUser.data.accessToken) {
-            const accessToken = loggedInUser.data.accessToken;
+            const accessToken = loggedInUser.data.accessToken
 
-            storage.saveToken(accessToken);
+            storage.saveToken(accessToken)
 
             storage.saveUserData({
               ...loggedInUser.data,
-              venueManager: formData.venueManager,
-            });
+              isVenueManager: formData.venueManager,
+            })
 
-            console.log('Logged In User:', loggedInUser.data);
-            console.log('Access Token:', accessToken);
-            console.log(
-              'Venue Manager from loggedInUser:',
-              loggedInUser.data.venueManager
-            );
+            console.log('Logged In User:', loggedInUser.data)
+            console.log('Access Token:', accessToken)
 
-            const storedUserData = storage.loadUserData();
-            const storedVenueManager = storedUserData
-              ? storedUserData.venueManager
-              : false;
-            console.log('Venue Manager from localStorage:', storedVenueManager);
+            localStorage.setItem('userLoggedIn', 'true')
 
-            localStorage.setItem('userLoggedIn', 'true');
+            window.location.href = '/profile'
 
-            window.location.href = '/profile';
-
-            dispatch(login());
-            dispatch(setVenueManager(formData.venueManager));
+            dispatch(login())
+            dispatch(setVenueManager(formData.venueManager))
           } else {
-            alert('Login failed. Please check your credentials.');
+            alert('Login failed. Please check your credentials.')
           }
         }
       } catch (error) {
-        console.error('Registration/Login failed:', error.message);
-        alert('Registration/Login failed. Please try again.');
+        console.error('Registration/Login failed:', error.message)
+        alert('Registration/Login failed. Please try again.')
       }
     }
-  };
+  }
 
-  const { createUsername, createPassword, email, avatarUrl } = formData;
-  const { email: emailError, createUsername: usernameError, createPassword: createPasswordError } = errors;
+  const { createUsername, createPassword, email, avatarUrl } = formData
+  const {
+    email: emailError,
+    createUsername: usernameError,
+    createPassword: createPasswordError,
+  } = errors
 
   const inputStyles = {
     color: '#01333e',
@@ -153,8 +146,7 @@ const BaseForm = ({ variant }) => {
         color: '#ccc',
       },
     },
-  };
-
+  }
 
   return (
     <div>
@@ -237,7 +229,7 @@ const BaseForm = ({ variant }) => {
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  venueManager: e.target.value === 'manager',
+                  venueManager: e.target.value === 'manager' ? true : false,
                 })
               }
               error={!errors.venueManager}
