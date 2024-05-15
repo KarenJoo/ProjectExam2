@@ -35,8 +35,12 @@ const UpdateAvatarForm = ({ open, onClose, onUpdate }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color={'secondary'}>Cancel</Button>
-        <Button onClick={handleSubmit} color={'secondary'}>Update</Button>
+        <Button onClick={onClose} color={'secondary'}>
+          Cancel
+        </Button>
+        <Button onClick={handleSubmit} color={'secondary'}>
+          Update
+        </Button>
       </DialogActions>
     </Dialog>
   )

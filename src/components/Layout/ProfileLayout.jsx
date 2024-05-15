@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import { Avatar, Typography, Grid, Button } from '@mui/material'
 import UpdateAvatarForm from '../Forms/AvatarForm'
 import styles from './ProfileLayout.module.css'
@@ -8,35 +8,37 @@ import useStorage from '../../utils/useStorage'
 
 const ProfileLayout = ({ userData }) => {
   const storage = useStorage()
-  const [isUpdateAvatarOpen, setIsUpdateAvatarOpen] = useState(false);
-  const { name, avatar, bookedVenues, venueManager, venues } = userData
+  const [isUpdateAvatarOpen, setIsUpdateAvatarOpen] = useState(false)
+  const { name, bookedVenues, venueManager, venues } = userData
   const venuesCount = venues ? venues.length : 0
   const isVenueManager = userData && userData.venueManager
+  const [avatar, setAvatar] = useState(userData.avatar)
 
   const handleUpdateAvatar = async (avatarUrl) => {
     try {
       const accessToken = storage.loadToken('accessToken')
       const apiKey = await createApiKey(accessToken)
 
-   const url = `${PROFILE_API}/${name}`;
-    const method = 'PUT'
-    const response = await fetch(url, {
-      method,
+      const url = `${PROFILE_API}/${name}`
+      const method = 'PUT'
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
           'X-Noroff-API-Key': apiKey,
         },
         body: JSON.stringify({ avatar: { url: avatarUrl } }),
-    })
-    if (!response.ok) {
-      throw new Error('Failed to update avatar')
+      })
+      if (!response.ok) {
+        throw new Error('Failed to update avatar')
+      }
+      setAvatar({ url: avatarUrl })
+      setIsUpdateAvatarOpen(false)
+    } catch (error) {
+      console.error('Error updating avatar:', error)
     }
-   
-  } catch (error) {
-    console.error('Error updating avatar:', error)
   }
-  };
 
   return (
     <div className={styles.profileContainer}>
@@ -49,7 +51,12 @@ const ProfileLayout = ({ userData }) => {
               sx={{ width: 120, height: 120 }}
             />
           )}
-           <Button onClick={() => setIsUpdateAvatarOpen(true)} variant='outlined' color='secondary'>Update Avatar</Button>
+          <Button
+            variant='contained'
+            onClick={() => setIsUpdateAvatarOpen(true)}
+          >
+            Update Avatar
+          </Button>
           <UpdateAvatarForm
             open={isUpdateAvatarOpen}
             onClose={() => setIsUpdateAvatarOpen(false)}
