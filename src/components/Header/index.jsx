@@ -12,18 +12,21 @@ import { Link } from 'react-router-dom'
 import Logout from './Logout'
 import CreateIcon from '@mui/icons-material/Create'
 import AddIcon from '@mui/icons-material/Add'
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   return (
     <Box
@@ -33,11 +36,13 @@ const Navbar = () => {
         justifyContent: 'space-between',
         height: '70px',
         backgroundColor: 'rgba(1, 51, 62, 0.8)',
+        width: '100vw',
+        maxWidth: '100%', 
         overflowX: 'hidden',
       }}
     >
       {/* menu */}
-      <Typography variant='body1' sx={{ color: '#fde8c9', marginLeft: '20px' }}>
+      <Typography variant='body1' sx={{ color: '#fde8c9' }}>
         <Link to={`/login`} className='link'>
           Log in
         </Link>
@@ -70,8 +75,6 @@ const Navbar = () => {
             sx={{
               backgroundColor: '#01333e',
               color: '#fde8c9',
-              marginRight: '30px',
-
               boxShadow: '0 0 0 1px #fde8c9',
               '&:hover': {
                 boxShadow: '0 0 0 3px #fde8c9',
@@ -93,8 +96,7 @@ const Navbar = () => {
           elevation: 0,
           sx: {
             backgroundColor: 'rgba(1, 51, 62, 0.9)',
-            width: '50%',
-            marginLeft: '20px',
+            width: '100%', // Always fill the viewport width
             marginTop: '10px',
             padding: '20px',
           },
@@ -165,7 +167,6 @@ const Navbar = () => {
         </MenuItem>
       </Menu>
     </Box>
-  )
-}
-
+  );
+};
 export default Navbar
