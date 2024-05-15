@@ -12,13 +12,11 @@ import { Link } from 'react-router-dom'
 import Logout from './Logout'
 import CreateIcon from '@mui/icons-material/Create'
 import AddIcon from '@mui/icons-material/Add'
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
