@@ -55,12 +55,17 @@ const theme = createTheme({
       fontSize: '0.875rem',
       fontWeight: 400,
     },
-    container: {
-      backgroundColor: '#000',
-      height: '100vh',
-      width: '100%',
-      marginBottom: '100px',
-      marginTop: '20px',
+    components: {
+      MuiFilledInput: {
+        styleOverrides: {
+          root: {
+            borderRadius: '16px', // Set rounded corners
+            '& input': {
+              color: '#1976d2', // Set text color to primary color
+            },
+          },
+        },
+      },
     },
 
   },
