@@ -121,12 +121,14 @@ const Profile = () => {
   return (
     <div className='contentContainer'>
       <ProfileLayout userData={userData} />
-      {isVenueManager && (
+      {!isVenueManager ? (
         <UserVenuesList venues={userData.venues} handleDelete={handleDelete} />
+      ) : (
+        <UserBookingsList bookings={userData.bookings} />
       )}
-      {!isVenueManager && (<UserBookingsList bookings={userData.bookings} />)}
     </div>
   )
+  
 }
 
 export default Profile
