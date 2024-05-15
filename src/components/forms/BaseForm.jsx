@@ -57,7 +57,7 @@ const BaseForm = ({ variant }) => {
       try {
         const { email, createPassword } = formData
 
-        let loggedInUser
+        let loggedInUser;
 
         // register user
         if (isRegister) {
@@ -92,13 +92,14 @@ const BaseForm = ({ variant }) => {
           })
 
           if (loggedInUser.data.accessToken) {
-            const accessToken = loggedInUser.data.accessToken
+            const accessToken = loggedInUser.data.accessToken;
+            const isVenueManager = formData.venueManager;
 
             storage.saveToken(accessToken)
 
             storage.saveUserData({
               ...loggedInUser.data,
-              isVenueManager: formData.venueManager,
+              isVenueManager: isVenueManager,
             })
 
             console.log('Logged In User:', loggedInUser.data)
@@ -109,7 +110,8 @@ const BaseForm = ({ variant }) => {
             window.location.href = '/profile'
 
             dispatch(login())
-            dispatch(setVenueManager(formData.venueManager))
+
+            dispatch(setVenueManager(isVenueManager))
           } else {
             alert('Login failed. Please check your credentials.')
           }
