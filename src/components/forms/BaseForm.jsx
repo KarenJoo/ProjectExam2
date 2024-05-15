@@ -5,7 +5,11 @@ import useStorage from '../../utils/useStorage'
 import Alert from '@mui/material/Alert'
 import CheckIcon from '@mui/icons-material/Check'
 import { useDispatch } from 'react-redux'
-import { login, setVenueManager } from '../../storage/reducers/authReducer'
+import {
+  login,
+  setVenueManager,
+  setUserData,
+} from '../../storage/reducers/authReducer'
 
 const BaseForm = ({ variant }) => {
   const isRegister = variant === 'register'
@@ -57,7 +61,7 @@ const BaseForm = ({ variant }) => {
       try {
         const { email, createPassword } = formData
 
-        let loggedInUser;
+        let loggedInUser
 
         // register user
         if (isRegister) {
@@ -92,10 +96,11 @@ const BaseForm = ({ variant }) => {
           })
 
           if (loggedInUser.data.accessToken) {
-            const accessToken = loggedInUser.data.accessToken;
-            const isVenueManager = formData.venueManager;
+            const accessToken = loggedInUser.data.accessToken
+            const isVenueManager = formData.venueManager
 
             storage.saveToken(accessToken)
+            storage.saveUserData(loggedInUser.data)
 
             storage.saveUserData({
               ...loggedInUser.data,
@@ -110,8 +115,8 @@ const BaseForm = ({ variant }) => {
             window.location.href = '/profile'
 
             dispatch(login())
-
             dispatch(setVenueManager(isVenueManager))
+            dispatch(setUserData(loggedInUser.data))
           } else {
             alert('Login failed. Please check your credentials.')
           }

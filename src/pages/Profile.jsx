@@ -98,10 +98,12 @@ const Profile = () => {
         const updatedUserData = {
           ...storedUserData,
           venues: userVenuesData.data,
+          bookings: userBookingsData.data,
         }
 
         setUserData(updatedUserData)
         setVenues(userVenuesData.data)
+        setUserBookings(userBookingsData.data);
       } catch (error) {
         console.error('Error fetching user data:', error)
       }
@@ -120,9 +122,9 @@ const Profile = () => {
     <div className='contentContainer'>
       <ProfileLayout userData={userData} />
       {isVenueManager && (
-        <UserVenuesList venues={venues} handleDelete={handleDelete} />
+        <UserVenuesList venues={userData.venues} handleDelete={handleDelete} />
       )}
-      {!isVenueManager && <UserBookingsList bookings={userBookings} />}
+      {!isVenueManager && (<UserBookingsList bookings={userData.bookings} />)}
     </div>
   )
 }
