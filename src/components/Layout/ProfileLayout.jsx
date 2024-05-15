@@ -5,14 +5,18 @@ import styles from './ProfileLayout.module.css'
 import { PROFILE_API } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
+import { useDispatch } from 'react-redux'
+import { updateAvatarUrl } from '../../storage/reducers/avatarReducer'
+import { useSelector } from 'react-redux'
 
 const ProfileLayout = ({ userData }) => {
   const storage = useStorage()
   const [isUpdateAvatarOpen, setIsUpdateAvatarOpen] = useState(false)
-  const { name, bookedVenues, venueManager, venues } = userData
+  const { name, bookedVenues, venueManager, venues, avatar } = userData
   const venuesCount = venues ? venues.length : 0
-  const isVenueManager = userData && userData.venueManager
-  const [avatar, setAvatar] = useState(userData.avatar)
+  const isVenueManager = venueManager
+  const dispatch = useDispatch()
+  const reduxAvatarUrl = useSelector((state) => state.avatar.url)
 
   const handleUpdateAvatar = async (avatarUrl) => {
     try {
@@ -33,7 +37,8 @@ const ProfileLayout = ({ userData }) => {
       if (!response.ok) {
         throw new Error('Failed to update avatar')
       }
-      setAvatar({ url: avatarUrl })
+      localStorage.setItem('avatarUrl', avatarUrl)
+      dispatch(updateAvatarUrl(avatarUrl))
       setIsUpdateAvatarOpen(false)
     } catch (error) {
       console.error('Error updating avatar:', error)
@@ -47,7 +52,7 @@ const ProfileLayout = ({ userData }) => {
           {avatar && (
             <Avatar
               alt={name || 'User Avatar'}
-              src={avatar.url}
+              src={reduxAvatarUrl || avatar.url}
               sx={{ width: 120, height: 120 }}
             />
           )}

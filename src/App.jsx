@@ -9,6 +9,7 @@ import Profile from './pages/Profile'
 import CreateVenue from './pages/manager/CreateVenue'
 import UpdateVenue from './pages/manager/UpdateVenue'
 
+
 function App() {
   return (
     <div className='App'>
