@@ -2,9 +2,10 @@ import React from 'react'
 import useStorage from '../../utils/useStorage'
 
 const Logout = () => {
-  const { clearUserData } = useStorage()
+  const { clearUserData, save } = useStorage()
 
   const handleLogout = () => {
+    save('userLoggedIn', false);
     clearUserData()
     window.location.href = '/login'
   }
