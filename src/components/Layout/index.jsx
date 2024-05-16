@@ -10,8 +10,8 @@ export default function Layout(props) {
   return (
     <>
       <ThemeProvider theme={theme}>
+         <Navbar /> 
         <header>
-          <Navbar />
         </header>
         <main>{children}</main>
         <footer>

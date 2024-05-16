@@ -12,33 +12,22 @@ import { Link } from 'react-router-dom'
 import Logout from './Logout'
 import CreateIcon from '@mui/icons-material/Create'
 import AddIcon from '@mui/icons-material/Add'
-
+import styles from './index.module.css'
 
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height: '70px',
-        backgroundColor: 'rgba(1, 51, 62, 0.8)',
-        width: '100vw',
-        maxWidth: '100%', 
-        overflowX: 'hidden',
-      }}
-    >
+    <Box className={styles.navbarContainer}>
       {/* menu */}
       <Typography variant='body1' sx={{ color: '#fde8c9' }}>
         <Link to={`/login`} className='link'>
@@ -56,27 +45,17 @@ const Navbar = () => {
       {/* Account Settings Button */}
       <Tooltip title='Account settings'>
         <IconButton
+          className={styles.profileBtn}
           onClick={handleClick}
           size='small'
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup='true'
           aria-expanded={open ? 'true' : undefined}
-          sx={{
-            color: '#01333e',
-            backgroundColor: '#01333e',
-            '&:hover': {
-              backgroundColor: '#01333e',
-            },
-          }}
         >
           <Avatar
+            className={styles.profileIcon}
             sx={{
               backgroundColor: '#01333e',
-              color: '#fde8c9',
-              boxShadow: '0 0 0 1px #fde8c9',
-              '&:hover': {
-                boxShadow: '0 0 0 3px #fde8c9',
-              },
             }}
           >
             P
@@ -86,29 +65,22 @@ const Navbar = () => {
 
       {/* Dropdown Menu */}
       <Menu
+        className={styles.dropDownMenu}
         anchorEl={anchorEl}
         id='account-menu'
         open={open}
         onClose={handleClose}
         PaperProps={{
-          elevation: 0,
           sx: {
             backgroundColor: 'rgba(1, 51, 62, 0.9)',
-            width: '100%', // Always fill the viewport width
+            width: '50%',
             marginTop: '10px',
             padding: '20px',
           },
         }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
+        
       >
-        {/* profile */}
+        {/* profile link */}
         <MenuItem
           onClick={handleClose}
           sx={{ fontSize: '12px', color: '#fde8c9' }}
@@ -127,17 +99,6 @@ const Navbar = () => {
             P
           </Avatar>
           Profile
-        </MenuItem>
-
-        {/* book venue */}
-        <MenuItem
-          onClick={handleClose}
-          sx={{ fontSize: '12px', color: '#fde8c9' }}
-        >
-          <ListItemIcon>
-            <AddIcon fontSize='small' sx={{ color: '#fde8c9' }} />
-          </ListItemIcon>
-          Book
         </MenuItem>
 
         {/* create venue */}
@@ -165,6 +126,6 @@ const Navbar = () => {
         </MenuItem>
       </Menu>
     </Box>
-  );
-};
+  )
+}
 export default Navbar
