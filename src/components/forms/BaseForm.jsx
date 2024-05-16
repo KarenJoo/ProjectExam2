@@ -86,6 +86,7 @@ const BaseForm = ({ variant }) => {
           })
 
           setRegistrationSuccess(true)
+          dispatch(login()); 
 
           // Log in user
           loggedInUser = registeredUser

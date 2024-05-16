@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    loggedIn: false, 
+    loggedIn: localStorage.getItem('userLoggedIn') === 'true', 
     isVenueManager: false, 
     userData: null, 
 };
@@ -22,6 +22,7 @@ const authSlice = createSlice({
         },
         setUserData: (state, action) => {
             state.userData = action.payload;
+            state.loggedIn = true;
           },
     },
 });
