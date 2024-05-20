@@ -34,68 +34,66 @@ const Homepage = () => {
 
   return (
     <Box p={2} textAlign='center'>
-      <Typography variant='h1'>Holidaze</Typography>
-      <Typography variant='h3' color='primary'>
-        Book and dayze away
-      </Typography>
+      <Box >
+        <Typography variant='h1'>Holidaze</Typography>
+        <Typography variant='h3' color='primary'>
+          Book and dayze away
+        </Typography>
 
-      {/* Styled Search Bar */}
-      <Box
-        bgcolor='#fff'
-        border={'1px'}
-        borderColor={'#000'}
-        borderRadius={2}
-        boxShadow={1}
-        margin={'20px auto'}
-        width={{ xs: '90%', sm: '80%', md: '60%' }}
-      >
-        <TextField
-          fullWidth
-          variant='outlined'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder='Search venues...'
-          InputLabelProps={{
-            style: { color: '#1976d2' },
-          }}
-        />
+        {/* Styled Search Bar */}
+        <Box
+          bgcolor='#fff'
+          border={'1px'}
+          borderColor={'#000'}
+          borderRadius={2}
+          boxShadow={1}
+          margin={'20px auto'}
+          width={{ xs: '90%', sm: '80%', md: '60%' }}
+        >
+          <TextField
+            fullWidth
+            variant='outlined'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder='Search venues...'
+            InputLabelProps={{
+              style: { color: '#1976d2' },
+            }}
+          />
+        </Box>
+
+        {/* Display filtered and sorted venues up to the display count */}
+        <Grid container spacing={1} justifyContent='center'>
+          {filteredVenues.slice(0, displayCount).map((venue) => (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              key={venue.id}
+              display='flex'
+              justifyContent='center'
+            >
+              <VenueCard venue={venue} />
+            </Grid>
+          ))}
+        </Grid>
       </Box>
 
-      {/* Display filtered and sorted venues up to the display count */}
-      <Grid
-        container
-        spacing={1}
-        justifyContent='center'
-        sx={{ height: '1000px' }}
-      >
-        {filteredVenues.slice(0, displayCount).map((venue) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            key={venue.id}
-            display='flex'
-            justifyContent='center'
-          >
-            <VenueCard venue={venue} />
-          </Grid>
-        ))}
-      </Grid>
-
       {/* Button to load more venues */}
-      {displayCount < filteredVenues.length && (
-        <Button
-          onClick={handleViewMore}
-          variant='contained'
-          color='primary'
-          sx={{ marginTop: 2 }}
-        >
-          View More
-        </Button>
-      )}
+      <Box mt={2} mb={2}>
+        {displayCount < filteredVenues.length && (
+          <Button
+            onClick={handleViewMore}
+            variant='contained'
+            color='primary'
+          >
+            View More
+          </Button>
+        )}
+      </Box>
     </Box>
-  )
-}
+  );
+};
 
 export default Homepage

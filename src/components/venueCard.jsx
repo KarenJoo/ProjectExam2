@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions'
 import Typography from '@mui/material/Typography'
 import { PrimaryButton } from './Styles/Buttons'
 import { styled } from '@mui/system'
-import { Grid, Box } from '@mui/material'
+import { Grid } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
@@ -30,89 +30,63 @@ const VenueCard = ({ venue }) => {
   const breakfastStatus = meta?.breakfast ? 'Yes' : 'No'
   const petsStatus = meta?.pets ? 'Yes' : 'No'
 
+  
   return (
     <Card
       sx={{
         backgroundColor: '#fff',
-        color: '#fff',
-        border: '0.5px solid #fff',
+        color: '#000',
+        border: '0.5px solid #ccc',
         boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.20)',
-        height: '300px',
-        maxHeight: '500px',
-        width: '400px',
-        maxWidth: '400px',
+        height: '270px', // Default height for small screens
+        width: '550px', // Default width for small screens
+        maxWidth: '100%',
+        '@media (min-width: 600px)': { // Adjustments for larger screens
+          height: '250px',
+          width: '500px',
+        },
       }}
     >
-      <Grid container direction={isSmallScreen ? 'column' : 'row'}>
-        <Grid item xs={6} sm={8}>
+      <Grid container direction="row">
+        <Grid item xs={4} sm={4} md={4}>
           <CardMedia
             component='img'
-            height='100%'
+            height='300px'
             image={media && media.length > 0 ? media[0].url : ''}
             alt={name}
-            sx={{ height: isSmallScreen ? '200px' : '300px' }}
+            sx={{ objectFit: 'cover' }}
           />
         </Grid>
-        <Grid item xs={6} sm={12} >
+        <Grid item xs={8} sm={8} md={8}>
           <CardHeader
             title={
-              <Typography
-                variant='h1'
-                sx={{
-                  textAlign: 'left',
-                  padding: '0px',
-                  margin: '0px',
-                  fontSize: isSmallScreen ? '16px' : '20px',
-                  color: '#000',
-                }}
-              >
+              <Typography variant='h1' sx={{ color: '#000', margin: '0px', padding: '0px', fontSize: '15px', textAlign: 'left' }}>
                 {name}
               </Typography>
             }
             subheader={
-              <Typography
-                variant='subtitle2'
-                sx={{
-                  textAlign: 'left',
-                  padding: '0px',
-                  marginTop: '4px',
-                  fontSize: isSmallScreen ? '12px' : '12px',
-                  color: '#000',
-                }}
-              >
+              <Typography variant='body2' sx={{ color: '#666', marginTop: '8px', fontSize: '12px', textAlign: 'left' }}>
                 {`Location: ${location && location.city}, ${location && location.country}`}
               </Typography>
             }
-            sx={{
-              paddingBottom: '4px',
-            }}
           />
           <CardContent>
             <TruncatedText
               variant='body2'
-              sx={{
-                color: '#000',
-                textAlign: 'left',
-                marginBottom: '20px',
-                fontSize: isSmallScreen ? '15px' : '12px',
-              }}
+              sx={{ color: '#333', marginBottom: '10px', fontSize: '12px', textAlign: 'left' }}
             >
               {description}
             </TruncatedText>
             <Typography
               variant='body2'
-              sx={{ textAlign: 'left', color: '#000', fontSize: '12px' }}
+              sx={{ color: '#666', marginBottom: '8px', fontSize: '10px', textAlign: 'left' }}
             >
               WiFi: {wifiStatus} | Parking: {parkingStatus} | Breakfast:{' '}
               {breakfastStatus} | Pets: {petsStatus}
             </Typography>
             <Typography
               variant='body1'
-              sx={{
-                marginTop: '12px',
-                fontSize: isSmallScreen ? '20px' : '15px',
-                color: '#000',
-              }}
+              sx={{ color: '#000', fontSize: '12px' }}
             >
               {price} NOK
             </Typography>
@@ -120,9 +94,7 @@ const VenueCard = ({ venue }) => {
           <CardActions sx={{ justifyContent: 'center' }}>
             <Link
               to={`/venue/${venue.id}`}
-              style={{
-                textDecoration: 'none',
-              }}
+              style={{ textDecoration: 'none' }}
             >
               <PrimaryButton variant='contained' sx={{ fontSize: '12px' }}>
                 Book Now
@@ -132,6 +104,6 @@ const VenueCard = ({ venue }) => {
         </Grid>
       </Grid>
     </Card>
-  )
-}
+  );
+};
 export default VenueCard
