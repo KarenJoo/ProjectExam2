@@ -6,7 +6,16 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import Typography from '@mui/material/Typography'
-import { SecondaryButton, PrimaryButton } from './Styles/Buttons'
+import { PrimaryButton } from './Styles/Buttons'
+import { styled } from '@mui/system'
+
+const TruncatedText = styled(Typography)(({ theme }) => ({
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 3,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+}))
 
 const VenueCard = ({ venue }) => {
   const { name, description, media, price, maxGuests, meta, location } = venue
@@ -23,6 +32,8 @@ const VenueCard = ({ venue }) => {
         color: '#fff',
         border: '0.5px solid #fff',
         boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.20)',
+        height: '500px',
+        width: '250px',
       }}
     >
       <CardMedia
@@ -38,7 +49,7 @@ const VenueCard = ({ venue }) => {
             sx={{
               textAlign: 'left',
               padding: '0px',
-              marginBottom: '10px',
+              margin: '0px',
               fontSize: '20px',
               color: '#000',
             }}
@@ -48,29 +59,33 @@ const VenueCard = ({ venue }) => {
         }
         subheader={
           <Typography
-            variant='p'
+            variant='subtitle2'
             sx={{
               textAlign: 'left',
               padding: '0px',
+              marginTop: '4px',
               fontSize: '12px',
               color: '#000',
             }}
-          >{`Max Guests: ${maxGuests} | Location: ${location && location.city}, ${location && location.country}`}</Typography>
+          >
+            {` Location: ${location && location.city}, ${location && location.country}`}
+          </Typography>
         }
+        sx={{
+          paddingBottom: '4px',
+        }}
       />
-
       <CardContent>
-        <Typography
+        <TruncatedText
           variant='body2'
           sx={{
             color: '#000',
             textAlign: 'left',
-            marginTop: '10px',
-            marginBottom: '30px',
+            marginBottom: '20px',
           }}
         >
           {description}
-        </Typography>
+        </TruncatedText>
         <Typography
           variant='body2'
           sx={{ textAlign: 'left', color: '#000', fontSize: '12px' }}

@@ -61,16 +61,15 @@ const Homepage = () => {
         />
       </Box>
 
-      <Grid container spacing={2} justifyContent='center'>
-        {/* Display filtered venues */}
+      <Grid container spacing={2} xs={{width: '100vw'}}>
+       
         {filteredVenues.map((venue) => (
-          <Grid item xs={12} sm={4} md={3} key={venue.id}>
+          <Grid item xs={12} sm={5} md={4} key={venue.id}>
             <VenueCard venue={venue} />
           </Grid>
         ))}
       </Grid>
 
-      {/* Display venues up to the display count */}
       <Grid container spacing={1} justifyContent='center'>
         {sortedVenues.slice(0, displayCount).map((venue) => (
           <Grid item xs={12} sm={6} md={4} key={venue.id}>
@@ -79,14 +78,14 @@ const Homepage = () => {
         ))}
       </Grid>
 
-      {/* Button to load more venues */}
+    
       {displayCount < sortedVenues.length && (
         <Button onClick={handleViewMore} variant='contained' color='primary'>
           View More
         </Button>
       )}
     </Box>
-  );
-};
+  )
+}
 
 export default Homepage
