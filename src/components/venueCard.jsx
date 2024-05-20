@@ -1,43 +1,104 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, Typography } from '@mui/material';
-import styles from './VenueCard.module.css';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardMedia from '@mui/material/CardMedia'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import Typography from '@mui/material/Typography'
+import { SecondaryButton, PrimaryButton } from './Styles/Buttons'
 
 const VenueCard = ({ venue }) => {
-  const { name, description, media, price, maxGuests, meta, location } = venue;
+  const { name, description, media, price, maxGuests, meta, location } = venue
 
-  const wifiStatus = meta?.wifi ? 'Available' : 'Not Available';
-  const parkingStatus = meta?.parking ? 'Available' : 'Not Available';
-  const breakfastStatus = meta?.breakfast ? 'Included' : 'Not Included';
-  const petsStatus = meta?.pets ? 'Allowed' : 'Not Allowed';
+  const wifiStatus = meta?.wifi ? 'Yes' : 'No'
+  const parkingStatus = meta?.parking ? 'Yes' : 'No'
+  const breakfastStatus = meta?.breakfast ? 'Yes' : 'No'
+  const petsStatus = meta?.pets ? 'Yes' : 'No'
 
   return (
-    <Card className={styles.venueCard} style={{ backgroundColor: '#fff' }}>
-      <div className={styles.imageContainer}>
-        <img src={media && media.length > 0 ? media[0].url : ''} alt={name} />
-      </div>
-      <CardContent>
-        <Typography variant='h2'>{name}</Typography>
-        <Typography variant='body1'>{description}</Typography>
-        <Typography variant='body2'>
-          Max Guests: {maxGuests} | Location: {location && location.city},{' '}
-          {location && location.country}
-        </Typography>
-        <div className={styles.contentList}>
-          <Typography key='wifi'>WiFi: {wifiStatus}</Typography>
-          <Typography key='parking'>Parking: {parkingStatus}</Typography>
-          <Typography key='breakfast'>Breakfast: {breakfastStatus}</Typography>
-          <Typography key='pets'>Pets: {petsStatus}</Typography>
-        </div>
-      </CardContent>
-      <div className={styles.cardFootContent}>
-        <Typography variant='body2'>{price} NOK</Typography>
-        <Link to={`/venue/${venue.id}`} className={styles.viewButton}>
-          View Venue
-        </Link>
-      </div>
-    </Card>
-  );
-};
+    <Card
+      sx={{
+        backgroundColor: '#fff',
+        color: '#fff',
+        border: '0.5px solid #fff',
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.20)',
+      }}
+    >
+      <CardMedia
+        component='img'
+        height='194'
+        image={media && media.length > 0 ? media[0].url : ''}
+        alt={name}
+      />
+      <CardHeader
+        title={
+          <Typography
+            variant='h1'
+            sx={{
+              textAlign: 'left',
+              padding: '0px',
+              marginBottom: '10px',
+              fontSize: '20px',
+              color: '#000',
+            }}
+          >
+            {name}
+          </Typography>
+        }
+        subheader={
+          <Typography
+            variant='p'
+            sx={{
+              textAlign: 'left',
+              padding: '0px',
+              fontSize: '12px',
+              color: '#000',
+            }}
+          >{`Max Guests: ${maxGuests} | Location: ${location && location.city}, ${location && location.country}`}</Typography>
+        }
+      />
 
-export default VenueCard;
+      <CardContent>
+        <Typography
+          variant='body2'
+          sx={{
+            color: '#000',
+            textAlign: 'left',
+            marginTop: '10px',
+            marginBottom: '30px',
+          }}
+        >
+          {description}
+        </Typography>
+        <Typography
+          variant='body2'
+          sx={{ textAlign: 'left', color: '#000', fontSize: '12px' }}
+        >
+          WiFi: {wifiStatus} | Parking: {parkingStatus} | Breakfast:{' '}
+          {breakfastStatus} | Pets: {petsStatus}
+        </Typography>
+        <Typography
+          variant='body1'
+          sx={{ marginTop: '20px', fontSize: '20px', color: '#000' }}
+        >
+          {price} NOK
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Link
+          to={`/venue/${venue.id}`}
+          style={{
+            textDecoration: 'none',
+            margin: '0px auto',
+            marginBottom: '10px',
+          }}
+        >
+          <PrimaryButton variant='contained'>Book Now</PrimaryButton>
+        </Link>
+      </CardActions>
+    </Card>
+  )
+}
+
+export default VenueCard

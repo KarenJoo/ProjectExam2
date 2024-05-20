@@ -61,7 +61,7 @@ const Homepage = () => {
         />
       </Box>
 
-      <Grid container spacing={0} justifyContent='center'>
+      <Grid container spacing={2} justifyContent='center'>
         {/* Display filtered venues */}
         {filteredVenues.map((venue) => (
           <Grid item xs={12} sm={4} md={3} key={venue.id}>
@@ -71,7 +71,7 @@ const Homepage = () => {
       </Grid>
 
       {/* Display venues up to the display count */}
-      <Grid container spacing={2} justifyContent='center'>
+      <Grid container spacing={1} justifyContent='center'>
         {sortedVenues.slice(0, displayCount).map((venue) => (
           <Grid item xs={12} sm={6} md={4} key={venue.id}>
             <VenueCard venue={venue} />
