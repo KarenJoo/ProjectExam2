@@ -100,7 +100,7 @@ const Homepage = () => {
         </Box>
 
         {/* Display filtered and sorted venues up to the display count */}
-        <Box minHeight='100vh' width='90%' margin='20px auto'>
+        <Box minHeight='100vh' width='95%' margin='20px auto'>
           <Grid container spacing={2} justifyContent='center'>
             {filteredVenues.length > 0 ? (
               filteredVenues.slice(0, displayCount).map((venue) => (

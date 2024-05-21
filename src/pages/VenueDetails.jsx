@@ -2,7 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { VENUES_URL } from '../utils/api'
 import useFetch from '../hooks/useFetch'
-import { Box, Card, CardContent, Typography, CardMedia, ImageList, ImageListItem  } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  ImageList,
+  ImageListItem,
+  Rating,
+} from '@mui/material'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
 import BookingForm from '../components/Forms/BookingForm'
 import useStorage from '../utils/useStorage'
 
@@ -12,27 +22,26 @@ const VenueDetails = () => {
   const { data: venueDetails, loading, error } = useFetch(API_URL)
   const { isUserLoggedIn, getUserRole, loadToken } = useStorage()
   const accessToken = loadToken()
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState('')
 
   useEffect(() => {
     if (venueDetails && venueDetails.media && venueDetails.media.length > 0) {
-      setSelectedImage(venueDetails.media[0].url);
-      console.log('Venue Details:', venueDetails);
+      setSelectedImage(venueDetails.media[0].url)
+      console.log('Venue Details:', venueDetails)
     }
-  }, [venueDetails]);
+  }, [venueDetails])
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   if (error) {
-    return <div>Error: Unable to load venue details.</div>;
+    return <div>Error: Unable to load venue details.</div>
   }
 
   if (!venueDetails) {
-    return <div>Error: Venue details not found.</div>;
+    return <div>Error: Venue details not found.</div>
   }
-
 
   const {
     name,
@@ -80,8 +89,6 @@ const VenueDetails = () => {
           },
           width: '80%',
           mx: 'auto',
-          my: 1,
-          p: 1,
           backgroundColor: '#ffffff',
           border: '0.5px solid #fde8c9',
           borderRadius: '8px',
@@ -89,44 +96,58 @@ const VenueDetails = () => {
           boxShadow: 1,
         }}
       >
-  <CardMedia
+        <CardMedia
           component='img'
           image={selectedImage}
           alt={name}
           sx={{ height: '400px', width: '100%', objectFit: 'cover' }}
         />
-        <Box sx={{ width: '100%', height: 200 }}>
+        <Box sx={{ width: '100%', height: 160 }}>
           <ImageList
-            sx={{ width: '100%', height: '200px' }}
-            variant="masonry"
+            sx={{ width: '100%', height: '200px', padding: 1, margin: '0px' }}
+            variant='masonry'
             cols={3}
             gap={8}
           >
-            {media && media.map((item, index) => (
-              <ImageListItem key={index} onClick={() => setSelectedImage(item.url)}>
-                <img
-                  src={`${item.url}`}
-                  alt={name}
-                  loading="lazy"
-                  style={{ height: '150px', width: '100%', objectFit: 'cover', cursor: 'pointer' }}
-                />
-              </ImageListItem>
-            ))}
+            {media &&
+              media.map((item, index) => (
+                <ImageListItem
+                  key={index}
+                  onClick={() => setSelectedImage(item.url)}
+                >
+                  <img
+                    src={`${item.url}`}
+                    alt={name}
+                    loading='lazy'
+                    style={{
+                      height: '150px',
+                      width: '100%',
+                      objectFit: 'cover',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </ImageListItem>
+              ))}
           </ImageList>
         </Box>
         <CardContent>
-          <Typography variant='h2' gutterBottom>
+          <Typography
+            variant='h1'
+            color='#01333e'
+            fontSize={'1.5em'}
+            gutterBottom
+          >
             {name}
           </Typography>
-          <Typography variant='body1' paragraph>
+          <Typography variant='body2' paragraph>
+            <LocationOnIcon sx={{ height: '12px' }} />
+
+            {address}
+          </Typography>
+          <Typography variant='p' color={'#000'} paragraph>
             {description}
           </Typography>
-          <Typography variant='body2' paragraph>
-            Address: {address} | Max Guests: {maxGuests}
-          </Typography>
-          <Typography variant='body2' paragraph>
-            Rating: {rating}
-          </Typography>
+
           <Typography variant='body2' paragraph>
             Owner: {owner && owner.name ? owner.name : 'Unknown Owner'}
           </Typography>
@@ -137,8 +158,22 @@ const VenueDetails = () => {
               Breakfast: {breakfastIncluded}
             </Typography>
             <Typography variant='body2'>Pets: {petsAllowed}</Typography>
+            <Typography variant='body2'>Max Guests: {maxGuests}</Typography>
           </Box>
-
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100vw',
+              alignItems: 'center',
+              textAlign: 'center',
+              mb: 2,
+              fontSize: '12px',
+            }}
+          >
+            Reviews:{' '}
+            <Rating name='read-only' value={rating} readOnly precision={0.5} sx={{ margin:'10px auto', textAlign: 'center'}} />
+          </Box>
+            <Typography variant='h2' sx={{ margin:'10px auto', textAlign: 'center'}}>{price} NOK</Typography>
           <BookingForm
             onSubmit={handleBookingSubmit}
             accessToken={accessToken}
@@ -184,7 +219,7 @@ const VenueDetails = () => {
             mb: 1,
           }}
         >
-          <Typography variant='body2'>{price} NOK</Typography>
+        
         </Box>
       </Card>
     </Box>

@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import { PrimaryButton } from './Styles/Buttons'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import { styled } from '@mui/system'
-import { Grid } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 
 const TruncatedText = styled(Typography)(({ theme }) => ({
   display: '-webkit-box',
@@ -38,7 +38,7 @@ const VenueCard = ({ venue }) => {
         width: '450px',
         maxWidth: '100%',
         '@media (min-width: 600px)': {
-          height: '450px',
+          height: '500px',
           width: '300px',
         },
       }}
@@ -68,21 +68,21 @@ const VenueCard = ({ venue }) => {
             }}
           />
         </Grid>
-        <Grid item xs={7} sm={8} md={8}>
+        <Grid item xs={7} sm={8} md={8} width={'100%'}>
           <CardHeader
             title={
-              <Typography
+              <TruncatedText
                 variant='h1'
                 sx={{
                   color: '#000',
                   margin: '0px',
                   padding: '0px',
-                  fontSize: '15px',
+                  fontSize: '14px',
                   textAlign: 'left',
                 }}
               >
                 {name}
-              </Typography>
+              </TruncatedText>
             }
             subheader={
               <Typography
@@ -99,21 +99,46 @@ const VenueCard = ({ venue }) => {
               </Typography>
             }
           />
-          <CardContent sx={{ paddingY: '10px', paddingBottom: '0px' }}>
-            <TruncatedText
-              variant='body2'
-              sx={{
-                color: '#333',
-                marginBottom: '10px',
-                fontSize: '10px',
-                textAlign: 'left',
-              }}
-            >
-              {description}
-            </TruncatedText>
+
+          <CardContent
+            sx={{
+              paddingY: '10px',
+              '@media (min-width: 600px)': {
+                paddingY: '0px',
+                height: '130px',
+                minWidth: '90%',
+                margin: '0px auto',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            }}
+          >
+            <Box sx={{ height: '40px', margin: '0px auto' }}>
+              <TruncatedText
+                variant='body2'
+                sx={{
+                  color: '#333',
+                  marginBottom: '10px',
+                  fontSize: '10px',
+                  '@media (min-width: 600px)': {
+                    fontSize: '12px',
+                  },
+                  textAlign: 'left',
+                }}
+              >
+                {description}
+              </TruncatedText>
+            </Box>
             <Typography
               variant='body2'
-              sx={{ color: '#666', fontSize: '10px', textAlign: 'left' }}
+              sx={{
+                color: '#666',
+                fontSize: '10px',
+                textAlign: 'left',
+                '@media (min-width: 600px)': {
+                  marginTop: '30px',
+                },
+              }}
             >
               WiFi: {wifiStatus} | Parking: {parkingStatus} | Breakfast:{' '}
               {breakfastStatus} | Pets: {petsStatus}
