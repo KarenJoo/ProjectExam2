@@ -38,19 +38,34 @@ const VenueCard = ({ venue }) => {
         width: '550px',
         maxWidth: '100%',
         '@media (min-width: 600px)': {
-          height: '250px',
-          width: '500px',
+          height: '450px',
+          width: '300px',
         },
       }}
     >
-      <Grid container direction='row'>
+      <Grid
+        container
+        direction='row'
+        sx={{
+          '@media (min-width: 600px)': {
+            flexDirection: 'column',
+            minWidth: '400px',
+          },
+        }}
+      >
         <Grid item xs={5} sm={4} md={4}>
           <CardMedia
             component='img'
             height='300px'
             image={media && media.length > 0 ? media[0].url : ''}
             alt={name}
-            sx={{ objectFit: 'cover' }}
+            sx={{
+              objectFit: 'cover',
+              '@media (min-width: 600px)': {
+                height: '220px',
+                width: '330px',
+              },
+            }}
           />
         </Grid>
         <Grid item xs={7} sm={8} md={8}>
@@ -105,7 +120,14 @@ const VenueCard = ({ venue }) => {
             </Typography>
             <Typography
               variant='body1'
-              sx={{ color: '#000', fontSize: '12px', marginTop: '10px' }}
+              sx={{
+                color: '#000',
+                fontSize: '12px',
+                marginTop: '10px',
+                '@media (min-width: 600px)': {
+                  marginTop: '20px',
+                },
+              }}
             >
               {price} NOK
             </Typography>
