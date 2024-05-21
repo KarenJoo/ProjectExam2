@@ -47,13 +47,13 @@ const Navbar = () => {
   return (
     <Box
       sx={{
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         height: 70,
-        bgcolor: 'rgba(1, 51, 62, 0.8)',
+        bgcolor: 'rgba(1, 51, 62, 0.9)',
         maxWidth: '100vw',
         width: '100%',
         minWidth: '100%',
@@ -98,7 +98,7 @@ const Navbar = () => {
               aria-controls={open ? 'account-menu' : undefined}
               aria-haspopup='true'
               aria-expanded={open ? 'true' : undefined}
-              sx={{ color: '#01333e', bgcolor: '#01333e' }}
+              sx={{ color: '#01333e' }}
             >
               <Avatar
                 className='profileIcon'
@@ -140,6 +140,7 @@ const Navbar = () => {
               width: '200px',
               marginTop: '10px',
               padding: '20px',
+              borderRadius: '0px',
             }}
           >
             {/* profile link */}
