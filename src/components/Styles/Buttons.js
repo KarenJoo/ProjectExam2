@@ -19,3 +19,22 @@ import { Button } from '@mui/material';
       border: '2px solid #01333e',
     },
   }));
+
+
+const ViewMoreButtonContainer = styled('div')({
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '16px',
+    marginBottom: '16px',
+    
+  });
+  
+  const ViewMoreButton = ({ onClick }) => (
+    <ViewMoreButtonContainer>
+      <Button onClick={onClick} variant="contained" color="primary" >
+        View More
+      </Button>
+    </ViewMoreButtonContainer>
+  );
+  
+  export default ViewMoreButton;

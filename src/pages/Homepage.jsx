@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import VenueCard from '../components/venueCard'
 import { API_BASE_URL } from '../utils/api'
-import { Box, TextField, Grid, Button } from '@mui/material'
+import { Box, TextField, Grid } from '@mui/material'
 import useFetch from '../hooks/useFetch'
 import { filterVenues } from '../components/SearchAndFilter'
+import ViewMoreButton from '../components/Styles/Buttons'
 
 const Homepage = () => {
   const API_URL = `${API_BASE_URL}/venues`
@@ -83,13 +84,7 @@ const Homepage = () => {
       {/* Button to load more venues */}
       <Box mt={2} mb={2}>
         {displayCount < filteredVenues.length && (
-          <Button
-            onClick={handleViewMore}
-            variant='contained'
-            color='primary'
-          >
-            View More
-          </Button>
+              <ViewMoreButton onClick={handleViewMore} />
         )}
       </Box>
     </Box>
