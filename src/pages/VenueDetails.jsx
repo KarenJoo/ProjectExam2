@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { VENUES_URL } from '../utils/api'
 import useFetch from '../hooks/useFetch'
@@ -12,9 +12,11 @@ const VenueDetails = () => {
   const { data: venueDetails, loading, error } = useFetch(API_URL)
   const { isUserLoggedIn, getUserRole, loadToken } = useStorage()
   const accessToken = loadToken()
+  const [selectedImage, setSelectedImage] = useState('');
 
   useEffect(() => {
-    if (venueDetails) {
+    if (venueDetails && venueDetails.media && venueDetails.media.length > 0) {
+      setSelectedImage(venueDetails.media[0].url);
       console.log('Venue Details:', venueDetails);
     }
   }, [venueDetails]);
@@ -87,12 +89,31 @@ const VenueDetails = () => {
           boxShadow: 1,
         }}
       >
-        <CardMedia
+  <CardMedia
           component='img'
-          image={media && media.length > 0 ? media[0].url : ''}
+          image={selectedImage}
           alt={name}
           sx={{ height: '400px', width: '100%', objectFit: 'cover' }}
         />
+        <Box sx={{ width: '100%', height: 200 }}>
+          <ImageList
+            sx={{ width: '100%', height: '200px' }}
+            variant="masonry"
+            cols={3}
+            gap={8}
+          >
+            {media && media.map((item, index) => (
+              <ImageListItem key={index} onClick={() => setSelectedImage(item.url)}>
+                <img
+                  src={`${item.url}`}
+                  alt={name}
+                  loading="lazy"
+                  style={{ height: '150px', width: '100%', objectFit: 'cover', cursor: 'pointer' }}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </Box>
         <CardContent>
           <Typography variant='h2' gutterBottom>
             {name}
