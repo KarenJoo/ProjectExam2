@@ -4,6 +4,8 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import hero1 from '../../assets/img/hero1.jpg'
 import hero2 from '../../assets/img/hero2.jpg'
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 
 const HeroSlider = () => {
   const [sliderPosition, setSliderPosition] = useState(50)
@@ -91,12 +93,48 @@ const HeroSlider = () => {
           bottom: 0,
           left: `${sliderPosition}%`,
           width: '2px',
-          bgcolor: 'rgba(255, 255, 255, 0.8)',
+          bgcolor: '#fff',
           cursor: 'col-resize',
         }}
         onMouseDown={startSlide}
         onTouchStart={startSlide}
       />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '10px',
+          right: `${100 - sliderPosition}%`,
+          zIndex: 1000,
+          color: '#fff',
+          opacity: 0.8,
+          cursor: 'pointer',
+          transform: 'translateX(-10%)',
+          fontSize: '48px',
+        }}
+        onClick={() => {
+          setSliderPosition((prevPosition) => Math.max(prevPosition - 10, 0))
+        }}
+      >
+        <NavigateBeforeIcon fontSize='inherit' />
+      </Box>
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '10px',
+          left: `${sliderPosition}%`,
+          zIndex: 1000,
+          color: '#fff',
+          opacity: 0.8,
+          cursor: 'pointer',
+          transform: 'translateX(-10%)',
+          fontSize: '48px',
+        }}
+        onClick={() => {
+          setSliderPosition((prevPosition) => Math.min(prevPosition + 10, 100))
+        }}
+      >
+        <NavigateNextIcon fontSize='inherit' />
+      </Box>
     </Box>
   )
 }
