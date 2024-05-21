@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import HeroSlider from '../components/Layout/HeroSlider'
 import Typography from '@mui/material/Typography'
 import VenueCard from '../components/venueCard'
 import { API_BASE_URL } from '../utils/api'
@@ -52,7 +53,9 @@ const Homepage = () => {
   const filteredVenues = filterVenues(sortedVenues, searchTerm)
 
   return (
-    <Box p={2} textAlign='center'>
+    <Box textAlign='center'>
+      <HeroSlider />
+
       <Box>
         <Typography variant='h1'>Holidaze</Typography>
         <Typography variant='h3' color='primary'>
