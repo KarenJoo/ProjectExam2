@@ -66,6 +66,7 @@ const HeroSlider = () => {
           width: `${sliderPosition}%`,
           height: '100%',
           objectFit: 'cover',
+          cursor: 'grab',
         }}
         onMouseDown={startSlide}
         onTouchStart={startSlide}
@@ -81,7 +82,7 @@ const HeroSlider = () => {
           width: `${100 - sliderPosition}%`,
           height: '100%',
           objectFit: 'cover',
-          cursor: 'col-resize',
+          cursor: 'grab',
         }}
         onMouseDown={startSlide}
         onTouchStart={startSlide}

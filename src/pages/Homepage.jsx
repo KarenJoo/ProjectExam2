@@ -100,8 +100,8 @@ const Homepage = () => {
         </Box>
 
         {/* Display filtered and sorted venues up to the display count */}
-        <Box minHeight='100vh' width='95%' margin='20px auto'>
-          <Grid container spacing={1} justifyContent='center'>
+        <Box minHeight='100vh' width='90%' margin='20px auto'>
+          <Grid container spacing={2} justifyContent='center'>
             {filteredVenues.length > 0 ? (
               filteredVenues.slice(0, displayCount).map((venue) => (
                 <Grid
@@ -112,6 +112,10 @@ const Homepage = () => {
                   key={venue.id}
                   display='flex'
                   justifyContent='center'
+                  sx={{
+                    transition: 'transform 0.1s ease-in-out',
+                    '&:hover': { transform: 'scale(1.05)' },
+                  }}
                 >
                   <VenueCard venue={venue} />
                 </Grid>

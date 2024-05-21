@@ -85,8 +85,6 @@ const VenueDetails = () => {
           borderRadius: '8px',
           overflow: 'hidden',
           boxShadow: 1,
-          transition: 'transform 0.3s ease-in-out',
-          '&:hover': { transform: 'scale(1.02)' },
         }}
       >
         <CardMedia
