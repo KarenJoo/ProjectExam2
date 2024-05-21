@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import VenueCard from '../components/venueCard'
 import { API_BASE_URL } from '../utils/api'
-import { Box, TextField, Grid, Alert } from '@mui/material'
+import { Box, TextField, Grid, CircularProgress } from '@mui/material'
 import useFetch from '../hooks/useFetch'
 import { filterVenues } from '../components/SearchAndFilter'
 import ViewMoreButton from '../components/Styles/Buttons'
+import { AlertError, AlertWarning } from '../components/Styles/Errors'
 
 const Homepage = () => {
   const API_URL = `${API_BASE_URL}/venues`
@@ -14,11 +15,28 @@ const Homepage = () => {
   const [displayCount, setDisplayCount] = useState(6)
 
   if (loading) {
-    return <div className='contentContainer'>Loading...</div>
+    return (
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        height='100vh'
+      >
+        <CircularProgress
+          style={{ color: '#fde8c9' }}
+          thickness={6}
+          size={80}
+        />
+      </Box>
+    )
   }
 
   if (error) {
-    return <div>{error}</div>
+    return (
+      <Box minHeight='100vh'>
+        <AlertError message={`Failed to fetch venues`} />
+      </Box>
+    )
   }
 
   const handleViewMore = () => {
@@ -97,9 +115,9 @@ const Homepage = () => {
                 </Grid>
               ))
             ) : (
-              <Alert severity='warning' sx={{ mt: 2 }}>
-                No venues found.
-              </Alert>
+              <Box minHeight='100vh'>
+                <AlertWarning message={`No venues found`} />
+              </Box>
             )}
           </Grid>
         </Box>
