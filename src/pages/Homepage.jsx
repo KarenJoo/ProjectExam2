@@ -57,8 +57,7 @@ const Homepage = () => {
       <HeroSlider />
 
       <Box>
-        <Typography variant='h1'>Holidaze</Typography>
-        <Typography variant='h3' color='primary'>
+        <Typography variant='h1' color='primary' marginTop='10px'>
           Book and dayze away
         </Typography>
 
@@ -67,8 +66,8 @@ const Homepage = () => {
           bgcolor='#fff'
           borderRadius={2}
           boxShadow={1}
-          margin={'20px auto'}
-          width={{ xs: '100%', sm: '80%', md: '60%' }}
+          margin={'10px auto'}
+          width={{ xs: '85%', sm: '60%', md: '60%' }}
         >
           <TextField
             fullWidth
@@ -101,7 +100,7 @@ const Homepage = () => {
         </Box>
 
         {/* Display filtered and sorted venues up to the display count */}
-        <Box minHeight='100vh'>
+        <Box minHeight='100vh' width='95%' margin='20px auto'>
           <Grid container spacing={1} justifyContent='center'>
             {filteredVenues.length > 0 ? (
               filteredVenues.slice(0, displayCount).map((venue) => (

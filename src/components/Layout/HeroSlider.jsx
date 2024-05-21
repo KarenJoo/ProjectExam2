@@ -44,7 +44,7 @@ const HeroSlider = () => {
       ref={sliderRef}
       sx={{
         position: 'relative',
-        width: '100vw',
+        width: '100%',
         height: '70vh',
         overflow: 'hidden',
         userSelect: 'none',

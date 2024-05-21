@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { VENUES_URL } from '../utils/api'
 import useFetch from '../hooks/useFetch'
-import { Card, CardContent, Typography } from '@mui/material'
-import styles from '../components/VenueCard.module.css'
+import { Box, Card, CardContent, Typography, CardMedia, ImageList, ImageListItem  } from '@mui/material'
 import BookingForm from '../components/Forms/BookingForm'
 import useStorage from '../utils/useStorage'
 
@@ -14,17 +13,24 @@ const VenueDetails = () => {
   const { isUserLoggedIn, getUserRole, loadToken } = useStorage()
   const accessToken = loadToken()
 
+  useEffect(() => {
+    if (venueDetails) {
+      console.log('Venue Details:', venueDetails);
+    }
+  }, [venueDetails]);
+
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: Unable to load venue details.</div>
+    return <div>Error: Unable to load venue details.</div>;
   }
 
   if (!venueDetails) {
-    return <div>Error: Venue details not found.</div>
+    return <div>Error: Venue details not found.</div>;
   }
+
 
   const {
     name,
@@ -44,7 +50,6 @@ const VenueDetails = () => {
     return date.toLocaleDateString()
   }
 
-  // Function to handle booking submission
   const handleBookingSubmit = () => {
     console.log('Booking submitted')
   }
@@ -59,29 +64,61 @@ const VenueDetails = () => {
     : 'Address not available'
 
   return (
-    <div className={styles.container}>
-      <Card className={styles.venueCard} style={{ marginBottom: '100px' }}>
-        <div className={styles.imageContainer}>
-          <img src={media && media.length > 0 ? media[0].url : ''} alt={name} />
-        </div>
+    <Box
+      sx={{ height: '100%', width: '100%', mb: 3, mt: 2, marginTop: '100px' }}
+    >
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          '@media (min-width: 600px)': {
+            flexDirection: 'row',
+            height: 'auto',
+            width: '700px',
+          },
+          width: '80%',
+          mx: 'auto',
+          my: 1,
+          p: 1,
+          backgroundColor: '#ffffff',
+          border: '0.5px solid #fde8c9',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          boxShadow: 1,
+          transition: 'transform 0.3s ease-in-out',
+          '&:hover': { transform: 'scale(1.02)' },
+        }}
+      >
+        <CardMedia
+          component='img'
+          image={media && media.length > 0 ? media[0].url : ''}
+          alt={name}
+          sx={{ height: '400px', width: '100%', objectFit: 'cover' }}
+        />
         <CardContent>
-          <Typography variant='h2'>{name}</Typography>
-          <Typography variant='body1'>{description}</Typography>
-          <Typography variant='body2'>
+          <Typography variant='h2' gutterBottom>
+            {name}
+          </Typography>
+          <Typography variant='body1' paragraph>
+            {description}
+          </Typography>
+          <Typography variant='body2' paragraph>
             Address: {address} | Max Guests: {maxGuests}
           </Typography>
-          <Typography variant='body2'>Rating: {rating}</Typography>
-          <Typography variant='body2'>
+          <Typography variant='body2' paragraph>
+            Rating: {rating}
+          </Typography>
+          <Typography variant='body2' paragraph>
             Owner: {owner && owner.name ? owner.name : 'Unknown Owner'}
           </Typography>
-          <div className={styles.contentList}>
-            <Typography key='wifi'>WiFi: {wifiAvailable}</Typography>
-            <Typography key='parking'>Parking: {parkingAvailable}</Typography>
-            <Typography key='breakfast'>
+          <Box sx={{ my: 2 }}>
+            <Typography variant='body2'>WiFi: {wifiAvailable}</Typography>
+            <Typography variant='body2'>Parking: {parkingAvailable}</Typography>
+            <Typography variant='body2'>
               Breakfast: {breakfastIncluded}
             </Typography>
-            <Typography key='pets'>Pets: {petsAllowed}</Typography>
-          </div>
+            <Typography variant='body2'>Pets: {petsAllowed}</Typography>
+          </Box>
 
           <BookingForm
             onSubmit={handleBookingSubmit}
@@ -91,11 +128,13 @@ const VenueDetails = () => {
             isCustomer={!getUserRole() || getUserRole() === 'customer'}
           />
 
-          <Typography variant='h3'>Bookings:</Typography>
-          <div className={styles.cardContainer}>
+          <Typography variant='h3' gutterBottom>
+            Bookings:
+          </Typography>
+          <Box>
             {bookings && bookings.length > 0 ? (
               bookings.map((booking) => (
-                <Card key={booking.id} className={styles.bookingCard}>
+                <Card key={booking.id} sx={{ mb: 1 }}>
                   <CardContent>
                     <Typography variant='subtitle1'>
                       Date From: {formatDate(booking.dateFrom)}
@@ -114,14 +153,22 @@ const VenueDetails = () => {
                 No bookings found for this venue.
               </Typography>
             )}
-          </div>
+          </Box>
         </CardContent>
-        <div className={styles.cardFootContent}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mt: 1,
+            mb: 1,
+          }}
+        >
           <Typography variant='body2'>{price} NOK</Typography>
-        </div>
+        </Box>
       </Card>
-    </div>
+    </Box>
   )
 }
-
 export default VenueDetails

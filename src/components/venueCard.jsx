@@ -34,8 +34,8 @@ const VenueCard = ({ venue }) => {
         color: '#000',
         border: '0.5px solid #ccc',
         boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.20)',
-        height: '230px',
-        width: '550px',
+        height: '250px',
+        width: '450px',
         maxWidth: '100%',
         '@media (min-width: 600px)': {
           height: '450px',
