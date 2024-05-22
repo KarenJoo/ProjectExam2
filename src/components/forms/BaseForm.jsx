@@ -141,7 +141,7 @@ const BaseForm = ({ variant }) => {
   return (
     <Box >
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit} 
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -164,13 +164,16 @@ const BaseForm = ({ variant }) => {
             <TextField
               name='createUsername'
               label='Create Username'
-              variant='filled'
+              variant='outlined'
               fullWidth
               value={createUsername}
               onChange={handleInputChange}
               error={!!usernameError}
               helperText={usernameError}
-             
+              style={{ backgroundColor: '#fff', color: '#000' }}
+              InputLabelProps={{
+                style: { color: '#000' },
+              }}
             />
 
             <TextField
@@ -244,7 +247,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!emailError}
               helperText={emailError}
-             
+              
             />
 
             <TextField
@@ -275,6 +278,7 @@ const BaseForm = ({ variant }) => {
         >
           {isRegister ? 'Register' : 'Login'}
         </Button>
+        
       </form>
     </Box>
   )

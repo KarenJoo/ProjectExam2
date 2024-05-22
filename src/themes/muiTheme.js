@@ -53,20 +53,7 @@ const theme = createTheme({
       fontFamily: 'Poppins, sans-serif',
       fontSize: '0.875rem',
       fontWeight: 400,
-    },
-    components: {
-      MuiFilledInput: {
-        styleOverrides: {
-          root: {
-            borderRadius: '16px', 
-            '& input': {
-              color: '#000', 
-
-            },
-          },
-        },
-      },
-    },
+    }
 
   },
 });

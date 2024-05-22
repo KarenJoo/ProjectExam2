@@ -20,3 +20,12 @@ body {
   text-decoration: none;
   color: (var(--secondary-color));
 }
+label.MuiFormLabel-root {
+  color: #000 !important;
+  font-size: 12px;
+}
+
+.MuiFilledInput-root {
+  background-color: #fff !important;
+
+}
