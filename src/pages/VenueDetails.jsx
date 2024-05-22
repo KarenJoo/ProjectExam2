@@ -113,9 +113,9 @@ const VenueDetails = () => {
           '@media (min-width: 600px)': {
             flexDirection: 'row',
             height: 'auto',
-            width: '700px',
+            maxWidth: '700px',
           },
-          width: '80%',
+          width: '90%',
           mx: 'auto',
           backgroundColor: '#ffffff',
           border: '0.5px solid #fde8c9',
@@ -124,75 +124,86 @@ const VenueDetails = () => {
           boxShadow: 1,
         }}
       >
-        <CardMedia
-          component='img'
-          image={selectedImage}
-          alt={name}
-          sx={{ height: '400px', width: '100%', objectFit: 'cover' }}
-        />
-        <Box sx={{ width: '100%', height: 160, position: 'relative' }}>
-          <IconButton
-            onClick={handlePrevClick}
-            sx={{
-              position: 'absolute',
-              left: 15,
-              opacity: '70%',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              zIndex: 1,
-              color: '#000',
-              backgroundColor: '#fff',
-            }}
-          >
-            <ArrowBackIosIcon />
-          </IconButton>
-          <IconButton
-            onClick={handleNextClick}
-            sx={{
-              position: 'absolute',
-              right: 10,
-              opacity: '70%',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              zIndex: 1,
-              color: '#000',
-              backgroundColor: '#fff',
-            }}
-          >
-            <ArrowForwardIosIcon />
-          </IconButton>
-          <ImageList
-            sx={{
-              width: '96%',
-              height: '170px',
-              padding: 1,
-              overflow: 'hidden',
-              marginTop: '0px',
-            }}
-            variant='masonry'
-            cols={3}
-            gap={2}
-          >
-            {media &&
-              media.slice(currentIndex, currentIndex + 3).map((item, index) => (
-                <ImageListItem
-                  key={index}
-                  onClick={() => setSelectedImage(item.url)}
-                >
-                  <img
-                    src={`${item.url}`}
-                    alt={name}
-                    loading='lazy'
-                    style={{
-                      height: '150px',
-                      width: '100%',
-                      objectFit: 'cover',
-                      cursor: 'pointer',
-                    }}
-                  />
-                </ImageListItem>
-              ))}
-          </ImageList>
+        <Box
+          sx={{
+            '@media (min-width: 600px)': {
+              flexDirection: 'column',
+              width: '700px',
+            },
+          }}
+        >
+          <CardMedia
+            component='img'
+            image={selectedImage}
+            alt={name}
+            sx={{ height: '400px', width: '100%', objectFit: 'cover' }}
+          />
+          <Box sx={{ width: '100%', height: 160, position: 'relative' }}>
+            <IconButton
+              onClick={handlePrevClick}
+              sx={{
+                position: 'absolute',
+                left: 15,
+                opacity: '70%',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1,
+                color: '#000',
+                backgroundColor: '#fff',
+              }}
+            >
+              <ArrowBackIosIcon />
+            </IconButton>
+            <IconButton
+              onClick={handleNextClick}
+              sx={{
+                position: 'absolute',
+                right: 10,
+                opacity: '70%',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1,
+                color: '#000',
+                backgroundColor: '#fff',
+              }}
+            >
+              <ArrowForwardIosIcon />
+            </IconButton>
+            <ImageList
+              sx={{
+                width: '96%',
+                height: '170px',
+                padding: 1,
+                overflow: 'hidden',
+                marginTop: '0px',
+              }}
+              variant='masonry'
+              cols={3}
+              gap={2}
+            >
+              {media &&
+                media
+                  .slice(currentIndex, currentIndex + 3)
+                  .map((item, index) => (
+                    <ImageListItem
+                      key={index}
+                      onClick={() => setSelectedImage(item.url)}
+                    >
+                      <img
+                        src={`${item.url}`}
+                        alt={name}
+                        loading='lazy'
+                        style={{
+                          height: '150px',
+                          width: '100%',
+                          objectFit: 'cover',
+                          cursor: 'pointer',
+                        }}
+                      />
+                    </ImageListItem>
+                  ))}
+            </ImageList>
+          </Box>
         </Box>
         <CardContent>
           <Typography variant='h1' color='#01333e' fontSize={'1.5em'}>
@@ -206,7 +217,16 @@ const VenueDetails = () => {
           <Typography variant='p' paragraph>
             Host: {owner && owner.name ? owner.name : 'Unknown Owner'}
           </Typography>
-          <Typography variant='p' color={'#000'} paragraph>
+          <Typography
+            variant='p'
+            paragraph
+            sx={{
+              color: '#000',
+              '@media (min-width: 600px)': {
+                marginTop: '50px',
+              },
+            }}
+          >
             {description}
           </Typography>
           <TableContainer
@@ -216,6 +236,9 @@ const VenueDetails = () => {
               mb: 2,
               width: '100%',
               boxShadow: 'none',
+              '@media (min-width: 600px)': {
+                marginTop: '100px',
+              },
             }}
           >
             <Table size='small'>
@@ -307,11 +330,14 @@ const VenueDetails = () => {
           <Box
             sx={{
               display: 'flex',
-              width: '100vw',
+              width: '200px',
               alignItems: 'center',
               textAlign: 'center',
               mb: 2,
               fontSize: '12px',
+              '@media (min-width: 600px)': {
+                mt: '50px',
+              },
             }}
           >
             Reviews:{' '}
@@ -344,7 +370,7 @@ const VenueDetails = () => {
       </Card>
 
       <Box
-        sx={{ height: '80%', width: '80%', mb: 3, mt: 2, margin: '10px auto' }}
+        sx={{ height: '90%', width: '90%', mb: 3, mt: 2, margin: '10px auto' }}
       >
         <BookingForm
           onSubmit={handleBookingSubmit}
@@ -357,10 +383,9 @@ const VenueDetails = () => {
         <Box
           sx={{
             height: 'auto',
-            width: '90%',
+            width: '94%',
             mb: 3,
-            mt: 2,
-            margin: '0px auto',
+            margin: '20px auto',
             backgroundColor: '#fff',
             borderRadius: '4px',
             padding: '20px',
@@ -373,17 +398,68 @@ const VenueDetails = () => {
             bookings.map((booking) => (
               <Card
                 key={booking.id}
-                sx={{ mb: 1, backgroundColor: '#01333e09' }}
+                sx={{
+                  mb: 1,
+                  backgroundColor: '#01333e09',
+                  borderRadius: '8px',
+                  padding: '10px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '5px',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                }}
               >
-                <CardContent>
-                  <Typography variant='p' sx={{ marginLeft: '10px' }}>
-                    Date From: {formatDate(booking.dateFrom)}
+                <CardContent sx={{ padding: '10px' }}>
+                  <Typography
+                    variant='body2'
+                    sx={{
+                      color: '#01333e',
+                      fontWeight: 'bold',
+                      marginBottom: '5px',
+                    }}
+                  >
+                    Date From:{' '}
+                    <Typography
+                      variant='body2'
+                      component='span'
+                      sx={{ color: '#000', marginLeft: '5px' }}
+                    >
+                      {formatDate(booking.dateFrom)}
+                    </Typography>
                   </Typography>
-                  <Typography variant='p'>
-                    Date To: {formatDate(booking.dateTo)}
+                  <Typography
+                    variant='body2'
+                    sx={{
+                      color: '#01333e',
+                      fontWeight: 'bold',
+                      marginBottom: '5px',
+                    }}
+                  >
+                    Date To:{' '}
+                    <Typography
+                      variant='body2'
+                      component='span'
+                      sx={{ color: '#000', marginLeft: '5px' }}
+                    >
+                      {formatDate(booking.dateTo)}
+                    </Typography>
                   </Typography>
-                  <Typography variant='p'>
-                    Booked by: {booking.customer && booking.customer.name}
+                  <Typography
+                    variant='body2'
+                    sx={{
+                      color: '#01333e',
+                      fontWeight: 'bold',
+                      marginBottom: '5px',
+                    }}
+                  >
+                    Booked by:{' '}
+                    <Typography
+                      variant='body2'
+                      component='span'
+                      sx={{ color: '#000', marginLeft: '5px' }}
+                    >
+                      {booking.customer && booking.customer.name}
+                    </Typography>
                   </Typography>
                 </CardContent>
               </Card>
