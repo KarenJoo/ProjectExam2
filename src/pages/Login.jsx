@@ -1,18 +1,43 @@
 import React from 'react'
-import { Typography } from '@mui/material'
-import StyleSheet from './LoginRegister.module.css'
+import { Typography, Box } from '@mui/material'
 import { Link } from 'react-router-dom'
 import BaseForm from '../components/Forms/BaseForm'
 
 function LoginPage() {
   return (
-    <div className={StyleSheet.container}>
-      <BaseForm variant='login' />
-      <Typography variant='body2'>If you don't have an account</Typography>
-      <Link to='/register' className={StyleSheet.link}>
-        <Typography variant='body2'>Register here</Typography>
-      </Link>
-    </div>
+    <Box
+      sx={{
+        height: '100vh',
+        width: '100%',
+        mb: 3,
+        mt: 2,
+        margin: '0 auto', 
+        alignItems: 'center',
+        textAlign: 'center',
+        '@media (min-width: 600px)': {
+          flexDirection: 'column',
+          maxWidth: '600px',
+        },
+      }}
+    >
+      <Box 
+        sx={{
+          margin: '100px auto',
+          alignItems: 'center',
+          textAlign: 'center', 
+          padding: '20px', 
+          borderRadius: '8px', 
+          boxShadow: '0px 3px 6px rgba(0,0,0,0.1)', 
+        }}
+      >
+        <BaseForm variant='login' />
+        <Box sx={{maxWidth: '700px', backgroundColor: '#fff', width: '84%', margin: '0px auto', borderRadius: '5px', padding: '10px'}}>
+        <Typography variant='p' sx={{ color: 'var(--primary-color)', mt: 2 }}>If you don't have an account</Typography>
+        <Link to='/register' >
+          <Typography variant='body2' sx={{ color: 'var(--primary-color)', mt: 1 }}>Register here</Typography>
+        </Link></Box>
+      </Box>
+    </Box>
   )
 }
 

@@ -104,7 +104,10 @@ const VenueDetails = () => {
 
   return (
     <Box
-      sx={{ height: '100%', width: '100%', mb: 3, mt: 2, marginTop: '100px' }}
+      sx={{ height: '100%', width: '100%', mb: 3, mt: 2, margin: '100px auto', '@media (min-width: 600px)': {
+        flexDirection: 'column',
+        maxWidth: '700px',
+      }, }}
     >
       <Card
         sx={{
@@ -113,7 +116,6 @@ const VenueDetails = () => {
           '@media (min-width: 600px)': {
             flexDirection: 'row',
             height: 'auto',
-            maxWidth: '700px',
           },
           width: '90%',
           mx: 'auto',
@@ -129,6 +131,7 @@ const VenueDetails = () => {
             '@media (min-width: 600px)': {
               flexDirection: 'column',
               width: '700px',
+              minWidth: '300px'
             },
           }}
         >
