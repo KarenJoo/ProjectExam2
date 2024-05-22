@@ -31,24 +31,20 @@ const BookingForm = ({ venueId, onSubmit }) => {
         venueId: venueId,
       }
 
-
       const accessToken = storage.loadToken('accessToken')
 
       const newBooking = await createBooking(accessToken, bookingData, apiKey)
       onSubmit(newBooking)
       console.log('new;', newBooking)
-
     } catch (error) {
       console.error('Error creating booking:', error)
-      
     }
-    
   }
-  
+
   return (
     <Card sx={{ '@media (max-width:600px)': { marginBottom: '20px' } }}>
       <CardContent>
-        <Typography variant='body3'>Book your next stay</Typography>
+        <Typography variant='h2'>Book your next stay</Typography>
         <TextField
           fullWidth
           label='Check-in Date'

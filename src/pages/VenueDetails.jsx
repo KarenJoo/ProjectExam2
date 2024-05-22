@@ -24,7 +24,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper';
+import Paper from '@mui/material/Paper'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import BookingForm from '../components/Forms/BookingForm'
 import useStorage from '../utils/useStorage'
@@ -167,11 +167,11 @@ const VenueDetails = () => {
               height: '170px',
               padding: 1,
               overflow: 'hidden',
-              
+              marginTop: '0px',
             }}
             variant='masonry'
             cols={3}
-            gap={4}
+            gap={2}
           >
             {media &&
               media.slice(currentIndex, currentIndex + 3).map((item, index) => (
@@ -195,28 +195,30 @@ const VenueDetails = () => {
           </ImageList>
         </Box>
         <CardContent>
-          <Typography
-            variant='h1'
-            color='#01333e'
-            fontSize={'1.5em'}
-            
-          >
+          <Typography variant='h1' color='#01333e' fontSize={'1.5em'}>
             {name}
           </Typography>
           <Typography variant='body2' paragraph>
             <LocationOnIcon sx={{ height: '12px' }} />
 
             {address}
-          </Typography>  <Typography variant='p' paragraph>
+          </Typography>{' '}
+          <Typography variant='p' paragraph>
             Host: {owner && owner.name ? owner.name : 'Unknown Owner'}
           </Typography>
           <Typography variant='p' color={'#000'} paragraph>
             {description}
           </Typography>
-
-        
-          <TableContainer component={Paper} sx={{ overflowX: 'hidden', mb: 2, width: '100%', boxShadow: 'none' }}>
-          <Table size='small'>
+          <TableContainer
+            component={Paper}
+            sx={{
+              overflowX: 'hidden',
+              mb: 2,
+              width: '100%',
+              boxShadow: 'none',
+            }}
+          >
+            <Table size='small'>
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ padding: '4px' }}>
@@ -244,14 +246,18 @@ const VenueDetails = () => {
               <TableBody>
                 <TableRow>
                   <TableCell sx={{ padding: '4px' }}>{wifiAvailable}</TableCell>
-                  <TableCell sx={{ padding: '4px' }}>{parkingAvailable}</TableCell>
-                  <TableCell sx={{ padding: '4px' }}>{breakfastIncluded}</TableCell>
+                  <TableCell sx={{ padding: '4px' }}>
+                    {parkingAvailable}
+                  </TableCell>
+                  <TableCell sx={{ padding: '4px' }}>
+                    {breakfastIncluded}
+                  </TableCell>
                   <TableCell sx={{ padding: '4px' }}>{petsAllowed}</TableCell>
                   <TableCell sx={{ padding: '4px' }}>{maxGuests}</TableCell>
                 </TableRow>
               </TableBody>
-            </Table>      
-           </TableContainer>
+            </Table>
+          </TableContainer>
           <Box
             sx={{
               display: 'flex',
@@ -292,7 +298,7 @@ const VenueDetails = () => {
       </Card>
 
       <Box
-        sx={{ height: '90%', width: '90%', mb: 3, mt: 2, marginTop: '100px' }}
+        sx={{ height: '80%', width: '80%', mb: 3, mt: 2, margin: '10px auto' }}
       >
         <BookingForm
           onSubmit={handleBookingSubmit}
@@ -302,31 +308,44 @@ const VenueDetails = () => {
           isCustomer={!getUserRole() || getUserRole() === 'customer'}
         />
 
-        <Typography variant='h3' gutterBottom>
-          Bookings:
-        </Typography>
-        <Box sx={'20px'}>
-          {bookings && bookings.length > 0 ? (
-            bookings.map((booking) => (
-              <Card key={booking.id} sx={{ mb: 1 }}>
-                <CardContent>
-                  <Typography variant='subtitle1'>
-                    Date From: {formatDate(booking.dateFrom)}
-                  </Typography>
-                  <Typography variant='subtitle1'>
-                    Date To: {formatDate(booking.dateTo)}
-                  </Typography>
-                  <Typography variant='subtitle1'>
-                    User: {booking.customer && booking.customer.name}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <Typography variant='subtitle1'>
-              No bookings found for this venue.
-            </Typography>
-          )}
+        <Box
+          sx={{
+            height: 'auto',
+            width: '90%',
+            mb: 3,
+            mt: 2,
+            margin: '0px auto',
+            backgroundColor: '#fff',
+            borderRadius: '2px',
+            padding: '20px',
+          }}
+        >
+          <Typography variant='h4' gutterBottom>
+            Bookings:
+          </Typography>
+          <Box sx={'20px'}>
+            {bookings && bookings.length > 0 ? (
+              bookings.map((booking) => (
+                <Card key={booking.id} sx={{ mb: 1 }}>
+                  <CardContent>
+                    <Typography variant='subtitle1'>
+                      Date From: {formatDate(booking.dateFrom)}
+                    </Typography>
+                    <Typography variant='subtitle1'>
+                      Date To: {formatDate(booking.dateTo)}
+                    </Typography>
+                    <Typography variant='subtitle1'>
+                      User: {booking.customer && booking.customer.name}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <Typography variant='p'>
+                No bookings found for this venue.
+              </Typography>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>
