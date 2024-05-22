@@ -151,13 +151,16 @@ const VenueCard = ({ venue }) => {
                 marginTop: '10px',
                 '@media (min-width: 600px)': {
                   marginTop: '20px',
+                  marginLeft: '20px'
                 },
               }}
             >
               {price} NOK
             </Typography>
           </CardContent>
-          <CardActions sx={{ justifyContent: 'center' }}>
+          <CardActions sx={{ justifyContent: 'center', '@media (min-width: 600px)': {
+                  marginLeft: '40px',
+                }, }}>
             <Link to={`/venue/${venue.id}`} style={{ textDecoration: 'none' }}>
               <PrimaryButton variant='contained' sx={{ fontSize: '12px' }}>
                 Book Now
