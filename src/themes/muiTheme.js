@@ -27,19 +27,18 @@ const theme = createTheme({
     },
     h3: {
       fontFamily: 'Poppins, sans-serif',
-      fontSize: '1.75rem',
+      fontSize: '1.5rem',
       fontWeight: 600,
     },
     h4: {
       fontFamily: 'Poppins, sans-serif',
-      fontSize: '1.5rem',
+      fontSize: '1.0rem',
       fontWeight: 600,
     },
     h5: {
       fontFamily: 'Poppins, sans-serif',
       fontSize: '0.8rem',
       fontWeight: 100,
-      color: '#fde8c9',
     },
     p: {
       fontFamily: 'Poppins, sans-serif',
@@ -59,9 +58,10 @@ const theme = createTheme({
       MuiFilledInput: {
         styleOverrides: {
           root: {
-            borderRadius: '16px', // Set rounded corners
+            borderRadius: '16px', 
             '& input': {
-              color: '#1976d2', // Set text color to primary color
+              color: '#000', 
+
             },
           },
         },

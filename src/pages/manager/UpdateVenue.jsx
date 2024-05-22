@@ -1,5 +1,5 @@
 import React from 'react'
-import VenueForm from '../../components/Forms/VenueForm'
+import VenueForm from '../../components/forms/VenueForm'
 import styles from './VenueForm.module.css'
 import { Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'

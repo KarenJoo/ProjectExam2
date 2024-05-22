@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Avatar, Typography, Grid, Button } from '@mui/material'
-import UpdateAvatarForm from '../Forms/AvatarForm'
+import UpdateAvatarForm from '../forms/AvatarForm'
 import styles from './ProfileLayout.module.css'
 import { PROFILE_API } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'

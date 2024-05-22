@@ -1,8 +1,8 @@
 import React from 'react'
-import BaseForm from '../components/Forms/BaseForm'
 import { Typography, Box } from '@mui/material'
 import { Link } from 'react-router-dom'
 import LoginIcon from '@mui/icons-material/Login'
+import BaseForm from '../components/forms/BaseForm'
 
 function RegisterPage() {
   return (

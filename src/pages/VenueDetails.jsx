@@ -26,7 +26,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
-import BookingForm from '../components/Forms/BookingForm'
+import BookingForm from '../components/forms/BookingForm'
 import useStorage from '../utils/useStorage'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
@@ -373,7 +373,7 @@ const VenueDetails = () => {
       </Card>
 
       <Box
-        sx={{ height: '90%', width: '90%', mb: 3, mt: 2, margin: '10px auto' }}
+        sx={{ height: '700px', width: '90%', mb: 3, mt: 2, margin: '10px auto' }}
       >
         <BookingForm
           onSubmit={handleBookingSubmit}

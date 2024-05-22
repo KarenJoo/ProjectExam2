@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, Button, MenuItem, Typography } from '@mui/material'
+import { TextField, Button, MenuItem, Typography, Box } from '@mui/material'
 import { registerUser, loginUser } from '../../utils/registerFetch'
 import useStorage from '../../utils/useStorage'
 import Alert from '@mui/material/Alert'
@@ -136,28 +136,10 @@ const BaseForm = ({ variant }) => {
     createPassword: createPasswordError,
   } = errors
 
-  const inputStyles = {
-    color: '#01333e',
-    '& .MuiOutlinedInput-root': {
-      borderColor: '#000',
-      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: '#fff',
-      },
-    },
-    '& .MuiInputBase-input': {
-      color: '#000',
-      backgroundColor: '#fff',
-      fontSize: '12px',
-    },
-    '& .MuiOutlinedInput-input': {
-      '&::placeholder': {
-        color: '#ccc',
-      },
-    },
-  }
+
 
   return (
-    <div>
+    <Box >
       <form
         onSubmit={handleSubmit}
         style={{
@@ -166,7 +148,7 @@ const BaseForm = ({ variant }) => {
           width: '80%',
           padding: '20px',
           margin: '30px auto',
-          color: '#01333e',
+          color: '#000',
           borderRadius: '10px',
           backgroundColor: '#fff',
           marginBottom: '50px',
@@ -188,7 +170,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!usernameError}
               helperText={usernameError}
-              InputProps={{ sx: inputStyles }}
+             
             />
 
             <TextField
@@ -201,7 +183,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!createPasswordError}
               helperText={createPasswordError}
-              InputProps={{ sx: inputStyles }}
+              
             />
 
             <TextField
@@ -214,7 +196,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!emailError}
               helperText={emailError}
-              InputProps={{ sx: inputStyles }}
+             
             />
 
             <TextField
@@ -224,7 +206,7 @@ const BaseForm = ({ variant }) => {
               fullWidth
               value={avatarUrl}
               onChange={handleInputChange}
-              InputProps={{ sx: inputStyles }}
+             
             />
 
             <TextField
@@ -242,7 +224,7 @@ const BaseForm = ({ variant }) => {
               }
               error={!errors.venueManager}
               helperText={errors.venueManager}
-              InputProps={{ sx: inputStyles }}
+             
             >
               <MenuItem value='customer'>Customer</MenuItem>
               <MenuItem value='manager'>Manager</MenuItem>
@@ -262,7 +244,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!emailError}
               helperText={emailError}
-              InputProps={{ sx: inputStyles }}
+             
             />
 
             <TextField
@@ -275,7 +257,7 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!createPasswordError}
               helperText={createPasswordError}
-              InputProps={{ sx: inputStyles }}
+          
             />
           </>
         )}
@@ -294,7 +276,7 @@ const BaseForm = ({ variant }) => {
           {isRegister ? 'Register' : 'Login'}
         </Button>
       </form>
-    </div>
+    </Box>
   )
 }
 
