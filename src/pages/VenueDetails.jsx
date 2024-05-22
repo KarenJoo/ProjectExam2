@@ -11,26 +11,26 @@ import {
   ImageList,
   ImageListItem,
   Rating,
-  IconButton
+  IconButton,
 } from '@mui/material'
-import WifiIcon from '@mui/icons-material/Wifi';
-import LocalParkingIcon from '@mui/icons-material/LocalParking';
-import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast';
-import PetsIcon from '@mui/icons-material/Pets';
-import GroupIcon from '@mui/icons-material/Group';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import WifiIcon from '@mui/icons-material/Wifi'
+import LocalParkingIcon from '@mui/icons-material/LocalParking'
+import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast'
+import PetsIcon from '@mui/icons-material/Pets'
+import GroupIcon from '@mui/icons-material/Group'
+import TableContainer from '@mui/material/TableContainer'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper';
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import BookingForm from '../components/Forms/BookingForm'
 import useStorage from '../utils/useStorage'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
-
-  
 const VenueDetails = () => {
   const { id } = useParams()
   const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`
@@ -90,13 +90,17 @@ const VenueDetails = () => {
     ? `${location.address}, ${location.city}, ${location.country}`
     : 'Address not available'
 
-    const handlePrevClick = () => {
-      setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : media.length - 1))
-    }
-  
-    const handleNextClick = () => {
-      setCurrentIndex((prevIndex) => (prevIndex < media.length - 1 ? prevIndex + 1 : 0))
-    }
+  const handlePrevClick = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : media.length - 1
+    )
+  }
+
+  const handleNextClick = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex < media.length - 1 ? prevIndex + 1 : 0
+    )
+  }
 
   return (
     <Box
@@ -126,24 +130,48 @@ const VenueDetails = () => {
           alt={name}
           sx={{ height: '400px', width: '100%', objectFit: 'cover' }}
         />
-          <Box sx={{ width: '100%', height: 160, position: 'relative' }}>
+        <Box sx={{ width: '100%', height: 160, position: 'relative' }}>
           <IconButton
             onClick={handlePrevClick}
-            sx={{ position: 'absolute', left: 15, opacity: '70%', top: '50%', transform: 'translateY(-50%)', zIndex: 1, color: '#000', backgroundColor: '#fff' }}
+            sx={{
+              position: 'absolute',
+              left: 15,
+              opacity: '70%',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 1,
+              color: '#000',
+              backgroundColor: '#fff',
+            }}
           >
             <ArrowBackIosIcon />
           </IconButton>
           <IconButton
             onClick={handleNextClick}
-            sx={{ position: 'absolute', right: 10, opacity: '70%', top: '50%', transform: 'translateY(-50%)', zIndex: 1, color: '#000', backgroundColor: '#fff' }}
+            sx={{
+              position: 'absolute',
+              right: 10,
+              opacity: '70%',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 1,
+              color: '#000',
+              backgroundColor: '#fff',
+            }}
           >
             <ArrowForwardIosIcon />
           </IconButton>
           <ImageList
-            sx={{ width: '100%', height: '170px', padding: 1, margin: '0px', overflow: 'hidden' }}
+            sx={{
+              width: '96%',
+              height: '170px',
+              padding: 1,
+              overflow: 'hidden',
+              
+            }}
             variant='masonry'
             cols={3}
-            gap={8}
+            gap={4}
           >
             {media &&
               media.slice(currentIndex, currentIndex + 3).map((item, index) => (
@@ -171,7 +199,7 @@ const VenueDetails = () => {
             variant='h1'
             color='#01333e'
             fontSize={'1.5em'}
-            gutterBottom
+            
           >
             {name}
           </Typography>
@@ -179,34 +207,51 @@ const VenueDetails = () => {
             <LocationOnIcon sx={{ height: '12px' }} />
 
             {address}
+          </Typography>  <Typography variant='p' paragraph>
+            Host: {owner && owner.name ? owner.name : 'Unknown Owner'}
           </Typography>
           <Typography variant='p' color={'#000'} paragraph>
             {description}
           </Typography>
 
-          <Typography variant='body2' paragraph>
-            Owner: {owner && owner.name ? owner.name : 'Unknown Owner'}
-          </Typography>
-          <Table size="small">
-            <TableHead>
-              
-                <TableCell><WifiIcon /></TableCell>
-                <TableCell><LocalParkingIcon /></TableCell>
-                <TableCell><FreeBreakfastIcon /></TableCell>
-                <TableCell><PetsIcon /></TableCell>
-                <TableCell><GroupIcon /></TableCell>
-           
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>{wifiAvailable}</TableCell>
-                <TableCell>{parkingAvailable}</TableCell>
-                <TableCell>{breakfastIncluded}</TableCell>
-                <TableCell>{petsAllowed}</TableCell>
-                <TableCell>{maxGuests}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+        
+          <TableContainer component={Paper} sx={{ overflowX: 'hidden', mb: 2, width: '100%', boxShadow: 'none' }}>
+          <Table size='small'>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ padding: '4px' }}>
+                    <WifiIcon fontSize='small' />
+                    <Typography variant='caption'>Wifi</Typography>
+                  </TableCell>
+                  <TableCell sx={{ padding: '4px' }}>
+                    <LocalParkingIcon fontSize='small' />
+                    <Typography variant='caption'>Parking</Typography>
+                  </TableCell>
+                  <TableCell sx={{ padding: '4px' }}>
+                    <FreeBreakfastIcon fontSize='small' />
+                    <Typography variant='caption'>Breakfast</Typography>
+                  </TableCell>
+                  <TableCell sx={{ padding: '4px' }}>
+                    <PetsIcon fontSize='small' />
+                    <Typography variant='caption'>Pets</Typography>
+                  </TableCell>
+                  <TableCell sx={{ padding: '4px' }}>
+                    <GroupIcon fontSize='small' />
+                    <Typography variant='caption'>Guests</Typography>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell sx={{ padding: '4px' }}>{wifiAvailable}</TableCell>
+                  <TableCell sx={{ padding: '4px' }}>{parkingAvailable}</TableCell>
+                  <TableCell sx={{ padding: '4px' }}>{breakfastIncluded}</TableCell>
+                  <TableCell sx={{ padding: '4px' }}>{petsAllowed}</TableCell>
+                  <TableCell sx={{ padding: '4px' }}>{maxGuests}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>      
+           </TableContainer>
           <Box
             sx={{
               display: 'flex',
@@ -218,11 +263,22 @@ const VenueDetails = () => {
             }}
           >
             Reviews:{' '}
-            <Rating name='read-only' value={rating} readOnly precision={0.5} sx={{ margin:'10px auto', textAlign: 'center'}} />
+            <Rating
+              name='read-only'
+              value={rating}
+              readOnly
+              precision={0.5}
+              sx={{ margin: '10px auto', textAlign: 'center' }}
+            />
           </Box>
-            <Typography variant='h2' sx={{ margin:'10px auto', textAlign: 'center'}}>{price} NOK</Typography>
+          <Typography
+            variant='h2'
+            sx={{ margin: '10px auto', textAlign: 'center' }}
+          >
+            {price} NOK
+          </Typography>
         </CardContent>
-       
+
         <Box
           sx={{
             display: 'flex',
@@ -232,48 +288,47 @@ const VenueDetails = () => {
             mt: 1,
             mb: 1,
           }}
-        >
-        
-        </Box>
-      </Card> 
-      
-      <Box  sx={{ height: '90%', width: '90%', mb: 3, mt: 2, marginTop: '100px' }}>
-        <BookingForm
-            onSubmit={handleBookingSubmit}
-            accessToken={accessToken}
-            venueId={id}
-            isLoggedIn={isUserLoggedIn()}
-            isCustomer={!getUserRole() || getUserRole() === 'customer'}
-          />
+        ></Box>
+      </Card>
 
-          <Typography variant='h3' gutterBottom>
-            Bookings:
-          </Typography>
-          <Box sx={'20px'}>
-            {bookings && bookings.length > 0 ? (
-              bookings.map((booking) => (
-                <Card key={booking.id} sx={{ mb: 1 }}>
-                  <CardContent>
-                    <Typography variant='subtitle1'>
-                      Date From: {formatDate(booking.dateFrom)}
-                    </Typography>
-                    <Typography variant='subtitle1'>
-                      Date To: {formatDate(booking.dateTo)}
-                    </Typography>
-                    <Typography variant='subtitle1'>
-                      User: {booking.customer && booking.customer.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <Typography variant='subtitle1'>
-                No bookings found for this venue.
-              </Typography>
-            )}
-           
-          </Box>
+      <Box
+        sx={{ height: '90%', width: '90%', mb: 3, mt: 2, marginTop: '100px' }}
+      >
+        <BookingForm
+          onSubmit={handleBookingSubmit}
+          accessToken={accessToken}
+          venueId={id}
+          isLoggedIn={isUserLoggedIn()}
+          isCustomer={!getUserRole() || getUserRole() === 'customer'}
+        />
+
+        <Typography variant='h3' gutterBottom>
+          Bookings:
+        </Typography>
+        <Box sx={'20px'}>
+          {bookings && bookings.length > 0 ? (
+            bookings.map((booking) => (
+              <Card key={booking.id} sx={{ mb: 1 }}>
+                <CardContent>
+                  <Typography variant='subtitle1'>
+                    Date From: {formatDate(booking.dateFrom)}
+                  </Typography>
+                  <Typography variant='subtitle1'>
+                    Date To: {formatDate(booking.dateTo)}
+                  </Typography>
+                  <Typography variant='subtitle1'>
+                    User: {booking.customer && booking.customer.name}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <Typography variant='subtitle1'>
+              No bookings found for this venue.
+            </Typography>
+          )}
         </Box>
+      </Box>
     </Box>
   )
 }
