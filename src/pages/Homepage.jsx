@@ -100,7 +100,7 @@ const Homepage = () => {
         </Box>
 
         {/* Display filtered and sorted venues up to the display count */}
-        <Box minHeight='100vh' width='95%' margin='20px auto'>
+        <Box minHeight='80vh' width='90%' margin='20px auto' maxWidth={'900px'}>
           <Grid container spacing={2} justifyContent='center'>
             {filteredVenues.length > 0 ? (
               filteredVenues.slice(0, displayCount).map((venue) => (
@@ -114,7 +114,7 @@ const Homepage = () => {
                   justifyContent='center'
                   sx={{
                     transition: 'transform 0.1s ease-in-out',
-                    '&:hover': { transform: 'scale(1.05)' },
+                    '&:hover': { transform: 'scale(1.04)' },
                   }}
                 >
                   <VenueCard venue={venue} />
@@ -130,7 +130,7 @@ const Homepage = () => {
       </Box>
 
       {/* Button to load more venues */}
-      <Box mt={2} mb={2}>
+      <Box mt={5} mb={5}>
         {displayCount < filteredVenues.length && (
           <ViewMoreButton onClick={handleViewMore} />
         )}

@@ -221,39 +221,85 @@ const VenueDetails = () => {
             <Table size='small'>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ padding: '4px' }}>
+                  <TableCell sx={{ padding: '4px', textAlign: 'center' }}>
                     <WifiIcon fontSize='small' />
-                    <Typography variant='caption'>Wifi</Typography>
+                    <Typography variant='caption' fontSize='10px'>
+                      Wifi
+                    </Typography>
                   </TableCell>
-                  <TableCell sx={{ padding: '4px' }}>
+                  <TableCell sx={{ padding: '4px', textAlign: 'center' }}>
                     <LocalParkingIcon fontSize='small' />
-                    <Typography variant='caption'>Parking</Typography>
+                    <Typography variant='caption' fontSize='10px'>
+                      Parking
+                    </Typography>
                   </TableCell>
-                  <TableCell sx={{ padding: '4px' }}>
+                  <TableCell sx={{ padding: '4px', textAlign: 'center' }}>
                     <FreeBreakfastIcon fontSize='small' />
-                    <Typography variant='caption'>Breakfast</Typography>
+                    <Typography variant='caption' fontSize='10px'>
+                      Breakfast
+                    </Typography>
                   </TableCell>
-                  <TableCell sx={{ padding: '4px' }}>
+                  <TableCell sx={{ padding: '4px', textAlign: 'center' }}>
                     <PetsIcon fontSize='small' />
-                    <Typography variant='caption'>Pets</Typography>
+                    <Typography variant='caption' fontSize='10px'>
+                      Pets
+                    </Typography>
                   </TableCell>
-                  <TableCell sx={{ padding: '4px' }}>
+                  <TableCell sx={{ padding: '4px', textAlign: 'center' }}>
                     <GroupIcon fontSize='small' />
-                    <Typography variant='caption'>Guests</Typography>
+                    <Typography variant='caption' fontSize='10px'>
+                      Guests
+                    </Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell sx={{ padding: '4px' }}>{wifiAvailable}</TableCell>
-                  <TableCell sx={{ padding: '4px' }}>
+                  <TableCell
+                    sx={{
+                      padding: '4px',
+                      textAlign: 'center',
+                      fontSize: '12px',
+                    }}
+                  >
+                    {wifiAvailable}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      padding: '4px',
+                      textAlign: 'center',
+                      fontSize: '12px',
+                    }}
+                  >
                     {parkingAvailable}
                   </TableCell>
-                  <TableCell sx={{ padding: '4px' }}>
+                  <TableCell
+                    sx={{
+                      padding: '4px',
+                      textAlign: 'center',
+                      fontSize: '12px',
+                    }}
+                  >
                     {breakfastIncluded}
                   </TableCell>
-                  <TableCell sx={{ padding: '4px' }}>{petsAllowed}</TableCell>
-                  <TableCell sx={{ padding: '4px' }}>{maxGuests}</TableCell>
+                  <TableCell
+                    sx={{
+                      padding: '4px',
+                      textAlign: 'center',
+                      fontSize: '12px',
+                    }}
+                  >
+                    {petsAllowed}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      padding: '4px',
+                      textAlign: 'center',
+                      fontSize: '12px',
+                    }}
+                  >
+                    {maxGuests}
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -316,36 +362,37 @@ const VenueDetails = () => {
             mt: 2,
             margin: '0px auto',
             backgroundColor: '#fff',
-            borderRadius: '2px',
+            borderRadius: '4px',
             padding: '20px',
           }}
         >
           <Typography variant='h4' gutterBottom>
             Bookings:
           </Typography>
-          <Box sx={'20px'}>
-            {bookings && bookings.length > 0 ? (
-              bookings.map((booking) => (
-                <Card key={booking.id} sx={{ mb: 1 }}>
-                  <CardContent>
-                    <Typography variant='subtitle1'>
-                      Date From: {formatDate(booking.dateFrom)}
-                    </Typography>
-                    <Typography variant='subtitle1'>
-                      Date To: {formatDate(booking.dateTo)}
-                    </Typography>
-                    <Typography variant='subtitle1'>
-                      User: {booking.customer && booking.customer.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <Typography variant='p'>
-                No bookings found for this venue.
-              </Typography>
-            )}
-          </Box>
+          {bookings && bookings.length > 0 ? (
+            bookings.map((booking) => (
+              <Card
+                key={booking.id}
+                sx={{ mb: 1, backgroundColor: '#01333e09' }}
+              >
+                <CardContent>
+                  <Typography variant='p' sx={{ marginLeft: '10px' }}>
+                    Date From: {formatDate(booking.dateFrom)}
+                  </Typography>
+                  <Typography variant='p'>
+                    Date To: {formatDate(booking.dateTo)}
+                  </Typography>
+                  <Typography variant='p'>
+                    Booked by: {booking.customer && booking.customer.name}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <Typography variant='p'>
+              No bookings found for this venue.
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>

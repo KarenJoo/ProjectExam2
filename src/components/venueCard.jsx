@@ -34,7 +34,7 @@ const VenueCard = ({ venue }) => {
         color: '#000',
         border: '0.5px solid #ccc',
         boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.20)',
-        height: '250px',
+        height: '270px',
         width: '450px',
         maxWidth: '100%',
         '@media (min-width: 600px)': {
@@ -151,16 +151,21 @@ const VenueCard = ({ venue }) => {
                 marginTop: '10px',
                 '@media (min-width: 600px)': {
                   marginTop: '20px',
-                  marginLeft: '20px'
+                  marginLeft: '20px',
                 },
               }}
             >
               {price} NOK
             </Typography>
           </CardContent>
-          <CardActions sx={{ justifyContent: 'center', '@media (min-width: 600px)': {
-                  marginLeft: '40px',
-                }, }}>
+          <CardActions
+            sx={{
+              justifyContent: 'center',
+              '@media (min-width: 600px)': {
+                marginLeft: '40px',
+              },
+            }}
+          >
             <Link to={`/venue/${venue.id}`} style={{ textDecoration: 'none' }}>
               <PrimaryButton variant='contained' sx={{ fontSize: '12px' }}>
                 Book Now
