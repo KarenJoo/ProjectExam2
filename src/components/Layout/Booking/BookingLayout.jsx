@@ -3,6 +3,7 @@ import { API_BASE_URL } from '../../../utils/api'
 import useStorage from '../../../utils/useStorage'
 import { createApiKey } from '../../../utils/createApiKey'
 import styles from './BookingLayout.module.css'
+import { Box, Button } from '@mui/material'
 import BookingList from './BookingList'
 
 const BookingLayout = () => {
@@ -35,7 +36,6 @@ const BookingLayout = () => {
 
         const venuesData = await response.json();
         setBookingVenues(venuesData.data);
-        // Modify venue data to include formatted bookings
         const venueBookings = venuesData.data.map((venue) => ({
           ...venue,
           bookings: venue.bookings.map((booking) => ({
@@ -73,23 +73,34 @@ const BookingLayout = () => {
     return date.toLocaleDateString();
   };
 
-
   return (
-    <div className={styles.bookingContainer}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        width: '80%',
+        marginTop: '100px',
+      }}
+    >
       {/* Calendar */}
-      <form onSubmit={handleSubmit} className={styles.calendarContainer}>
-        <button type='submit'>Book Venue</button>
+      <form
+        onSubmit={handleSubmit}
+        sx={{
+          marginBottom: '20px',
+          marginRight: { xs: '0', md: '20px' },
+        }}
+      >
+        <Button type='submit' variant="contained">Book Venue</Button>
       </form>
       {/* Booking Venues */}
-      <div className={styles.venuesContainer}>
+      <Box sx={{ width: '100%', maxWidth: '500px', height: 'auto', flex: 1 }}>
         {error ? (
           <div>Error: {error}</div>
         ) : (
-          <BookingList bookings={bookingVenues}  formatDate={formatDate}/>
+          <BookingList bookings={bookingVenues} formatDate={formatDate} />
         )}
-      </div>
-    </div>
-  );
-};
-
+      </Box>
+    </Box>
+  )
+}
 export default BookingLayout

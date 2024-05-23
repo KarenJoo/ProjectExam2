@@ -142,7 +142,6 @@ const Profile = () => {
         display='flex'
         justifyContent='center'
         alignItems='center'
-        
       >
         <Alert severity='error'>Failed to fetch profile data: {error}</Alert>
       </Box>
@@ -180,9 +179,11 @@ const Profile = () => {
               },
             }}
           >
-            <Box sx={{ margin: '10px auto', width: '90%' }}>
-              <UserVenuesList venues={venues} handleDelete={handleDelete} />
-            </Box>
+            {isVenueManager && (
+              <Box sx={{ margin: '10px auto', width: '90%' }}>
+                <UserVenuesList venues={venues} handleDelete={handleDelete} />
+              </Box>
+            )}
             {!isVenueManager && (
               <Box sx={{ margin: '10px auto', width: '90%' }}>
                 <UserBookingsList bookings={userBookings} />
