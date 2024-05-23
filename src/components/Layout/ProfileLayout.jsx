@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { updateAvatarUrl } from '../../storage/reducers/avatarReducer'
 import { PROFILE_API } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'
@@ -48,112 +49,130 @@ const ProfileLayout = ({ userData }) => {
   }, [userData.isVenueManager])
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        margin: '100px auto',
-        height: '100vh',
-        alignItems: 'center',
-        '@media (min-width: 600px)': {
-          maxWidth: '700px',
+    <Grid container md={12} sx={{ width: '50%' }}>
+      <Box
+        sx={{
           width: '100%',
-          
-        },
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
-        sx={{ margin: '10px auto', width: '60%', textAlign: 'center' }}
+          display: 'flex',
+          flexDirection: 'column',
+          margin: '100px auto',
+          height: '100vh',
+          alignItems: 'center',
+          '@media (min-width: 600px)': {
+            maxWidth: '700px',
+            width: '600px',
+          },
+        }}
       >
-        <Grid item xs={12} md={12}>
-          {avatar && (
-            <Avatar
-              alt={name || 'User Avatar'}
-              src={reduxAvatarUrl || avatar.url}
-              sx={{
-                maxWidth: 220,
-                maxHeight: 220,
-                width: '80%',
-                height: 'auto',
-                boxShadow: '0 2px 4px rgba(0, 0.5, 0.5, 0.5)',
-                margin: '0 auto',
-              }}
-            />
-          )}
-
-          <UpdateAvatarForm
-            open={isUpdateAvatarOpen}
-            onClose={() => setIsUpdateAvatarOpen(false)}
-            onUpdate={handleUpdateAvatar}
-          />
-        </Grid>
         <Grid
-          item
-          xs={12}
-          md={9}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '400px',
-            height: 'auto',
-            margin: '10px auto',
-            textAlign: 'center',
-            padding: '10px',
-            backgroundColor: '#ffffffcf',
-            border: '0.5px solid #fde8c9',
-            borderRadius: '8px',
-            overflow: 'hidden',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            transition: 'transform 0.3s ease-in-out','@media (min-width: 600px)': {
-              width: '50vw',
-            },
-          }}
+          container
+          spacing={2}
+          sx={{ margin: '10px auto', width: '80%', textAlign: 'center' }}
         >
-          <Typography variant='h1' sx={{ color: '#01333e', '@media (min-width: 600px)': {
-          fontSize: '100%'
-        }, }}>
-            {name || 'Unknown User'}
-          </Typography>
-          <Typography variant='body2'>
-            Venue Manager: {isVenueManager ? 'Yes' : 'No'}
-          </Typography>
-          {!isVenueManager && (
-            <Typography variant='body2'>
-              Total Bookings: {bookedVenues ? bookedVenues.length : 0}
-            </Typography>
-          )}{' '}
-          {isVenueManager && (
-            <Grid item xs={12} md={9}>
-              <Typography variant='body2'>
-                Total Venues: {venuesCount}
-              </Typography>
-              <ul>
-                {bookedVenues &&
-                  bookedVenues.map((venue) => (
-                    <Box key={venue.id}>
-                      <Typography variant='body1'>{venue.name}</Typography>
-                      <Typography variant='body2' color='textSecondary'>
-                        Location: {venue.location.city},{' '}
-                        {venue.location.country}
-                      </Typography>
-                    </Box>
-                  ))}
-              </ul>
-            </Grid>
-          )}{' '}
-          <Button
-            variant='outlined'
-            onClick={() => setIsUpdateAvatarOpen(true)}
+          <Grid item xs={12} md={12}>
+            {avatar && (
+              <Avatar
+                alt={name || 'User Avatar'}
+                src={reduxAvatarUrl || avatar.url}
+                sx={{
+                  maxWidth: 220,
+                  maxHeight: 220,
+                  width: '80%',
+                  height: 'auto',
+                  boxShadow: '0 2px 4px rgba(0, 0.5, 0.5, 0.5)',
+                  margin: '0 auto',
+                }}
+              />
+            )}
+
+            <UpdateAvatarForm
+              open={isUpdateAvatarOpen}
+              onClose={() => setIsUpdateAvatarOpen(false)}
+              onUpdate={handleUpdateAvatar}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '400px',
+              height: 'auto',
+              margin: '10px auto',
+              textAlign: 'center',
+              padding: '10px',
+              backgroundColor: '#ffffffcf',
+              border: '0.5px solid #fde8c9',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease-in-out',
+            }}
           >
-            Update Avatar
-          </Button>
+            <Typography
+              variant='h1'
+              sx={{
+                color: '#01333e',
+                '@media (min-width: 600px)': {
+                  fontSize: '100%',
+                },
+              }}
+            >
+              {name || 'Unknown User'}
+            </Typography>
+            <Typography variant='body2'>
+              Venue Manager: {isVenueManager ? 'Yes' : 'No'}
+            </Typography>
+            {!isVenueManager && (
+              <Typography variant='body2'>
+                Total Bookings: {bookedVenues ? bookedVenues.length : 0}
+              </Typography>
+            )}{' '}
+            {isVenueManager && (
+              <Grid item xs={12} md={12}>
+                <Typography variant='body2'>
+                  Total Venues: {venuesCount}
+                </Typography>
+                <ul>
+                  {bookedVenues &&
+                    bookedVenues.map((venue) => (
+                      <Box key={venue.id}>
+                        <Typography variant='body1'>{venue.name}</Typography>
+                        <Typography variant='body2' color='textSecondary'>
+                          Location: {venue.location.city},{' '}
+                          {venue.location.country}
+                        </Typography>
+                      </Box>
+                    ))}
+                </ul>
+              </Grid>
+            )}{' '}
+            <Button
+              variant='outlined'
+              sx={{ width: '220px', margin: '0 auto' }}
+              onClick={() => setIsUpdateAvatarOpen(true)}
+            >
+              Update Avatar
+            </Button>
+            <Button
+              component={Link}
+              variant='outlined'
+              to={`/create`}
+              sx={{
+                color: 'primary',
+                width: '220px',
+                margin: '20px auto',
+                '&:hover': { color: '#01333e' },
+              }}
+            >
+              Create Venue
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
-    
+      </Box>
+    </Grid>
   )
 }
 

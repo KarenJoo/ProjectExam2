@@ -1,5 +1,5 @@
-import React from 'react'
 import { Box, Typography } from '@mui/material'
+import React from 'react'
 
 const Footer = () => {
   return (
@@ -9,8 +9,8 @@ const Footer = () => {
         color: 'var(--secondary-color)',
         textAlign: 'center',
         padding: '20px 0',
-        position: 'relative',
         width: '100%',
+        mt: 'auto',
       }}
     >
       <Typography sx={{ fontSize: '12px' }}>

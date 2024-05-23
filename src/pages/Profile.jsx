@@ -148,7 +148,7 @@ const Profile = () => {
   const isVenueManager = userData && userData.venueManager;
 
   return (
-    <Grid container spacing={2} sx={{ width: '90%', margin: '10px auto' }}>
+    <Grid container spacing={4} sx={{ margin: '10px auto', width: '100%' }}>
     <Grid item xs={12} md={12}>
     <Box
       sx={{
@@ -157,8 +157,6 @@ const Profile = () => {
         margin: '10px auto',
         '@media (min-width: 600px)': {
           flexDirection: 'row',
-          margin: '0px',
-          padding: '0px',
         },
       }}
     >      <ProfileLayout userData={userData}></ProfileLayout>
@@ -167,7 +165,9 @@ const Profile = () => {
         sx={{
           flexBasis: '70%',
           '@media (min-width: 600px)': {
-            flexBasis: '70%',
+            flexBasis: '100%',
+            margin: '0 auto',
+            paddingRight: '10px'
           },
         }}
       >

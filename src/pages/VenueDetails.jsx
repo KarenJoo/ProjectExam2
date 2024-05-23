@@ -128,8 +128,8 @@ const VenueDetails = () => {
   return (
     <Box
       sx={{
-        height: '100%',
-        width: '100%',
+        width: '90%',
+        flex: 1,
         mb: 3,
         mt: 2,
         margin: '100px auto',
@@ -403,7 +403,7 @@ const VenueDetails = () => {
 
       <Box
         sx={{
-          height: '700px',
+          height: '100vh',
           width: '90%',
           mb: 3,
           mt: 2,

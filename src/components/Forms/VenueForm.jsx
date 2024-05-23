@@ -262,7 +262,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type='submit' variant='outlined' color='secondary'>
+            <Button type='submit' variant='outlined' color='primary'>
               {isUpdate ? 'Update Venue' : 'Create Venue'}
             </Button>
             <Grid>
