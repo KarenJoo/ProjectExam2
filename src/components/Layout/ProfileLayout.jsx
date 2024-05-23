@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { Avatar, Typography, Grid, Button } from '@mui/material'
-import UpdateAvatarForm from '../forms/AvatarForm'
-import styles from './ProfileLayout.module.css'
+import { Avatar, Box, Button, Grid, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateAvatarUrl } from '../../storage/reducers/avatarReducer'
 import { PROFILE_API } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
-import { useDispatch } from 'react-redux'
-import { updateAvatarUrl } from '../../storage/reducers/avatarReducer'
-import { useSelector } from 'react-redux'
+import UpdateAvatarForm from '../forms/AvatarForm'
 
 const ProfileLayout = ({ userData }) => {
   const storage = useStorage()
@@ -50,7 +48,19 @@ const ProfileLayout = ({ userData }) => {
   }, [userData.isVenueManager])
 
   return (
-    <div className={styles.profileContainer}>
+    <Box
+      sx={{
+        height: '100vh',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '100px auto',
+        '@media (min-width: 600px)': {
+          flexDirection: 'column',
+          maxWidth: '700px',
+        },
+      }}
+    >
       <Grid container spacing={2}>
         <Grid item xs={12} md={3}>
           {avatar && (
@@ -101,7 +111,7 @@ const ProfileLayout = ({ userData }) => {
           </ul>
         </Grid>
       )}
-    </div>
+    </Box>
   )
 }
 

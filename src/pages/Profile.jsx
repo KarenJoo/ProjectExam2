@@ -120,13 +120,10 @@ const Profile = () => {
 
   return (
     <div className='contentContainer'>
-      <ProfileLayout userData={userData} />
-      {!isVenueManager ? (
-        <UserVenuesList venues={userData.venues} handleDelete={handleDelete} />
-      ) : (
-        <UserBookingsList bookings={userData.bookings} />
-      )}
-    </div>
+    <ProfileLayout userData={userData} />
+    <UserVenuesList venues={venues} handleDelete={handleDelete} />{' '}
+    {!isVenueManager && <UserBookingsList bookings={userBookings} />}
+  </div>
   )
   
 }
