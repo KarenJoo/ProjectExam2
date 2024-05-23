@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const useStorage = () => {
   const [userData, setUserData] = useState(null)
@@ -28,12 +28,15 @@ const useStorage = () => {
   const saveUserData = (userData) => {
     if (userData) {
       save('userData', userData)
+      setUserData(userData);
     }
   }
 
   // stores isVenueManager value, name, from register form
   const loadUserData = () => {
-    return load('userData')
+    const loadedUserData = load('userData');
+    setUserData(loadedUserData);
+    return loadedUserData;
   }
   const saveVenueManager = (venueManager) => {
     save('venueManager', venueManager)
@@ -44,8 +47,9 @@ const useStorage = () => {
   }
 
   const getUserRole = () => {
-    return userData?.role || 'customer'
-  }
+    const user = load('userData');
+    return user?.isVenueManager ? 'isVenueManager' : 'customer';
+  };
 
   const saveToken = (accessToken) => {
     localStorage.setItem('accessToken', accessToken)
@@ -62,6 +66,14 @@ const useStorage = () => {
   const loadApiKey = () => {
     return localStorage.getItem('apiKey')
   }
+
+  useEffect(() => {
+    const storedUserData = loadUserData();
+    if (storedUserData) {
+      setUserData(storedUserData);
+    }
+  }, []);
+
   return {
     saveUserData,
     saveApiKey,

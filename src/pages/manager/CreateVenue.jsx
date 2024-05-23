@@ -1,12 +1,18 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AlertError } from '../../components/Styles/Errors'
 import VenueForm from '../../components/forms/VenueForm'
 import useStorage from '../../utils/useStorage'
 
 const CreateVenue = () => {
   const { getUserRole } = useStorage()
-  const userRole = getUserRole()
+  const [userRole, setUserRole] = useState('customer');
+  console.log(getUserRole)
+  
+  useEffect(() => {
+    const role = getUserRole();
+    setUserRole(role);
+  }, []);
 
   const handleSubmit = (formData) => {
     console.log('Submitted form data:', formData)
@@ -33,7 +39,7 @@ const CreateVenue = () => {
     >
       <Typography variant='h2'>Create a venue</Typography>
 
-      {userRole === 'venue_manager' ? (
+      {userRole === 'isVenueManager' ? (
         <VenueForm onSubmit={handleSubmit} isUpdate={false} />
       ) : (
         <AlertError message='Only venue managers can create or update venues.' />

@@ -77,7 +77,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
 
       const storedUserData = storage.loadUserData()
       const isVenueManagerValue = storedUserData
-        ? storedUserData.venueManager
+        ? storedUserData.isVenueManager
         : false
 
       console.log(storedUserData)
