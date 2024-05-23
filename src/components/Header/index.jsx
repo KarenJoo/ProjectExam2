@@ -16,7 +16,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import Logout from './Logout'
 import CreateIcon from '@mui/icons-material/Create'
 import { logout } from '../../storage/reducers/authReducer'
-import useStorage from '../../utils/useStorage'
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -26,7 +25,7 @@ const Navbar = () => {
   const theme = useTheme()
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'))
   const navigate = useNavigate()
-  const storage = useStorage();
+  
 
   useEffect(() => {
     console.log('isLoggedIn:', isLoggedIn)
@@ -56,9 +55,7 @@ const Navbar = () => {
         justifyContent: 'space-between',
         height: 70,
         bgcolor: 'rgba(1, 51, 62, 0.9)',
-        maxWidth: '100vw',
         width: '100%',
-        minWidth: '100%',
         overflowX: 'hidden',
         zIndex: 1100,
       }}
@@ -140,7 +137,7 @@ const Navbar = () => {
           <Paper
             sx={{
               backgroundColor: 'rgba(1, 51, 62, 0.9)',
-              width: '200px',
+              width: '100%',
               marginTop: '10px',
               padding: '20px',
               borderRadius: '0px',

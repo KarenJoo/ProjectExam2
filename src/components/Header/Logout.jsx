@@ -11,6 +11,7 @@ const Logout = () => {
   const handleLogout = () => {
     save('userLoggedIn', false);
     clearUserData()
+    localStorage.removeItem('avatarUrl'); 
     dispatch(setVenueManager(false));
     window.location.href = '/login'
   }

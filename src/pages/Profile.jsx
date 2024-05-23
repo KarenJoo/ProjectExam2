@@ -142,6 +142,7 @@ const Profile = () => {
         display='flex'
         justifyContent='center'
         alignItems='center'
+        
       >
         <Alert severity='error'>Failed to fetch profile data: {error}</Alert>
       </Box>
@@ -154,7 +155,7 @@ const Profile = () => {
     <Grid
       container
       spacing={4}
-      sx={{ margin: '10px auto', width: '100%', height: '100vh' }}
+      sx={{ margin: '10px auto', height: '100vh', width: '100%' }}
     >
       <Grid item xs={12} md={12}>
         <Box

@@ -49,14 +49,15 @@ const ProfileLayout = ({ userData }) => {
   }, [userData.isVenueManager])
 
   return (
-    <Grid container md={12} sx={{  }}>
+    <Grid container md={12}>
       <Box
         sx={{
           margin: '100px auto',
           alignItems: 'center',
+          width: '70%',
           '@media (min-width: 600px)': {
             maxWidth: '700px',
-            width: '80%'
+            width: '80%',
           },
         }}
       >
@@ -71,10 +72,12 @@ const ProfileLayout = ({ userData }) => {
                 alt={name || 'User Avatar'}
                 src={reduxAvatarUrl || avatar.url}
                 sx={{
-                  maxWidth: 220,
-                  maxHeight: 220,
-                  width: '80%',
-                  height: 'auto',
+                  maxWidth: '80%',
+                  maxHeight: '80%',
+                  width: '250px',
+                  height: '200px',
+                  minWidth: '200px',
+                  minHeight: '200px',
                   boxShadow: '0 2px 4px rgba(0, 0.5, 0.5, 0.5)',
                   margin: '0 auto',
                 }}
@@ -94,8 +97,9 @@ const ProfileLayout = ({ userData }) => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              width: '400px',
+              width: '100%',
               height: 'auto',
+              minWidth: '200px',
               margin: '10px auto',
               textAlign: 'center',
               padding: '10px',
@@ -111,6 +115,7 @@ const ProfileLayout = ({ userData }) => {
               variant='h1'
               sx={{
                 color: '#01333e',
+                fontSize: '100%',
                 '@media (min-width: 600px)': {
                   fontSize: '100%',
                 },
@@ -121,7 +126,7 @@ const ProfileLayout = ({ userData }) => {
             <Typography variant='body2'>
               Venue Manager: {isVenueManager ? 'Yes' : 'No'}
             </Typography>
-            {!isVenueManager && (
+            {isVenueManager && (
               <Typography variant='body2'>
                 Total Bookings: {bookedVenues ? bookedVenues.length : 0}
               </Typography>
@@ -147,24 +152,27 @@ const ProfileLayout = ({ userData }) => {
             )}{' '}
             <Button
               variant='outlined'
-              sx={{ width: '220px', margin: '0 auto' }}
+              sx={{ width: '80%', margin: '20px auto' }}
               onClick={() => setIsUpdateAvatarOpen(true)}
             >
               Update Avatar
             </Button>
+            {isVenueManager && (
             <Button
               component={Link}
               variant='outlined'
               to={`/create`}
               sx={{
                 color: 'primary',
-                width: '220px',
-                margin: '20px auto',
+                width: '80%',
+                margin: '0px auto',
+                mb: '10px',
                 '&:hover': { color: '#01333e' },
               }}
             >
               Create Venue
             </Button>
+            )}
           </Grid>
         </Grid>
       </Box>
