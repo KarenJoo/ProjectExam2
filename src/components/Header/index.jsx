@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import CreateIcon from '@mui/icons-material/Create'
+import LogoutIcon from '@mui/icons-material/Logout'
+import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import MenuItem from '@mui/material/MenuItem'
+import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Box from '@mui/material/Box'
-import Popper from '@mui/material/Popper'
-import Avatar from '@mui/material/Avatar'
-import MenuItem from '@mui/material/MenuItem'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Tooltip from '@mui/material/Tooltip'
-import LogoutIcon from '@mui/icons-material/Logout'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Paper from '@mui/material/Paper'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import Logout from './Logout'
-import CreateIcon from '@mui/icons-material/Create'
 import { logout } from '../../storage/reducers/authReducer'
+import Logout from './Logout'
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const isLoggedIn = useSelector((state) => state.auth.loggedIn)
+  const isVenueManager = useSelector((state) => state.auth.isVenueManager)
   const dispatch = useDispatch()
   const theme = useTheme()
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'))
   const navigate = useNavigate()
-  
 
   useEffect(() => {
     console.log('isLoggedIn:', isLoggedIn)
@@ -89,7 +89,6 @@ const Navbar = () => {
             </Typography>
           </Box>
         ) : (
-          
           <Tooltip title='Account settings'>
             <IconButton
               className='profileBtn'
@@ -137,9 +136,10 @@ const Navbar = () => {
           <Paper
             sx={{
               backgroundColor: 'rgba(1, 51, 62, 0.9)',
-              width: '100%',
+              width: '150px',
+              height: 'auto',
               marginTop: '10px',
-              padding: '20px',
+              padding: '0px',
               borderRadius: '0px',
             }}
           >
@@ -165,17 +165,19 @@ const Navbar = () => {
             </MenuItem>
 
             {/* create venue */}
-            <MenuItem
-              onClick={handleClose}
-              sx={{ fontSize: '12px', color: '#fde8c9' }}
-              component={Link}
-              to='/create'
-            >
-              <ListItemIcon sx={{ color: '#fde8c9' }}>
-                <CreateIcon fontSize='small' />
-              </ListItemIcon>
-              Create venue
-            </MenuItem>
+            {isVenueManager && (
+              <MenuItem
+                onClick={handleClose}
+                sx={{ fontSize: '12px', color: '#fde8c9' }}
+                component={Link}
+                to='/create'
+              >
+                <ListItemIcon sx={{ color: '#fde8c9' }}>
+                  <CreateIcon fontSize='small' />
+                </ListItemIcon>
+                Create venue
+              </MenuItem>
+            )}
 
             <MenuItem
               onClick={handleClose}

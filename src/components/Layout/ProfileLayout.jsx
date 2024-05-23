@@ -17,6 +17,13 @@ const ProfileLayout = ({ userData }) => {
   const dispatch = useDispatch()
   const reduxAvatarUrl = useSelector((state) => state.avatar.url)
 
+  useEffect(() => {
+    const storedAvatarUrl = localStorage.getItem('avatarUrl')
+    if (storedAvatarUrl) {
+      dispatch(updateAvatarUrl(storedAvatarUrl))
+    }
+  }, [dispatch])
+
   const handleUpdateAvatar = async (avatarUrl) => {
     try {
       const accessToken = storage.loadToken('accessToken')
@@ -158,20 +165,20 @@ const ProfileLayout = ({ userData }) => {
               Update Avatar
             </Button>
             {isVenueManager && (
-            <Button
-              component={Link}
-              variant='outlined'
-              to={`/create`}
-              sx={{
-                color: 'primary',
-                width: '80%',
-                margin: '0px auto',
-                mb: '10px',
-                '&:hover': { color: '#01333e' },
-              }}
-            >
-              Create Venue
-            </Button>
+              <Button
+                component={Link}
+                variant='outlined'
+                to={`/create`}
+                sx={{
+                  color: 'primary',
+                  width: '80%',
+                  margin: '0px auto',
+                  mb: '10px',
+                  '&:hover': { color: '#01333e' },
+                }}
+              >
+                Create Venue
+              </Button>
             )}
           </Grid>
         </Grid>
