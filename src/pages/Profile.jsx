@@ -1,14 +1,12 @@
+import { Alert, Box, CircularProgress, Grid } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import ProfileLayout from '../components/Layout/ProfileLayout'
-import useStorage from '../utils/useStorage'
-import { getUserVenues, getUserBookings } from '../utils/getUserVenues'
-import { CREATE_API_KEY } from '../utils/api'
-import UserVenuesList from '../components/Layout/Profile/VenueList'
 import UserBookingsList from '../components/Layout/Profile/BookingList'
+import UserVenuesList from '../components/Layout/Profile/VenueList'
+import ProfileLayout from '../components/Layout/ProfileLayout'
+import { CREATE_API_KEY, VENUES_URL } from '../utils/api'
 import { createApiKey } from '../utils/createApiKey'
-import { VENUES_URL } from '../utils/api'
-import { Box, CircularProgress, Alert, Grid } from '@mui/material'
-
+import { getUserBookings, getUserVenues } from '../utils/getUserVenues'
+import useStorage from '../utils/useStorage'
 
 const Profile = () => {
   const storage = useStorage()
@@ -116,7 +114,7 @@ const Profile = () => {
         setLoading(false)
       }
     }
-    
+
     fetchUserData()
   }, [])
 
@@ -134,62 +132,66 @@ const Profile = () => {
           size={80}
         />
       </Box>
-    );
+    )
   }
 
   if (error) {
     return (
-      <Box minHeight='100vh' display='flex' justifyContent='center' alignItems='center'>
+      <Box
+        minHeight='100vh'
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+      >
         <Alert severity='error'>Failed to fetch profile data: {error}</Alert>
       </Box>
-    );
+    )
   }
 
-  const isVenueManager = userData && userData.venueManager;
+  const isVenueManager = userData && userData.venueManager
 
   return (
-    <Grid container spacing={4} sx={{ margin: '10px auto', width: '100%' }}>
-    <Grid item xs={12} md={12}>
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        margin: '10px auto',
-        '@media (min-width: 600px)': {
-          flexDirection: 'row',
-        },
-      }}
-    >      <ProfileLayout userData={userData}></ProfileLayout>
-
-      <Box
-        sx={{
-          flexBasis: '70%',
-          '@media (min-width: 600px)': {
-            flexBasis: '100%',
-            margin: '0 auto',
-            paddingRight: '10px'
-          },
-        }}
-      >
-        <Box sx={{ margin: '10px auto' }}>
-          <UserVenuesList venues={venues} handleDelete={handleDelete} />
-        </Box>
-        {isVenueManager && (
+    <Grid
+      container
+      spacing={4}
+      sx={{ margin: '10px auto', width: '100%', height: '100vh' }}
+    >
+      <Grid item xs={12} md={12}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: '10px auto',
+            '@media (min-width: 600px)': {
+              flexDirection: 'row',
+            },
+          }}
+        >
+          {' '}
+          <ProfileLayout userData={userData}></ProfileLayout>
           <Box
             sx={{
-              margin: '10px auto',
-              padding: '10px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              flexBasis: '70%',
+              '@media (min-width: 600px)': {
+                flexBasis: '100%',
+                margin: '0 auto',
+                paddingRight: '10px',
+              },
             }}
           >
-            <UserBookingsList bookings={userBookings} />
+            <Box sx={{ margin: '10px auto', width: '90%' }}>
+              <UserVenuesList venues={venues} handleDelete={handleDelete} />
+            </Box>
+            {isVenueManager && (
+              <Box sx={{ margin: '10px auto', width: '90%' }}>
+                <UserBookingsList bookings={userBookings} />
+              </Box>
+            )}
           </Box>
-        )}
-      </Box>
-    </Box>
+        </Box>
+      </Grid>
     </Grid>
-    </Grid>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

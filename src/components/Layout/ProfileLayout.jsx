@@ -49,18 +49,14 @@ const ProfileLayout = ({ userData }) => {
   }, [userData.isVenueManager])
 
   return (
-    <Grid container md={12} sx={{ width: '50%' }}>
+    <Grid container md={12} sx={{  }}>
       <Box
         sx={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
           margin: '100px auto',
-          height: '100vh',
           alignItems: 'center',
           '@media (min-width: 600px)': {
             maxWidth: '700px',
-            width: '600px',
+            width: '80%'
           },
         }}
       >
