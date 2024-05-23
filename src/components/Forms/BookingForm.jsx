@@ -43,7 +43,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
       setAlertError(true)
       return
     }
-    if (!isVenueManager) {
+    if (isVenueManager) {
       alert("Venue managers cannot book a venue.");
       return;
     }

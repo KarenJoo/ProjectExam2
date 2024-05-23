@@ -56,7 +56,7 @@ const ProfileLayout = ({ userData }) => {
   }, [userData.isVenueManager])
 
   return (
-    <Grid container md={12}>
+    <Grid container item md={12}>
       <Box
         sx={{
           margin: '100px auto',
@@ -121,7 +121,7 @@ const ProfileLayout = ({ userData }) => {
             <Typography
               variant='h1'
               sx={{
-                color: '#01333e',
+                color: 'primary',
                 fontSize: '100%',
                 '@media (min-width: 600px)': {
                   fontSize: '100%',
@@ -174,7 +174,7 @@ const ProfileLayout = ({ userData }) => {
                   width: '80%',
                   margin: '0px auto',
                   mb: '10px',
-                  '&:hover': { color: '#01333e' },
+                  '&:hover': { color: 'primary' },
                 }}
               >
                 Create Venue

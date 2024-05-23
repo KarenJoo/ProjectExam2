@@ -239,7 +239,7 @@ const VenueDetails = () => {
           </Box>
         </Box>
         <CardContent>
-          <Typography variant='h1' color='#01333e' fontSize={'1.5em'}>
+          <Typography variant='h1' color='primary' fontSize={'1.5em'}>
             {name}
           </Typography>
           <Typography variant='body2' paragraph>
@@ -453,7 +453,7 @@ const VenueDetails = () => {
                   <Typography
                     variant='body2'
                     sx={{
-                      color: '#01333e',
+                      color: 'primary',
                       fontWeight: 'bold',
                       marginBottom: '5px',
                     }}
@@ -470,7 +470,7 @@ const VenueDetails = () => {
                   <Typography
                     variant='body2'
                     sx={{
-                      color: '#01333e',
+                      color: 'primary',
                       fontWeight: 'bold',
                       marginBottom: '5px',
                     }}
@@ -487,7 +487,7 @@ const VenueDetails = () => {
                   <Typography
                     variant='body2'
                     sx={{
-                      color: '#01333e',
+                      color: 'primary',
                       fontWeight: 'bold',
                       marginBottom: '5px',
                     }}

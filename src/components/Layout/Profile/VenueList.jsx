@@ -93,7 +93,7 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
                               color: '#000',
                               borderColor: '#000',
                               margin: '10px auto',
-                              '&:hover': { color: '#01333e' },
+                              '&:hover': { color: 'primary' },
                               mr: 1,
                             }}
                           >

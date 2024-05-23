@@ -155,7 +155,7 @@ const BaseForm = ({ variant }) => {
           textAlign: 'left',
         }}
       >
-        <Typography variant='h1' style={{ color: '#01333e' }}>
+        <Typography variant='h1' style={{ color: 'primary' }}>
           {isRegister ? 'Register' : 'Log in'}
         </Typography>
 

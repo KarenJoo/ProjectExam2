@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
   
   // Filled button
   export const PrimaryButton = styled(Button)(({ theme }) => ({
-    backgroundColor: '#01333e',
+    backgroundColor: 'primary',
     color: '#fff',
     '&:hover': {
       backgroundColor: '#333',
@@ -13,10 +13,10 @@ import { Button } from '@mui/material';
   }));
   
   export const SecondaryButton = styled(Button)(({ theme }) => ({
-    color: '#01333e',
-    border: '2px solid #01333e',
+    color: 'primary',
+    border: '2px solid primary',
     '&:hover': {
-      border: '2px solid #01333e',
+      border: '2px solid primary',
     },
   }));
 
@@ -31,7 +31,7 @@ export const ViewMoreButtonContainer = styled('div')({
   
   export const ViewMoreButton = ({ onClick }) => (
     <ViewMoreButtonContainer>
-      <Button onClick={onClick} variant="contained" color="primary" >
+      <Button onClick={onClick} variant="contained" color="secondary" >
         View More
       </Button>
     </ViewMoreButtonContainer>
