@@ -12,6 +12,7 @@ import {
   ImageListItem,
   Rating,
   IconButton,
+  CircularProgress,
 } from '@mui/material'
 import WifiIcon from '@mui/icons-material/Wifi'
 import LocalParkingIcon from '@mui/icons-material/LocalParking'
@@ -30,6 +31,7 @@ import BookingForm from '../components/forms/BookingForm'
 import useStorage from '../utils/useStorage'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { AlertError } from '../components/Styles/Errors.js'
 
 const VenueDetails = () => {
   const { id } = useParams()
@@ -48,15 +50,36 @@ const VenueDetails = () => {
   }, [venueDetails])
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        height='100vh'
+      >
+        <CircularProgress
+          style={{ color: '#fde8c9' }}
+          thickness={6}
+          size={80}
+        />
+      </Box>
+    )
   }
 
   if (error) {
-    return <div>Error: Unable to load venue details.</div>
+    return (
+      <Box minHeight='100vh'>
+        <AlertError message={`Failed to fetch venue detailes`} />
+      </Box>
+    )
   }
 
   if (!venueDetails) {
-    return <div>Error: Venue details not found.</div>
+    return (
+      <Box minHeight='100vh'>
+        <AlertError message={`Failed to fetch venue detailes`} />
+      </Box>
+    )
   }
 
   const {
@@ -104,10 +127,17 @@ const VenueDetails = () => {
 
   return (
     <Box
-      sx={{ height: '100%', width: '100%', mb: 3, mt: 2, margin: '100px auto', '@media (min-width: 600px)': {
-        flexDirection: 'column',
-        maxWidth: '700px',
-      }, }}
+      sx={{
+        height: '100%',
+        width: '100%',
+        mb: 3,
+        mt: 2,
+        margin: '100px auto',
+        '@media (min-width: 600px)': {
+          flexDirection: 'column',
+          maxWidth: '700px',
+        },
+      }}
     >
       <Card
         sx={{
@@ -131,7 +161,7 @@ const VenueDetails = () => {
             '@media (min-width: 600px)': {
               flexDirection: 'column',
               width: '700px',
-              minWidth: '300px'
+              minWidth: '300px',
             },
           }}
         >
@@ -217,11 +247,10 @@ const VenueDetails = () => {
 
             {address}
           </Typography>{' '}
-          <Typography variant='p' paragraph>
+          <Typography variant='body2' paragraph>
             Host: {owner && owner.name ? owner.name : 'Unknown Owner'}
           </Typography>
           <Typography
-            variant='p'
             paragraph
             sx={{
               color: '#000',
@@ -373,7 +402,13 @@ const VenueDetails = () => {
       </Card>
 
       <Box
-        sx={{ height: '700px', width: '90%', mb: 3, mt: 2, margin: '10px auto' }}
+        sx={{
+          height: '700px',
+          width: '90%',
+          mb: 3,
+          mt: 2,
+          margin: '10px auto',
+        }}
       >
         <BookingForm
           onSubmit={handleBookingSubmit}
@@ -381,6 +416,8 @@ const VenueDetails = () => {
           venueId={id}
           isLoggedIn={isUserLoggedIn()}
           isCustomer={!getUserRole() || getUserRole() === 'customer'}
+          venueName={name}
+          venueImage={media && media.length > 0 ? media[0].url : ''}
         />
 
         <Box
@@ -468,7 +505,7 @@ const VenueDetails = () => {
               </Card>
             ))
           ) : (
-            <Typography variant='p'>
+            <Typography variant='body2'>
               No bookings found for this venue.
             </Typography>
           )}

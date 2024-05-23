@@ -7,7 +7,7 @@ import UserVenuesList from '../components/Layout/Profile/VenueList'
 import UserBookingsList from '../components/Layout/Profile/BookingList'
 import { createApiKey } from '../utils/createApiKey'
 import { VENUES_URL } from '../utils/api'
-import { Box, Grid, CircularProgress, Alert } from '@mui/material'
+import { Box, CircularProgress, Alert } from '@mui/material'
 
 
 const Profile = () => {
@@ -181,12 +181,7 @@ const Profile = () => {
       >
         <Box
           sx={{
-            backgroundColor: '#ffffffcf',
             margin: '10px auto',
-            padding: '10px',
-            border: '0.5px solid #fde8c9',
-            borderRadius: '8px',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
           }}
         >
           <UserVenuesList venues={venues} handleDelete={handleDelete} />
@@ -194,12 +189,10 @@ const Profile = () => {
         {!isVenueManager && (
           <Box
             sx={{
-              backgroundColor: '#ffffffcf',
               margin: '10px auto',
               padding: '10px',
-              border: '0.5px solid #fde8c9',
-              borderRadius: '8px',
               boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              height: 'auto',
             }}
           >
             <UserBookingsList bookings={userBookings} />

@@ -18,7 +18,7 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
   }
   return (
     <>
-      <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
+      <Typography variant='h2' sx={{ color: '#fde8c9', margin: '0px auto', textAlign: 'center' }}>
         Your Venues
       </Typography>
       <List sx={{ width: '90%', margin: '0px auto' }}>

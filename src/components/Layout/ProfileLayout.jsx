@@ -74,7 +74,7 @@ const ProfileLayout = ({ userData }) => {
             />
           )}
           <Button
-            variant='contained'
+            variant='outlined'
             onClick={() => setIsUpdateAvatarOpen(true)}
           >
             Update Avatar

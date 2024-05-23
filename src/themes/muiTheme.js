@@ -16,7 +16,7 @@ const theme = createTheme({
       fontSize: '2.0rem',
       padding: '10px',
       fontWeight: 700,
-      color: '#fde8c9',
+      color: '#01333e',
     },
     h2: {
       fontFamily: 'Poppins, sans-serif',
@@ -46,10 +46,6 @@ const theme = createTheme({
       fontWeight: 100,
 
     },
-    p: {
-      fontFamily: 'Poppins, sans-serif',
-      fontSize: '12px',
-    },
     body1: {
       fontFamily: 'Poppins, sans-serif',
       fontSize: '1rem',
@@ -57,7 +53,7 @@ const theme = createTheme({
     },
     body2: {
       fontFamily: 'Poppins, sans-serif',
-      fontSize: '0.875rem',
+      fontSize: '0.8rem',
       fontWeight: 400,
     }
 

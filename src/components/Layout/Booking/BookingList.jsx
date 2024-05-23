@@ -39,7 +39,7 @@ const BookingList = ({ bookings }) => {
               <ListItemAvatar>
                 <Avatar
                   sx={{ height: '80px', width: '80px', marginRight: '10px' }}
-                  alt={booking.name}
+                  alt={booking.venueName}
                   src={
                     booking.media && booking.media.length > 0
                       ? booking.media[0].url
@@ -50,7 +50,7 @@ const BookingList = ({ bookings }) => {
               <ListItemText
                 primary={
                   <Typography  variant='body1' noWrap>
-                    {booking.name}
+                    {booking.venueName}
                   </Typography>
                 }
                 secondary={

@@ -11,7 +11,9 @@ import useStorage from '../../utils/useStorage'
 import { createApiKey } from '../../utils/createApiKey'
 import { AlertError } from '../Styles/Errors'
 
-const BookingForm = ({ venueId, onSubmit }) => {
+
+
+const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   const [checkInDate, setCheckInDate] = useState('')
   const [checkOutDate, setCheckOutDate] = useState('')
   const [guests, setGuests] = useState(1)
@@ -31,6 +33,8 @@ const BookingForm = ({ venueId, onSubmit }) => {
     fetchApiKey()
   }, [])
 
+  
+
   const handleSubmit = async () => {
     const accessToken = storage.loadToken('accessToken')
     if (!accessToken) {
@@ -44,6 +48,8 @@ const BookingForm = ({ venueId, onSubmit }) => {
         dateTo: checkOutDate,
         guests: parseInt(guests),
         venueId: venueId,
+        venueName: venueName,
+        venueImage: venueImage,
       }
 
       const accessToken = storage.loadToken('accessToken')
@@ -59,7 +65,7 @@ const BookingForm = ({ venueId, onSubmit }) => {
   return (
     <Card sx={{ '@media (max-width:600px)': { marginBottom: '20px' } }}>
       <CardContent>
-        <Typography variant='body3'>Book your next stay</Typography>
+        <Typography variant='body3'>Book your next stay at: {venueName}</Typography> 
         <TextField
           fullWidth
           label='Check-in Date'

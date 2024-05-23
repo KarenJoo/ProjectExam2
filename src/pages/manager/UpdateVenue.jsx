@@ -1,6 +1,6 @@
 import React from 'react'
 import VenueForm from '../../components/forms/VenueForm'
-import styles from './VenueForm.module.css'
+import { Box } from '@mui/material'
 import { Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
@@ -13,10 +13,10 @@ const UpdateVenue = () => {
   }
 
   return (
-    <div className={styles.form}>
+    <Box sx={{marginTop: '100px'}}>
       <Typography variant='h2'>Update your venue</Typography>
       <VenueForm onSubmit={handleSubmit} isUpdate={true} userId={id} />
-    </div>
+    </Box>
   )
 }
 export default UpdateVenue

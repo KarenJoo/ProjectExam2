@@ -1,19 +1,44 @@
+import { Box, Typography } from '@mui/material'
 import React from 'react'
+import { AlertError } from '../../components/Styles/Errors'
 import VenueForm from '../../components/forms/VenueForm'
-import styles from './VenueForm.module.css'
-import { Typography } from '@mui/material'
+import useStorage from '../../utils/useStorage'
 
 const CreateVenue = () => {
+  const { getUserRole } = useStorage()
+  const userRole = getUserRole()
+
   const handleSubmit = (formData) => {
     console.log('Submitted form data:', formData)
     alert('Venue created successfully!')
   }
+
   return (
-    <div className={styles.form}>
+    <Box
+      sx={{
+        maxWidth: '500px',
+        minWidth: '100px',
+        height: '900px',
+        width: '80%',
+        padding: '20px',
+        backgroundColor: '#f5f5f5df',
+        border: '1px solid #ddd',
+        borderRadius: '8px',
+        margin: '100px auto',
+        marginBottom: '100px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Typography variant='h2'>Create a venue</Typography>
 
-      <VenueForm onSubmit={handleSubmit} isUpdate={false} />
-    </div>
+      {userRole === 'venue_manager' ? (
+        <VenueForm onSubmit={handleSubmit} isUpdate={false} />
+      ) : (
+        <AlertError message='Only venue managers can create or update venues.' />
+      )}
+    </Box>
   )
 }
 
