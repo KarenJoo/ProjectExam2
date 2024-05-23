@@ -54,31 +54,32 @@ const ProfileLayout = ({ userData }) => {
         display: 'flex',
         flexDirection: 'column',
         margin: '100px auto',
+        alignItems: 'center',
         '@media (min-width: 600px)': {
           flexDirection: 'column',
           maxWidth: '700px',
         },
       }}
     >
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        sx={{ margin: '10px auto', width: '100%', textAlign: 'center' }}
+      >
         <Grid item xs={12} md={3}>
           {avatar && (
             <Avatar
               alt={name || 'User Avatar'}
               src={reduxAvatarUrl || avatar.url}
               sx={{
-                width: 120,
-                height: 120,
+                width: 220,
+                height: 220,
                 boxShadow: '0 2px 4px rgba(0, 0.5, 0.5, 0.5)',
+                margin: '0 auto',
               }}
             />
           )}
-          <Button
-            variant='outlined'
-            onClick={() => setIsUpdateAvatarOpen(true)}
-          >
-            Update Avatar
-          </Button>
+
           <UpdateAvatarForm
             open={isUpdateAvatarOpen}
             onClose={() => setIsUpdateAvatarOpen(false)}
@@ -108,33 +109,41 @@ const ProfileLayout = ({ userData }) => {
           <Typography variant='h1' sx={{ color: '#01333e' }}>
             {name || 'Unknown User'}
           </Typography>
-          <Typography variant='h5'>
+          <Typography variant='body2'>
             Venue Manager: {isVenueManager ? 'Yes' : 'No'}
           </Typography>
           {!isVenueManager && (
-            <Typography variant='h5'>
+            <Typography variant='body2'>
               Total Bookings: {bookedVenues ? bookedVenues.length : 0}
             </Typography>
           )}{' '}
+          {isVenueManager && (
+            <Grid item xs={12} md={9}>
+              <Typography variant='body2'>
+                Total Venues: {venuesCount}
+              </Typography>
+              <ul>
+                {bookedVenues &&
+                  bookedVenues.map((venue) => (
+                    <div key={venue.id}>
+                      <Typography variant='body1'>{venue.name}</Typography>
+                      <Typography variant='body2' color='textSecondary'>
+                        Location: {venue.location.city},{' '}
+                        {venue.location.country}
+                      </Typography>
+                    </div>
+                  ))}
+              </ul>
+            </Grid>
+          )}{' '}
+          <Button
+            variant='outlined'
+            onClick={() => setIsUpdateAvatarOpen(true)}
+          >
+            Update Avatar
+          </Button>
         </Grid>
       </Grid>
-
-      {isVenueManager && (
-        <Grid item xs={12} md={9}>
-          <Typography variant='body1'>Total Venues: {venuesCount}</Typography>
-          <ul>
-            {bookedVenues &&
-              bookedVenues.map((venue) => (
-                <div key={venue.id}>
-                  <Typography variant='body1'>{venue.name}</Typography>
-                  <Typography variant='body2' color='textSecondary'>
-                    Location: {venue.location.city}, {venue.location.country}
-                  </Typography>
-                </div>
-              ))}
-          </ul>
-        </Grid>
-      )}
     </Box>
   )
 }

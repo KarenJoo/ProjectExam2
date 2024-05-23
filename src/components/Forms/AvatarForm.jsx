@@ -22,7 +22,7 @@ const UpdateAvatarForm = ({ open, onClose, onUpdate }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle color={'secondary'}>Update Avatar</DialogTitle>
+      <DialogTitle color={'primary'}>Update Avatar</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -35,10 +35,10 @@ const UpdateAvatarForm = ({ open, onClose, onUpdate }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color={'secondary'}>
+        <Button onClick={onClose} color={'primary'}>
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color={'secondary'}>
+        <Button onClick={handleSubmit} color={'primary'}>
           Update
         </Button>
       </DialogActions>
