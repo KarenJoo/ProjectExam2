@@ -440,7 +440,7 @@ const VenueDetails = () => {
                 key={booking.id}
                 sx={{
                   mb: 1,
-                  backgroundColor: '#01333e09',
+                  backgroundColor: '#fff',
                   borderRadius: '8px',
                   padding: '10px',
                   display: 'flex',

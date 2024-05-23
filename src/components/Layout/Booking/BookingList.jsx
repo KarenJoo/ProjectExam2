@@ -1,29 +1,37 @@
-import React from 'react'
 import {
-  Typography,
+  Avatar,
+  Box,
+  Divider,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Avatar,
-  Divider,
-  Box
+  Typography,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
-import styles from '../../Layout/Profile/VenueList.module.css'
 import dayjs from 'dayjs'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const BookingList = ({ bookings }) => {
-    const formatDate = (dateString) => {
-        return dayjs(dateString).format('YYYY-MM-DD');
-      };
-    
+  const formatDate = (dateString) => {
+    return dayjs(dateString).format('YYYY-MM-DD')
+  }
+
   return (
-    <Box>
-      <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
+    <Box
+      sx={{
+        '@media (min-width: 600px)': {
+          mt: '120px',
+        },
+      }}
+    >
+      <Typography
+        variant='h2'
+        sx={{ color: '#fde8c9', margin: '0px auto', textAlign: 'center' }}
+      >
         Bookings
       </Typography>
-      <List sx={{ width: '90%', margin: '0px auto' }}>
+      <List sx={{ width: '100%', margin: '0px auto' }}>
         {bookings.map((booking) => (
           <React.Fragment key={booking.id}>
             <ListItem
@@ -33,7 +41,8 @@ const BookingList = ({ bookings }) => {
                 border: '0.5px solid #fff',
                 backgroundColor: '#ffffffcf',
                 '&:hover': {
-                 backgroundColor: '#ffffffcf',
+                  transition: 'transform 0.1s ease-in-out',
+                  '&:hover': { transform: 'scale(1.04)' },
                 },
               }}
             >
@@ -50,7 +59,7 @@ const BookingList = ({ bookings }) => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Typography  variant='body1' noWrap>
+                  <Typography variant='body1' noWrap>
                     {booking.venueName}
                   </Typography>
                 }
@@ -73,20 +82,12 @@ const BookingList = ({ bookings }) => {
                         </Typography>
                       </ListItemText>
                     </ListItem>
-                    <Link
-                      to={`/venue/${booking.id}`}
-                      className={styles.viewButton}
-                    >
-                      View Venue
-                    </Link>
+                    <Link to={`/venue/${booking.id}`}>View Venue</Link>
                   </>
                 }
               />
             </ListItem>
-            <Divider
-              variant='inset'
-              sx={{ marginBottom: '10px' }}
-            />
+            <Divider variant='inset' sx={{ marginBottom: '10px' }} />
           </React.Fragment>
         ))}
       </List>

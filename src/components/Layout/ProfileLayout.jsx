@@ -133,7 +133,7 @@ const ProfileLayout = ({ userData }) => {
             <Typography variant='body2'>
               Venue Manager: {isVenueManager ? 'Yes' : 'No'}
             </Typography>
-            {isVenueManager && (
+            {!isVenueManager && (
               <Typography variant='body2'>
                 Total Bookings: {bookedVenues ? bookedVenues.length : 0}
               </Typography>

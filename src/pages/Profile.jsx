@@ -183,7 +183,7 @@ const Profile = () => {
             <Box sx={{ margin: '10px auto', width: '90%' }}>
               <UserVenuesList venues={venues} handleDelete={handleDelete} />
             </Box>
-            {isVenueManager && (
+            {!isVenueManager && (
               <Box sx={{ margin: '10px auto', width: '90%' }}>
                 <UserBookingsList bookings={userBookings} />
               </Box>
