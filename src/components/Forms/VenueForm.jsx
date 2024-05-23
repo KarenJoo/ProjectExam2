@@ -5,6 +5,7 @@ import {
   Button,
   FormControlLabel,
   Grid,
+  Alert,
 } from '@mui/material'
 import { VENUES_URL } from '../../utils/api'
 import useStorage from '../../utils/useStorage'
@@ -270,8 +271,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
             <Grid>
             {successMessage && (
             <Grid item xs={12}>
-              <div>{successMessage}</div>
-            </Grid>
+              <Alert severity="success" sx={{mt: '10px'}}>{successMessage}</Alert>            </Grid>
           )}
             </Grid>
           </Grid>

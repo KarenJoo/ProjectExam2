@@ -16,7 +16,6 @@ const CreateVenue = () => {
 
   const handleSubmit = (formData) => {
     console.log('Submitted form data:', formData)
-    alert('Venue created successfully!')
   }
 
   return (
