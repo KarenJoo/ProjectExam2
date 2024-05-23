@@ -7,7 +7,7 @@ import UserVenuesList from '../components/Layout/Profile/VenueList'
 import UserBookingsList from '../components/Layout/Profile/BookingList'
 import { createApiKey } from '../utils/createApiKey'
 import { VENUES_URL } from '../utils/api'
-import { Box, CircularProgress, Alert } from '@mui/material'
+import { Box, CircularProgress, Alert, Grid } from '@mui/material'
 
 
 const Profile = () => {
@@ -148,29 +148,21 @@ const Profile = () => {
   const isVenueManager = userData && userData.venueManager;
 
   return (
+    <Grid container spacing={2} sx={{ width: '90%', margin: '10px auto' }}>
+    <Grid item xs={12} md={12}>
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        width: '90%',
-        height: 'auto',
         margin: '10px auto',
         '@media (min-width: 600px)': {
           flexDirection: 'row',
+          margin: '0px',
+          padding: '0px',
         },
       }}
-    >
-      <Box
-        sx={{
-          flexBasis: '30%',
-          '@media (min-width: 600px)': {
-            flexBasis: '30%',
-            marginRight: '10px',
-          },
-        }}
-      >
-        <ProfileLayout userData={userData} />
-      </Box>
+    >      <ProfileLayout userData={userData}></ProfileLayout>
+
       <Box
         sx={{
           flexBasis: '70%',
@@ -179,20 +171,15 @@ const Profile = () => {
           },
         }}
       >
-        <Box
-          sx={{
-            margin: '10px auto',
-          }}
-        >
+        <Box sx={{ margin: '10px auto' }}>
           <UserVenuesList venues={venues} handleDelete={handleDelete} />
         </Box>
-        {!isVenueManager && (
+        {isVenueManager && (
           <Box
             sx={{
               margin: '10px auto',
               padding: '10px',
               boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              height: 'auto',
             }}
           >
             <UserBookingsList bookings={userBookings} />
@@ -200,6 +187,9 @@ const Profile = () => {
         )}
       </Box>
     </Box>
+    </Grid>
+    </Grid>
   );
 };
-export default Profile
+
+export default Profile;

@@ -54,26 +54,30 @@ const ProfileLayout = ({ userData }) => {
         display: 'flex',
         flexDirection: 'column',
         margin: '100px auto',
+        height: '100vh',
         alignItems: 'center',
         '@media (min-width: 600px)': {
-          flexDirection: 'column',
           maxWidth: '700px',
+          width: '100%',
+          
         },
       }}
     >
       <Grid
         container
         spacing={2}
-        sx={{ margin: '10px auto', width: '100%', textAlign: 'center' }}
+        sx={{ margin: '10px auto', width: '60%', textAlign: 'center' }}
       >
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={12}>
           {avatar && (
             <Avatar
               alt={name || 'User Avatar'}
               src={reduxAvatarUrl || avatar.url}
               sx={{
-                width: 220,
-                height: 220,
+                maxWidth: 220,
+                maxHeight: 220,
+                width: '80%',
+                height: 'auto',
                 boxShadow: '0 2px 4px rgba(0, 0.5, 0.5, 0.5)',
                 margin: '0 auto',
               }}
@@ -103,10 +107,14 @@ const ProfileLayout = ({ userData }) => {
             borderRadius: '8px',
             overflow: 'hidden',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            transition: 'transform 0.3s ease-in-out',
+            transition: 'transform 0.3s ease-in-out','@media (min-width: 600px)': {
+              width: '50vw',
+            },
           }}
         >
-          <Typography variant='h1' sx={{ color: '#01333e' }}>
+          <Typography variant='h1' sx={{ color: '#01333e', '@media (min-width: 600px)': {
+          fontSize: '100%'
+        }, }}>
             {name || 'Unknown User'}
           </Typography>
           <Typography variant='body2'>
@@ -125,13 +133,13 @@ const ProfileLayout = ({ userData }) => {
               <ul>
                 {bookedVenues &&
                   bookedVenues.map((venue) => (
-                    <div key={venue.id}>
+                    <Box key={venue.id}>
                       <Typography variant='body1'>{venue.name}</Typography>
                       <Typography variant='body2' color='textSecondary'>
                         Location: {venue.location.city},{' '}
                         {venue.location.country}
                       </Typography>
-                    </div>
+                    </Box>
                   ))}
               </ul>
             </Grid>
@@ -145,6 +153,7 @@ const ProfileLayout = ({ userData }) => {
         </Grid>
       </Grid>
     </Box>
+    
   )
 }
 

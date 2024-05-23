@@ -17,10 +17,12 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
     handleDelete(venueId)
   }
   return (
-    <>
+    <Box sx={{  '@media (min-width: 600px)': {
+      mt: '120px',
+    },}}>
       <Typography
         variant='h2'
-        sx={{ color: '#fde8c9', margin: '20px auto', textAlign: 'center' }}
+        sx={{ color: '#fde8c9', margin: '0px auto', textAlign: 'center' }}
       >
         Your Venues
       </Typography>
@@ -108,7 +110,7 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
           </React.Fragment>
         ))}
       </List>
-    </>
+    </Box>
   )
 }
 

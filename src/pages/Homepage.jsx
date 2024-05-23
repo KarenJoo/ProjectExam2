@@ -57,7 +57,7 @@ const Homepage = () => {
       <HeroSlider />
 
       <Box>
-        <Typography variant='h1' color='primary' marginTop='10px'>
+        <Typography variant='h1' color='secondary' marginTop='10px'>
           Book and dayze away
         </Typography>
 

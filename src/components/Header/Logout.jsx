@@ -2,6 +2,7 @@ import React from 'react'
 import useStorage from '../../utils/useStorage'
 import { useDispatch } from 'react-redux'
 import { setVenueManager } from '../../storage/reducers/authReducer'
+import { Box } from '@mui/material'
 
 const Logout = () => {
   const { clearUserData, save } = useStorage()
@@ -15,12 +16,12 @@ const Logout = () => {
   }
 
   return (
-    <div
+    <Box
       style={{ cursor: 'pointer', color: '#fde8c9', textDecoration: 'none' }}
       onClick={handleLogout}
     >
       Logout
-    </div>
+    </Box>
   )
 }
 

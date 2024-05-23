@@ -7,6 +7,7 @@ import {
   ListItemText,
   Avatar,
   Divider,
+  Box
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import styles from '../../Layout/Profile/VenueList.module.css'
@@ -18,7 +19,7 @@ const BookingList = ({ bookings }) => {
       };
     
   return (
-    <div>
+    <Box>
       <Typography variant='h1' sx={{ margin: '0px auto', textAlign: 'center' }}>
         Bookings
       </Typography>
@@ -32,7 +33,7 @@ const BookingList = ({ bookings }) => {
                 border: '0.5px solid #fff',
                 backgroundColor: '#ffffffcf',
                 '&:hover': {
-                  backgroundColor: '#fff',
+                 backgroundColor: '#ffffffcf',
                 },
               }}
             >
@@ -89,7 +90,7 @@ const BookingList = ({ bookings }) => {
           </React.Fragment>
         ))}
       </List>
-    </div>
+    </Box>
   )
 }
 
