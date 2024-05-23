@@ -7,12 +7,16 @@ import UserVenuesList from '../components/Layout/Profile/VenueList'
 import UserBookingsList from '../components/Layout/Profile/BookingList'
 import { createApiKey } from '../utils/createApiKey'
 import { VENUES_URL } from '../utils/api'
+import { Box, Grid, CircularProgress, Alert } from '@mui/material'
+
 
 const Profile = () => {
   const storage = useStorage()
   const [userData, setUserData] = useState(null)
   const [userBookings, setUserBookings] = useState([])
   const [venues, setVenues] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const handleDelete = async (venueId) => {
     try {
@@ -40,6 +44,7 @@ const Profile = () => {
       )
     } catch (error) {
       console.error('Error deleting venue:', error)
+      setError(error.message)
     }
   }
 
@@ -103,29 +108,105 @@ const Profile = () => {
 
         setUserData(updatedUserData)
         setVenues(userVenuesData.data)
-        setUserBookings(userBookingsData.data);
+        setUserBookings(userBookingsData.data)
       } catch (error) {
         console.error('Error fetching user data:', error)
+        setError(error.message)
+      } finally {
+        setLoading(false)
       }
     }
-
+    
     fetchUserData()
   }, [])
 
-  if (!userData) {
-    return <div>Loading...</div>
+  if (loading) {
+    return (
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        height='100vh'
+      >
+        <CircularProgress
+          style={{ color: '#fde8c9' }}
+          thickness={6}
+          size={80}
+        />
+      </Box>
+    );
   }
 
-  const isVenueManager = userData && userData.venueManager
+  if (error) {
+    return (
+      <Box minHeight='100vh' display='flex' justifyContent='center' alignItems='center'>
+        <Alert severity='error'>Failed to fetch profile data: {error}</Alert>
+      </Box>
+    );
+  }
+
+  const isVenueManager = userData && userData.venueManager;
 
   return (
-    <div className='contentContainer'>
-    <ProfileLayout userData={userData} />
-    <UserVenuesList venues={venues} handleDelete={handleDelete} />{' '}
-    {!isVenueManager && <UserBookingsList bookings={userBookings} />}
-  </div>
-  )
-  
-}
-
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '90%',
+        height: 'auto',
+        margin: '10px auto',
+        '@media (min-width: 600px)': {
+          flexDirection: 'row',
+        },
+      }}
+    >
+      <Box
+        sx={{
+          flexBasis: '30%',
+          '@media (min-width: 600px)': {
+            flexBasis: '30%',
+            marginRight: '10px',
+          },
+        }}
+      >
+        <ProfileLayout userData={userData} />
+      </Box>
+      <Box
+        sx={{
+          flexBasis: '70%',
+          '@media (min-width: 600px)': {
+            flexBasis: '70%',
+          },
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: '#ffffffcf',
+            margin: '10px auto',
+            padding: '10px',
+            border: '0.5px solid #fde8c9',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+          }}
+        >
+          <UserVenuesList venues={venues} handleDelete={handleDelete} />
+        </Box>
+        {!isVenueManager && (
+          <Box
+            sx={{
+              backgroundColor: '#ffffffcf',
+              margin: '10px auto',
+              padding: '10px',
+              border: '0.5px solid #fde8c9',
+              borderRadius: '8px',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <UserBookingsList bookings={userBookings} />
+          </Box>
+        )}
+      </Box>
+    </Box>
+  );
+};
 export default Profile

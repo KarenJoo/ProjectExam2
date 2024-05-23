@@ -50,7 +50,6 @@ const ProfileLayout = ({ userData }) => {
   return (
     <Box
       sx={{
-        height: '100vh',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -67,7 +66,11 @@ const ProfileLayout = ({ userData }) => {
             <Avatar
               alt={name || 'User Avatar'}
               src={reduxAvatarUrl || avatar.url}
-              sx={{ width: 120, height: 120 }}
+              sx={{
+                width: 120,
+                height: 120,
+                boxShadow: '0 2px 4px rgba(0, 0.5, 0.5, 0.5)',
+              }}
             />
           )}
           <Button
@@ -82,17 +85,38 @@ const ProfileLayout = ({ userData }) => {
             onUpdate={handleUpdateAvatar}
           />
         </Grid>
-        <Grid item xs={12} md={9}>
-          <Typography variant='h2'>{name || 'Unknown User'}</Typography>
-          <Typography variant='body1'>
+        <Grid
+          item
+          xs={12}
+          md={9}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '400px',
+            height: 'auto',
+            margin: '10px auto',
+            textAlign: 'center',
+            padding: '10px',
+            backgroundColor: '#ffffffcf',
+            border: '0.5px solid #fde8c9',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            transition: 'transform 0.3s ease-in-out',
+          }}
+        >
+          <Typography variant='h1' sx={{ color: '#01333e' }}>
+            {name || 'Unknown User'}
+          </Typography>
+          <Typography variant='h5'>
             Venue Manager: {isVenueManager ? 'Yes' : 'No'}
           </Typography>
+          {!isVenueManager && (
+            <Typography variant='h5'>
+              Total Bookings: {bookedVenues ? bookedVenues.length : 0}
+            </Typography>
+          )}{' '}
         </Grid>
-        {!isVenueManager && (
-          <Typography variant='body1'>
-            Total Bookings: {bookedVenues ? bookedVenues.length : 0}
-          </Typography>
-        )}
       </Grid>
 
       {isVenueManager && (

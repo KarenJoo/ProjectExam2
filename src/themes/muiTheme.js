@@ -40,6 +40,12 @@ const theme = createTheme({
       fontSize: '0.8rem',
       fontWeight: 100,
     },
+    h6: {
+      fontFamily: 'Poppins, sans-serif',
+      fontSize: '0.5rem',
+      fontWeight: 100,
+
+    },
     p: {
       fontFamily: 'Poppins, sans-serif',
       fontSize: '12px',
