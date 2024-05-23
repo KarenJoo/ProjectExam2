@@ -16,6 +16,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Logout from './Logout'
 import CreateIcon from '@mui/icons-material/Create'
 import { logout } from '../../storage/reducers/authReducer'
+import useStorage from '../../utils/useStorage'
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -25,6 +26,7 @@ const Navbar = () => {
   const theme = useTheme()
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'))
   const navigate = useNavigate()
+  const storage = useStorage();
 
   useEffect(() => {
     console.log('isLoggedIn:', isLoggedIn)
@@ -90,6 +92,7 @@ const Navbar = () => {
             </Typography>
           </Box>
         ) : (
+          
           <Tooltip title='Account settings'>
             <IconButton
               className='profileBtn'

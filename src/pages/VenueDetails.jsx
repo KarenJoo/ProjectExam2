@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { VENUES_URL } from '../utils/api'
-import useFetch from '../hooks/useFetch'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast'
+import GroupIcon from '@mui/icons-material/Group'
+import LocalParkingIcon from '@mui/icons-material/LocalParking'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import PetsIcon from '@mui/icons-material/Pets'
+import WifiIcon from '@mui/icons-material/Wifi'
 import {
   Box,
   Card,
   CardContent,
-  Typography,
   CardMedia,
+  CircularProgress,
+  IconButton,
   ImageList,
   ImageListItem,
   Rating,
-  IconButton,
-  CircularProgress,
+  Typography,
 } from '@mui/material'
-import WifiIcon from '@mui/icons-material/Wifi'
-import LocalParkingIcon from '@mui/icons-material/LocalParking'
-import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast'
-import PetsIcon from '@mui/icons-material/Pets'
-import GroupIcon from '@mui/icons-material/Group'
-import TableContainer from '@mui/material/TableContainer'
+import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
-import BookingForm from '../components/forms/BookingForm'
-import useStorage from '../utils/useStorage'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { AlertError } from '../components/Styles/Errors.js'
+import BookingForm from '../components/forms/BookingForm.jsx'
+import useFetch from '../hooks/useFetch'
+import { VENUES_URL } from '../utils/api'
+import useStorage from '../utils/useStorage'
 
 const VenueDetails = () => {
   const { id } = useParams()
