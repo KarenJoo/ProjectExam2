@@ -10,6 +10,7 @@ import { createBooking } from '../../utils/bookingsApi'
 import useStorage from '../../utils/useStorage'
 import { createApiKey } from '../../utils/createApiKey'
 import { AlertError } from '../Styles/Errors'
+import useAuth from '../../hooks/useAuth'
 
 
 
@@ -20,6 +21,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   const [apiKey, setApiKey] = useState('')
   const [alertError, setAlertError] = useState(false)
   const storage = useStorage()
+  const { isVenueManager } = useAuth();
 
   useEffect(() => {
     async function fetchApiKey() {
@@ -41,7 +43,10 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
       setAlertError(true)
       return
     }
-
+    if (!isVenueManager) {
+      alert("Venue managers cannot book a venue.");
+      return;
+    }
     try {
       const bookingData = {
         dateFrom: checkInDate,
