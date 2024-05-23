@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
 import {
-  TextField,
-  Checkbox,
+  Alert,
+  Box,
   Button,
+  Checkbox,
   FormControlLabel,
   Grid,
-  Alert,
+  TextField,
 } from '@mui/material'
-import { VENUES_URL } from '../../utils/api'
-import useStorage from '../../utils/useStorage'
-import styles from '../../pages/manager/VenueForm.module.css'
+import React, { useState } from 'react'
 import useAuth from '../../hooks/useAuth'
+import { VENUES_URL } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'
+import useStorage from '../../utils/useStorage'
 
 const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
   const storage = useStorage()
   const { isVenueManager } = useAuth()
-  const [successMessage, setSuccessMessage] = useState('');
-
+  const [successMessage, setSuccessMessage] = useState('')
 
   const [formData, setFormData] = useState({
     name: '',
@@ -37,8 +36,6 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
     },
     imageUrl: '',
   })
-
-
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -91,9 +88,8 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
         throw new Error('Only venue managers can create or update venues')
       }
 
-
-      const url = isUpdate ? `${VENUES_URL}/${userId}` : VENUES_URL;
-      const method = isUpdate ? 'PUT' : 'POST';
+      const url = isUpdate ? `${VENUES_URL}/${userId}` : VENUES_URL
+      const method = isUpdate ? 'PUT' : 'POST'
       const response = await fetch(url, {
         method,
         headers: {
@@ -108,12 +104,13 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
         throw new Error('Failed to create or update venue')
       }
       const data = await response.json()
-      console.log('Venue created successfully:', data)      
-      setSuccessMessage('Venue ' + (isUpdate ? 'updated' : 'created') + ' successfully');
+      console.log('Venue created successfully:', data)
+      setSuccessMessage(
+        'Venue ' + (isUpdate ? 'updated' : 'created') + ' successfully'
+      )
       if (onSubmit) {
         onSubmit(data)
       }
-      
     } catch (error) {
       console.error('Failed to create venue:', error)
       alert('Failed to create venue')
@@ -197,7 +194,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
           </Grid>
 
           {/* venue checkbox */}
-          <div className={styles.valueForm}>
+          <Box sx={{ width: '90%', margin: '10px auto' }}>
             <Grid item xs={12}>
               <FormControlLabel
                 control={
@@ -252,7 +249,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
                 label='Pets'
               />
             </Grid>
-          </div>
+          </Box>
 
           <Grid item xs={12}>
             <TextField
@@ -266,13 +263,16 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
           </Grid>
           <Grid item xs={12}>
             <Button type='submit' variant='outlined' color='secondary'>
-            {isUpdate ? 'Update Venue' : 'Create Venue'}
+              {isUpdate ? 'Update Venue' : 'Create Venue'}
             </Button>
             <Grid>
-            {successMessage && (
-            <Grid item xs={12}>
-              <Alert severity="success" sx={{mt: '10px'}}>{successMessage}</Alert>            </Grid>
-          )}
+              {successMessage && (
+                <Grid item xs={12}>
+                  <Alert severity='success' sx={{ mt: '10px' }}>
+                    {successMessage}
+                  </Alert>{' '}
+                </Grid>
+              )}
             </Grid>
           </Grid>
         </Grid>

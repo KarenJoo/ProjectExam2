@@ -8,9 +8,10 @@ import {
   Avatar,
   Divider,
   Button,
+  Box,
+  Link as MuiLink,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
-import styles from './VenueList.module.css'
 
 const VenuesList = ({ venues, userId, handleDelete }) => {
   const handleVenueDelete = (venueId) => {
@@ -18,10 +19,13 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
   }
   return (
     <>
-      <Typography variant='h2' sx={{ color: '#fde8c9', margin: '0px auto', textAlign: 'center' }}>
+      <Typography
+        variant='h2'
+        sx={{ color: '#fde8c9', margin: '20px auto', textAlign: 'center' }}
+      >
         Your Venues
       </Typography>
-      <List sx={{ width: '90%', margin: '0px auto' }}>
+      <List sx={{ width: '100%', margin: '0px auto' }}>
         {venues.map((venue) => (
           <React.Fragment key={venue.id}>
             <ListItem
@@ -31,8 +35,10 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
                 border: '0.5px solid #fff',
                 backgroundColor: '#ffffffcf',
                 '&:hover': {
-                  backgroundColor: '#fde8c9',
+                  transition: 'transform 0.1s ease-in-out',
+                  '&:hover': { transform: 'scale(1.04)' },
                 },
+                mb: 2,
               }}
             >
               <ListItemAvatar>
@@ -46,36 +52,58 @@ const VenuesList = ({ venues, userId, handleDelete }) => {
                   }
                 />
               </ListItemAvatar>
-              <ListItemText
-                primary={venue.name}
-                secondary={
-                  <>
-                    <Link
-                      to={`/venue/${venue.id}`}
-                      className={styles.viewButton}
-                    >
-                      View Venue
-                    </Link>
-                    {venue.createdBy === userId && (
-                      <>
-                        <Link
-                          to={`/update/${venue.id}`}
-                          className={styles.updateButton}
-                        >
-                          Update Venue
-                        </Link>
-                        <Button
-                          onClick={() => handleVenueDelete(venue.id)}
-                          variant='outlined'
-                          color='error'
-                        >
-                          Delete Venue
-                        </Button>
-                      </>
-                    )}
-                  </>
-                }
-              />
+              <Box
+                sx={{ display: 'flex', flexDirection: 'row', margin: '0 auto' }}
+              >
+                <ListItemText
+                  primary={venue.name}
+                  sx={{ mb: '10px' }}
+                  secondary={
+                    <>
+                      {venue.createdBy === userId && (
+                        <>
+                          <Box sx={{ display: 'flex' }}>
+                            <Button
+                              component={Link}
+                              to={`/update/${venue.id}`}
+                              sx={{
+                                color: '#000',
+                                fontSize: '12px',
+                                '&:hover': { color: '#01333e' },
+                                mr: 1,
+                              }}
+                            >
+                              Update
+                            </Button>
+                            <Button
+                              onClick={() => handleVenueDelete(venue.id)}
+                              color='error'
+                              sx={{ fontSize: '12px' }}
+                            >
+                              Delete
+                            </Button>
+                          </Box>{' '}
+                          <Button
+                            variant='outlined'
+                            component={Link}
+                            to={`/venue/${venue.id}`}
+                            sx={{
+                              textDecoration: 'none',
+                              color: '#000',
+                              borderColor: '#000',
+                              margin: '10px auto',
+                              '&:hover': { color: '#01333e' },
+                              mr: 1,
+                            }}
+                          >
+                            View Venue
+                          </Button>
+                        </>
+                      )}
+                    </>
+                  }
+                />
+              </Box>
             </ListItem>
             <Divider variant='inset' sx={{ marginBottom: '10px' }} />
           </React.Fragment>

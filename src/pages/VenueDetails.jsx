@@ -423,7 +423,7 @@ const VenueDetails = () => {
         <Box
           sx={{
             height: 'auto',
-            width: '94%',
+            width: '90%',
             mb: 3,
             margin: '20px auto',
             backgroundColor: '#fff',

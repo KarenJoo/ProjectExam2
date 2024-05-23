@@ -10,7 +10,7 @@ import ViewMoreButton from '../components/Styles/Buttons'
 import { AlertError, AlertWarning } from '../components/Styles/Errors'
 
 const Homepage = () => {
-  const API_URL = `${API_BASE_URL}/venues`
+  const API_URL = `${API_BASE_URL}/venues?sort=created`
   const { data: venues, loading, error } = useFetch(API_URL)
   const [searchTerm, setSearchTerm] = useState('')
   const [displayCount, setDisplayCount] = useState(6)
