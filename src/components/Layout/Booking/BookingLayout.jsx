@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { API_BASE_URL } from '../../../utils/api'
 import useStorage from '../../../utils/useStorage'
 import { createApiKey } from '../../../utils/createApiKey'
-import styles from './BookingLayout.module.css'
 import { Box, Button } from '@mui/material'
 import BookingList from './BookingList'
 

@@ -29,10 +29,10 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { AlertError } from '../components/Styles/Errors.js'
 import BookingForm from '../components/forms/BookingForm.jsx'
+import useAuth from '../hooks/useAuth.jsx'
 import useFetch from '../hooks/useFetch'
 import { VENUES_URL } from '../utils/api'
 import useStorage from '../utils/useStorage'
-import useAuth from '../hooks/useAuth.jsx'
 
 const VenueDetails = () => {
   const { id } = useParams()
@@ -42,7 +42,7 @@ const VenueDetails = () => {
   const accessToken = loadToken()
   const [selectedImage, setSelectedImage] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth()
 
   useEffect(() => {
     if (venueDetails && venueDetails.media && venueDetails.media.length > 0) {
@@ -104,10 +104,10 @@ const VenueDetails = () => {
 
   const handleBookingSubmit = () => {
     if (!isLoggedIn) {
-      alert('Please log in to book a venue.');
-      return;
+      alert('Please log in to book a venue.')
+      return
     }
-    
+
     console.log('Booking submitted')
   }
 

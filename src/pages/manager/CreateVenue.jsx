@@ -6,13 +6,13 @@ import useStorage from '../../utils/useStorage'
 
 const CreateVenue = () => {
   const { getUserRole } = useStorage()
-  const [userRole, setUserRole] = useState('customer');
+  const [userRole, setUserRole] = useState('customer')
   console.log(getUserRole)
-  
+
   useEffect(() => {
-    const role = getUserRole();
-    setUserRole(role);
-  }, []);
+    const role = getUserRole()
+    setUserRole(role)
+  }, [])
 
   const handleSubmit = (formData) => {
     console.log('Submitted form data:', formData)

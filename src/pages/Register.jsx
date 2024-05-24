@@ -1,7 +1,7 @@
-import React from 'react'
-import { Typography, Box } from '@mui/material'
-import { Link } from 'react-router-dom'
 import LoginIcon from '@mui/icons-material/Login'
+import { Box, Typography } from '@mui/material'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import BaseForm from '../components/forms/BaseForm'
 
 function RegisterPage() {
@@ -33,9 +33,7 @@ function RegisterPage() {
           marginTop: '16px',
         }}
       >
-        <LoginIcon
-          sx={{ color: '#fde8c9', marginRight: '8px' }}
-        />
+        <LoginIcon sx={{ color: '#fde8c9', marginRight: '8px' }} />
         <Typography variant='body2' sx={{ color: '#fde8c9' }}>
           Log in
         </Typography>
