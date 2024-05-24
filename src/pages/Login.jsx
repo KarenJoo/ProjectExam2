@@ -32,9 +32,9 @@ function LoginPage() {
       >
         <BaseForm variant='login' />
         <Box sx={{maxWidth: '700px', backgroundColor: '#fff', width: '84%', margin: '0px auto', borderRadius: '5px', padding: '10px'}}>
-        <Typography variant='body1' sx={{ fontSize: '15px', color: 'var(--primary-color)', mt: 2 }}>If you don't have an account</Typography>
+        <Typography variant='body1' sx={{ fontSize: '12px', color: 'primary', mt: 2 }}>If you don't have an account</Typography>
         <Link to='/register' >
-          <Typography variant='body2' sx={{ color: 'var(--primary-color)', mt: 1 }}>Register here</Typography>
+          <Typography variant='body2' sx={{ color: 'primary', mt: 1 }}>Register here</Typography>
         </Link></Box>
       </Box>
     </Box>

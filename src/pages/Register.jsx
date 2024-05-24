@@ -34,9 +34,9 @@ function RegisterPage() {
         }}
       >
         <LoginIcon
-          sx={{ color: 'secondary', marginRight: '8px' }}
+          sx={{ color: '#fde8c9', marginRight: '8px' }}
         />
-        <Typography variant='body2' sx={{ color: 'secondary' }}>
+        <Typography variant='body2' sx={{ color: '#fde8c9' }}>
           Log in
         </Typography>
       </Link>
