@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import { TextField, Button, MenuItem, Typography, Box } from '@mui/material'
-import { registerUser, loginUser } from '../../utils/registerFetch'
-import useStorage from '../../utils/useStorage'
-import Alert from '@mui/material/Alert'
 import CheckIcon from '@mui/icons-material/Check'
+import { Box, Button, MenuItem, TextField, Typography } from '@mui/material'
+import Alert from '@mui/material/Alert'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   login,
-  setVenueManager,
   setUserData,
+  setVenueManager,
 } from '../../storage/reducers/authReducer'
+import { loginUser, registerUser } from '../../utils/registerFetch'
+import useStorage from '../../utils/useStorage'
 
 const BaseForm = ({ variant }) => {
   const isRegister = variant === 'register'
@@ -33,21 +33,60 @@ const BaseForm = ({ variant }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+
+    // Update validation messages based on user input
+    switch (name) {
+      case 'createUsername':
+        setErrors({
+          ...errors,
+          createUsername:
+            value.length >= 3
+              ? 'Valid username'
+              : 'Username must be at least three characters',
+        })
+        break
+      case 'createPassword':
+        setErrors({
+          ...errors,
+          createPassword:
+            value.length >= 8
+              ? 'Valid password'
+              : 'Password must be at least eight characters',
+        })
+        break
+      case 'email':
+        setErrors({
+          ...errors,
+          email:
+            value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) &&
+            value.endsWith('@stud.noroff.no')
+              ? 'Valid email'
+              : 'Email must be a valid @stud.noroff.no email',
+        })
+        break
+      default:
+        break
+    }
   }
 
   const validateForm = () => {
     const inputErrors = {}
 
-    if (isRegister && !formData.createUsername) {
-      inputErrors.createUsername = 'Create Username is required'
+    if (isRegister) {
+      if (formData.createUsername.length < 3) {
+        inputErrors.createUsername = 'Username must be at least 3 characters'
+      }
+    }
+    if (formData.createPassword.length < 8) {
+      inputErrors.createPassword = 'Password must be at least 8 characters'
     }
 
-    if (!formData.createPassword) {
-      inputErrors.createPassword = 'Create Password is required'
-    }
-
-    if (!formData.email) {
-      inputErrors.email = 'Email is required'
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (
+      !emailRegex.test(formData.email) ||
+      !formData.email.endsWith('@stud.noroff.no')
+    ) {
+      inputErrors.email = 'Email must be a @stud.noroff.no email'
     }
 
     setErrors(inputErrors)
@@ -86,7 +125,7 @@ const BaseForm = ({ variant }) => {
           })
 
           setRegistrationSuccess(true)
-          dispatch(login()); 
+          dispatch(login())
 
           // Log in user
           loggedInUser = registeredUser
@@ -136,12 +175,10 @@ const BaseForm = ({ variant }) => {
     createPassword: createPasswordError,
   } = errors
 
-
-
   return (
-    <Box >
+    <Box>
       <form
-        onSubmit={handleSubmit} 
+        onSubmit={handleSubmit}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -171,8 +208,16 @@ const BaseForm = ({ variant }) => {
               error={!!usernameError}
               helperText={usernameError}
               style={{ backgroundColor: '#fff', color: '#000' }}
-              InputLabelProps={{
-                style: { color: '#000' },
+              InputProps={{
+                style: {
+                  color: '#000', // Keep input text color black
+                  borderColor:
+                    errors.createUsername === 'Valid username'
+                      ? 'green'
+                      : usernameError
+                        ? 'red'
+                        : 'inherit',
+                },
               }}
             />
 
@@ -186,7 +231,6 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!createPasswordError}
               helperText={createPasswordError}
-              
             />
 
             <TextField
@@ -199,7 +243,6 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!emailError}
               helperText={emailError}
-             
             />
 
             <TextField
@@ -209,7 +252,6 @@ const BaseForm = ({ variant }) => {
               fullWidth
               value={avatarUrl}
               onChange={handleInputChange}
-             
             />
 
             <TextField
@@ -227,7 +269,6 @@ const BaseForm = ({ variant }) => {
               }
               error={!errors.venueManager}
               helperText={errors.venueManager}
-             
             >
               <MenuItem value='customer'>Customer</MenuItem>
               <MenuItem value='manager'>Manager</MenuItem>
@@ -247,7 +288,6 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!emailError}
               helperText={emailError}
-              
             />
 
             <TextField
@@ -260,7 +300,6 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!createPasswordError}
               helperText={createPasswordError}
-          
             />
           </>
         )}
@@ -278,7 +317,6 @@ const BaseForm = ({ variant }) => {
         >
           {isRegister ? 'Register' : 'Login'}
         </Button>
-        
       </form>
     </Box>
   )
