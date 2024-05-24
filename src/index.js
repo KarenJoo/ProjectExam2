@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import theme from './themes/muiTheme'
 import { Provider } from 'react-redux';
@@ -15,12 +15,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-    <HashRouter>
+    <Router>
     <Provider store={store}>
   
     <App />
     </Provider>
-    </HashRouter>
+    </Router>
     </ThemeProvider>
     </React.StrictMode>
 );
