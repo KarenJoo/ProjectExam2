@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 const useStorage = () => {
   const [userData, setUserData] = useState(null)
+  const [isVenueManager, setIsVenueManager] = useState(false)
 
   const save = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
@@ -23,6 +24,7 @@ const useStorage = () => {
   const clearUserData = () => {
     remove('userData')
     setUserData(null)
+    setIsVenueManager(false)
   }
 
   const saveUserData = (userData) => {

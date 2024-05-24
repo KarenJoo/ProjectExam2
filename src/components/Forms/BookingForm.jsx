@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import {
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  Button
-} from '@mui/material'
-import { createBooking } from '../../utils/bookingsApi'
-import useStorage from '../../utils/useStorage'
-import { createApiKey } from '../../utils/createApiKey'
-import { AlertError } from '../Styles/Errors'
+import { Button, Card, CardContent, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
-
-
+import { createBooking } from '../../utils/bookingsApi'
+import { createApiKey } from '../../utils/createApiKey'
+import useStorage from '../../utils/useStorage'
+import { AlertError } from '../Styles/Errors'
 
 const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   const [checkInDate, setCheckInDate] = useState('')
@@ -21,7 +13,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   const [apiKey, setApiKey] = useState('')
   const [alertError, setAlertError] = useState(false)
   const storage = useStorage()
-  const { isVenueManager, isUserLoggedIn } = useAuth();
+  const { isVenueManager, isUserLoggedIn } = useAuth()
 
   useEffect(() => {
     async function fetchApiKey() {
@@ -29,23 +21,23 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
       if (accessToken) {
         const key = await createApiKey(accessToken)
         setApiKey(key)
-      
       }
     }
     fetchApiKey()
   }, [])
 
-  
-
   const handleSubmit = async () => {
     const accessToken = storage.loadToken('accessToken')
-    if (!isUserLoggedIn) {
-      setAlertError('Only logged in customers can book a venue.');
-            return
+    if (!isUserLoggedIn && !isVenueManager) {
+      setAlertError('Venue managers can not book a venue.')
+      return
     }
     if (!isVenueManager) {
-      setAlertError('Venue managers cannot book a venue.');
-            return;
+      setAlertError('Venue managers cannot book a venue.')
+      return
+    }
+    if (!isUserLoggedIn) {
+      setAlertError('Only logged in customers can book a venue.')
     }
     console.log('Booking submitted')
 
@@ -72,7 +64,9 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   return (
     <Card sx={{ '@media (max-width:600px)': { marginBottom: '20px' } }}>
       <CardContent>
-        <Typography variant='body3'>Book your next stay at: {venueName}</Typography> 
+        <Typography variant='body3'>
+          Book your next stay at: {venueName}
+        </Typography>
         <TextField
           fullWidth
           label='Check-in Date'
@@ -102,9 +96,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
         <Button variant='contained' fullWidth onClick={handleSubmit}>
           Book now
         </Button>
-        {alertError && (
-          <AlertError message={alertError} />
-        )}
+        {alertError && <AlertError message={alertError} />}
       </CardContent>
     </Card>
   )
