@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Homepage from './pages/Homepage';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import theme from './themes/muiTheme'
@@ -17,6 +18,7 @@ root.render(
       <ThemeProvider theme={theme}>
     <Router>
     <Provider store={store}>
+      <Homepage /> 
     <App />
     </Provider>
     </Router>
