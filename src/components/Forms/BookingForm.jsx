@@ -1,10 +1,11 @@
-import { Button, Card, CardContent, TextField, Typography } from '@mui/material'
+import { Button, Card, CardContent, TextField, Typography, Alert } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import { createBooking } from '../../utils/bookingsApi'
 import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
 import { AlertError } from '../Styles/Errors'
+import CheckIcon from '@mui/icons-material/Check';
 
 const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   const [checkInDate, setCheckInDate] = useState('')
@@ -12,8 +13,9 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   const [guests, setGuests] = useState(1)
   const [apiKey, setApiKey] = useState('')
   const [alertError, setAlertError] = useState(false)
+  const [bookingSuccess, setBookingSuccess] = useState(false); 
   const storage = useStorage()
-  const { isVenueManager, isUserLoggedIn } = useAuth()
+  const { isLoggedIn } = useAuth()
 
   useEffect(() => {
     async function fetchApiKey() {
@@ -28,18 +30,17 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
 
   const handleSubmit = async () => {
     const accessToken = storage.loadToken('accessToken')
-    if (!isUserLoggedIn && !isVenueManager) {
-      setAlertError('Venue managers can not book a venue.')
-      return
+       if (!isLoggedIn) {
+      setAlertError('Only logged in customers can book a venue.');
+      return;
     }
-    if (!isVenueManager) {
-      setAlertError('Venue managers cannot book a venue.')
-      return
-    }
-    if (!isUserLoggedIn) {
-      setAlertError('Only logged in customers can book a venue.')
-    }
+    else
     console.log('Booking submitted')
+    try {
+
+    } catch(error) {
+      console.error('Error creating booking:', error); 
+    }
 
     try {
       const bookingData = {
@@ -55,7 +56,8 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
 
       const newBooking = await createBooking(accessToken, bookingData, apiKey)
       onSubmit(newBooking)
-      console.log('new;', newBooking)
+      setBookingSuccess(true);
+      console.log('Registerd booking;', newBooking)
     } catch (error) {
       console.error('Error creating booking:', error)
     }
@@ -97,6 +99,16 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
           Book now
         </Button>
         {alertError && <AlertError message={alertError} />}
+        {/* Display success alert if bookingSuccess is true */}
+        {bookingSuccess && (
+          <Alert
+            icon={<CheckIcon fontSize='inherit' />}
+            severity='success'
+            sx={{ marginTop: '10px' }}
+          >
+            Booking successful!
+          </Alert>
+        )}
       </CardContent>
     </Card>
   )

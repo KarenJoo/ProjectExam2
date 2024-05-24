@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setVenueManager } from '../storage/reducers/authReducer'
 
 const useStorage = () => {
   const [userData, setUserData] = useState(null)
   const [isVenueManager, setIsVenueManager] = useState(false)
+  const dispatch = useDispatch();
 
   const save = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
@@ -23,6 +26,7 @@ const useStorage = () => {
 
   const clearUserData = () => {
     remove('userData')
+    remove('isVenueManager')
     setUserData(null)
     setIsVenueManager(false)
   }
@@ -31,15 +35,23 @@ const useStorage = () => {
     if (userData) {
       save('userData', userData)
       setUserData(userData);
+      save('isVenueManager', userData.isVenueManager); 
+      setIsVenueManager(userData.isVenueManager);
     }
   }
 
   // stores isVenueManager value, name, from register form
   const loadUserData = () => {
     const loadedUserData = load('userData');
-    setUserData(loadedUserData);
+    if (loadedUserData) {
+      setUserData(loadedUserData);
+      const isVenueManager = load('isVenueManager');
+      setIsVenueManager(isVenueManager); 
+      dispatch(setVenueManager(isVenueManager)); 
+    }
     return loadedUserData;
   }
+
   const saveVenueManager = (venueManager) => {
     save('venueManager', venueManager)
   }
@@ -49,8 +61,8 @@ const useStorage = () => {
   }
 
   const getUserRole = () => {
-    const user = load('userData');
-    return user?.isVenueManager ? 'isVenueManager' : 'customer';
+  
+    return isVenueManager ? 'isVenueManager' : 'customer';
   };
 
   const saveToken = (accessToken) => {

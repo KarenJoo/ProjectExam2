@@ -42,7 +42,7 @@ const VenueDetails = () => {
   const accessToken = loadToken()
   const [selectedImage, setSelectedImage] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
-  const { isUserLoggedIn, isVenueManager } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     if (venueDetails && venueDetails.media && venueDetails.media.length > 0) {
@@ -103,15 +103,11 @@ const VenueDetails = () => {
   }
 
   const handleBookingSubmit = () => {
-    if (!isUserLoggedIn) {
-      // Display an alert or redirect the user to the login page
+    if (!isLoggedIn) {
       alert('Please log in to book a venue.');
       return;
     }
-    if (isVenueManager) {
-      alert('Venue managers cannot book venues.');
-      return;
-    }
+    
     console.log('Booking submitted')
   }
 
@@ -425,7 +421,7 @@ const VenueDetails = () => {
           onSubmit={handleBookingSubmit}
           accessToken={accessToken}
           venueId={id}
-          isLoggedIn={isUserLoggedIn}
+          isLoggedIn={isLoggedIn}
           isCustomer={!getUserRole() || getUserRole() === 'customer'}
           venueName={name}
           venueImage={media && media.length > 0 ? media[0].url : ''}
