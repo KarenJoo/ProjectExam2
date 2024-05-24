@@ -1,4 +1,4 @@
-import { Alert, Box, CircularProgress, Grid } from '@mui/material'
+import { Alert, Box, CircularProgress, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import UserBookingsList from '../components/Layout/Profile/BookingList'
 import UserVenuesList from '../components/Layout/Profile/VenueList'
@@ -179,16 +179,19 @@ const Profile = () => {
               },
             }}
           >
-            {isVenueManager && (
+            {!isVenueManager && (
               <Box sx={{ margin: '10px auto', width: '90%' }}>
                 <UserVenuesList venues={venues} handleDelete={handleDelete} />
               </Box>
             )}
-            {!isVenueManager && (
+           
               <Box sx={{ margin: '10px auto', width: '90%' }}>
+              <Typography variant='h2' sx={{ color: '#fde8c9', margin: '0px auto', textAlign: 'center' }}>
+        Your Bookings
+      </Typography>
                 <UserBookingsList bookings={userBookings} />
               </Box>
-            )}
+         
           </Box>
         </Box>
       </Grid>

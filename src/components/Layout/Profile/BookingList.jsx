@@ -25,9 +25,7 @@ const UserBookingsList = ({ bookings }) => {
 
   return (
     <>
-      <Typography variant='h2' sx={{ color: '#fde8c9', margin: '0px auto', textAlign: 'center' }}>
-        Your Bookings
-      </Typography>
+     
       <List sx={{ width: '90%', margin: '0px auto' }}>
         {bookings.map((booking) => (
           <React.Fragment key={booking.id}>

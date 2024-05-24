@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom'
 const VenuesList = ({ venues, userId, handleDelete }) => {
   const handleVenueDelete = (venueId) => {
     handleDelete(venueId)
+
+    
   }
   return (
     <Box sx={{  '@media (min-width: 600px)': {

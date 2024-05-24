@@ -133,14 +133,18 @@ const ProfileLayout = ({ userData }) => {
             <Typography variant='body2'>
               Venue Manager: {isVenueManager ? 'Yes' : 'No'}
             </Typography>
-            {!isVenueManager && (
+            {isVenueManager && (
               <Typography variant='body2'>
                 Total Bookings: {bookedVenues ? bookedVenues.length : 0}
               </Typography>
             )}{' '}
             {isVenueManager && (
               <Grid item xs={12} md={12}>
-                <Typography variant='body2'>
+                <Typography
+                  variant='body2'
+                  fontWeight={'700'}
+                  color={'primary'}
+                >
                   Total Venues: {venuesCount}
                 </Typography>
                 <ul>

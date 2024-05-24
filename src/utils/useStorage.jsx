@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setVenueManager } from '../storage/reducers/authReducer'
 
 const useStorage = () => {
   const [userData, setUserData] = useState(null)
-  const [isVenueManager, setIsVenueManager] = useState(false)
   const dispatch = useDispatch();
+  const isVenueManager = useSelector(state => state.auth.isVenueManager); 
 
   const save = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
@@ -28,7 +28,7 @@ const useStorage = () => {
     remove('userData')
     remove('isVenueManager')
     setUserData(null)
-    setIsVenueManager(false)
+   
   }
 
   const saveUserData = (userData) => {
@@ -36,7 +36,7 @@ const useStorage = () => {
       save('userData', userData)
       setUserData(userData);
       save('isVenueManager', userData.isVenueManager); 
-      setIsVenueManager(userData.isVenueManager);
+  
     }
   }
 
@@ -45,9 +45,7 @@ const useStorage = () => {
     const loadedUserData = load('userData');
     if (loadedUserData) {
       setUserData(loadedUserData);
-      const isVenueManager = load('isVenueManager');
-      setIsVenueManager(isVenueManager); 
-      dispatch(setVenueManager(isVenueManager)); 
+      dispatch(setVenueManager(loadedUserData.isVenueManager));
     }
     return loadedUserData;
   }
@@ -82,6 +80,7 @@ const useStorage = () => {
   }
 
   useEffect(() => {
+    loadUserData();
     const storedUserData = loadUserData();
     if (storedUserData) {
       setUserData(storedUserData);
