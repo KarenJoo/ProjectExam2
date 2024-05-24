@@ -32,15 +32,17 @@ import BookingForm from '../components/forms/BookingForm.jsx'
 import useFetch from '../hooks/useFetch'
 import { VENUES_URL } from '../utils/api'
 import useStorage from '../utils/useStorage'
+import useAuth from '../hooks/useAuth.jsx'
 
 const VenueDetails = () => {
   const { id } = useParams()
   const API_URL = `${VENUES_URL}/${id}?_owner=true&_bookings=true`
   const { data: venueDetails, loading, error } = useFetch(API_URL)
-  const { isUserLoggedIn, getUserRole, loadToken } = useStorage()
+  const { getUserRole, loadToken } = useStorage()
   const accessToken = loadToken()
   const [selectedImage, setSelectedImage] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
+  const { isUserLoggedIn, isVenueManager } = useAuth();
 
   useEffect(() => {
     if (venueDetails && venueDetails.media && venueDetails.media.length > 0) {
@@ -101,6 +103,15 @@ const VenueDetails = () => {
   }
 
   const handleBookingSubmit = () => {
+    if (!isUserLoggedIn) {
+      // Display an alert or redirect the user to the login page
+      alert('Please log in to book a venue.');
+      return;
+    }
+    if (isVenueManager) {
+      alert('Venue managers cannot book venues.');
+      return;
+    }
     console.log('Booking submitted')
   }
 
@@ -414,7 +425,7 @@ const VenueDetails = () => {
           onSubmit={handleBookingSubmit}
           accessToken={accessToken}
           venueId={id}
-          isLoggedIn={isUserLoggedIn()}
+          isLoggedIn={isUserLoggedIn}
           isCustomer={!getUserRole() || getUserRole() === 'customer'}
           venueName={name}
           venueImage={media && media.length > 0 ? media[0].url : ''}

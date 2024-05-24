@@ -16,6 +16,7 @@ const authSlice = createSlice({
         logout: (state) => {
             state.loggedIn = false;
             state.userData = null;
+            localStorage.setItem('userLoggedIn', 'false');
         },
         setVenueManager: (state, action) => {
             state.isVenueManager = action.payload;

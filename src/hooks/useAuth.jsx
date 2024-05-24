@@ -1,18 +1,29 @@
-import { useState, useEffect } from 'react'
-import useStorage from '../utils/useStorage'
+import { useSelector } from 'react-redux';
 
 const useAuth = () => {
-  const [isVenueManager, setIsVenueManager] = useState(false)
-  const { loadUserData } = useStorage()
+  const auth = useSelector((state) => state.auth) || {};
+  const isUserLoggedIn = !!auth.accessToken;
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const isVenueManager = auth.role === 'venueManager';
 
-  useEffect(() => {
-    const storedUserData = loadUserData()
-    const venueManager = storedUserData?.venueManager || false 
+  return { isUserLoggedIn, isVenueManager, isLoggedIn };
+};
 
-    setIsVenueManager(venueManager)
-  }, [])
+export default useAuth;
 
-  return { isVenueManager }
-}
 
-export default useAuth
+// const useAuth = () => {
+//   const [isVenueManager, setIsVenueManager] = useState(false)
+//   const { loadUserData } = useStorage()
+
+//   useEffect(() => {
+//     const storedUserData = loadUserData()
+//     const venueManager = storedUserData?.venueManager || false 
+
+//     setIsVenueManager(venueManager)
+//   }, [])
+
+//   return { isVenueManager }
+// }
+
+// export default useAuth

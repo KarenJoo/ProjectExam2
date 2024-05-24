@@ -21,7 +21,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   const [apiKey, setApiKey] = useState('')
   const [alertError, setAlertError] = useState(false)
   const storage = useStorage()
-  const { isVenueManager } = useAuth();
+  const { isVenueManager, isUserLoggedIn } = useAuth();
 
   useEffect(() => {
     async function fetchApiKey() {
@@ -39,14 +39,16 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
 
   const handleSubmit = async () => {
     const accessToken = storage.loadToken('accessToken')
-    if (!accessToken) {
-      setAlertError(true)
-      return
+    if (!isUserLoggedIn) {
+      setAlertError('Only logged in customers can book a venue.');
+            return
     }
-    if (isVenueManager) {
-      alert("Venue managers cannot book a venue.");
-      return;
+    if (!isVenueManager) {
+      setAlertError('Venue managers cannot book a venue.');
+            return;
     }
+    console.log('Booking submitted')
+
     try {
       const bookingData = {
         dateFrom: checkInDate,
@@ -57,7 +59,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
         venueImage: venueImage,
       }
 
-      const accessToken = storage.loadToken('accessToken')
+      // const accessToken = storage.loadToken('accessToken')
 
       const newBooking = await createBooking(accessToken, bookingData, apiKey)
       onSubmit(newBooking)
@@ -101,7 +103,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
           Book now
         </Button>
         {alertError && (
-          <AlertError message="Only logged in customers can book a venue." />
+          <AlertError message={alertError} />
         )}
       </CardContent>
     </Card>
