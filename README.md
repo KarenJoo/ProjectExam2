@@ -1,4 +1,4 @@
-# Holidaze
+# Holidaze Project Exam 2
 
 # Getting Started with Create React App
 
