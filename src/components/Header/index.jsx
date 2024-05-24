@@ -41,8 +41,11 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout())
-    navigate('/')
+    localStorage.removeItem('avatarUrl')
+    localStorage.removeItem('userData')
+    localStorage.removeItem('isVenueManager')
     handleClose()
+    navigate('/')
   }
 
   return (
