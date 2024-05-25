@@ -6,7 +6,7 @@ import { updateAvatarUrl } from '../../storage/reducers/avatarReducer'
 import { PROFILE_API } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
-import UpdateAvatarForm from '../forms/AvatarForm'
+import UpdateAvatarForm from '../Forms/AvatarForm'
 
 const ProfileLayout = ({ userData }) => {
   const storage = useStorage()

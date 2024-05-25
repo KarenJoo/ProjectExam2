@@ -2,7 +2,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import BaseForm from '../components/forms/BaseForm'
+import BaseForm from '../components/Forms/BaseForm'
 
 function RegisterPage() {
   return (
