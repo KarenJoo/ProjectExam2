@@ -27,5 +27,19 @@ label.MuiFormLabel-root {
 
 .MuiFilledInput-root {
   background-color: #fff !important;
+}
 
+/* inout border validation */
+
+.errorInput .MuiOutlinedInput-notchedOutline {
+  border-color: red !important;
+}
+
+.MuiInputBase-input {
+  border-color: black !important; /* Default border color */
+  border-width: 0px !important;
+}
+
+.validInput  .MuiOutlinedInput-notchedOutline  {
+  border-color: green !important;
 }
