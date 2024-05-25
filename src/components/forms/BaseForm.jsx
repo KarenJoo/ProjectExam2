@@ -34,35 +34,34 @@ const BaseForm = ({ variant }) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
 
-    // Update validation messages based on user input
     switch (name) {
       case 'createUsername':
-        setErrors({
-          ...errors,
+        setErrors((prevErrors) => ({
+          ...prevErrors,
           createUsername:
             value.length >= 3
               ? 'Valid username'
               : 'Username must be at least 3 characters',
-        })
+        }))
         break
       case 'createPassword':
-        setErrors({
-          ...errors,
+        setErrors((prevErrors) => ({
+          ...prevErrors,
           createPassword:
             value.length >= 8
               ? 'Valid password'
               : 'Password must be at least 8 characters',
-        })
+        }))
         break
       case 'email':
-        setErrors({
-          ...errors,
+        setErrors((prevErrors) => ({
+          ...prevErrors,
           email:
-            value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) &&
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) &&
             value.endsWith('@stud.noroff.no')
               ? 'Valid email'
               : 'Email must be a valid @stud.noroff.no email',
-        })
+        }))
         break
       default:
         break
@@ -177,13 +176,7 @@ const BaseForm = ({ variant }) => {
 
   const getHelperTextStyles = (field) => ({
     color: errors[field] && errors[field].startsWith('Valid') ? 'green' : 'red',
-
   })
-
-  const getInputPropsStyles = (field) => ({
-    className: errors[field] && !errors[field].startsWith('Valid') ? 'errorInput' : 'validInput',
-  });
-
   return (
     <Box>
       <form
@@ -214,7 +207,7 @@ const BaseForm = ({ variant }) => {
               fullWidth
               value={createUsername}
               onChange={handleInputChange}
-              error={!!usernameError}
+              error={!!usernameError && !usernameError.startsWith('Valid')}
               helperText={usernameError}
               FormHelperTextProps={{
                 style: getHelperTextStyles('createUsername'),
@@ -222,9 +215,7 @@ const BaseForm = ({ variant }) => {
               InputLabelProps={{
                 style: { color: '#000' },
               }}
-              className={errors['createUsername'] && !errors['createUsername'].startsWith('Valid') ? 'errorInput' : 'validInput'}
             />
-            
 
             <TextField
               name='createPassword'
@@ -234,7 +225,10 @@ const BaseForm = ({ variant }) => {
               fullWidth
               value={createPassword}
               onChange={handleInputChange}
-              error={!!createPasswordError}
+              error={
+                !!createPasswordError &&
+                !createPasswordError.startsWith('Valid')
+              }
               helperText={createPasswordError}
               FormHelperTextProps={{
                 style: getHelperTextStyles('createPassword'),
@@ -242,7 +236,6 @@ const BaseForm = ({ variant }) => {
               InputLabelProps={{
                 style: { color: '#000' },
               }}
-              className={errors['createPassword'] && !errors['createPassword'].startsWith('Valid') ? 'errorInput' : 'validInput'}
             />
 
             <TextField
@@ -253,8 +246,14 @@ const BaseForm = ({ variant }) => {
               fullWidth
               value={email}
               onChange={handleInputChange}
-              error={!!emailError}
+              error={!!emailError && !emailError.startsWith('Valid')}
               helperText={emailError}
+              FormHelperTextProps={{
+                style: getHelperTextStyles('email'),
+              }}
+              InputLabelProps={{
+                style: { color: '#000' },
+              }}
             />
 
             <TextField
@@ -298,14 +297,11 @@ const BaseForm = ({ variant }) => {
               fullWidth
               value={email}
               onChange={handleInputChange}
-              error={!!emailError}
+              error={!!emailError && !emailError.startsWith('Valid')}
               helperText={emailError}
               FormHelperTextProps={{ style: getHelperTextStyles('email') }}
               InputLabelProps={{
                 style: { color: '#000' },
-              }}
-              InputProps={{
-                sx: getInputPropsStyles('email'),
               }}
             />
 
@@ -319,6 +315,12 @@ const BaseForm = ({ variant }) => {
               onChange={handleInputChange}
               error={!!createPasswordError}
               helperText={createPasswordError}
+              FormHelperTextProps={{
+                style: getHelperTextStyles('createPassword'),
+              }}
+              InputLabelProps={{
+                style: { color: '#000' },
+              }}
             />
           </>
         )}

@@ -6,8 +6,10 @@ import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
 import { AlertError } from '../Styles/Errors'
 import CheckIcon from '@mui/icons-material/Check';
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
-const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
+const BookingForm = ({ venueId, onSubmit, venueName, venueImage, bookingData }) => {
   const [checkInDate, setCheckInDate] = useState('')
   const [checkOutDate, setCheckOutDate] = useState('')
   const [guests, setGuests] = useState(1)
@@ -27,6 +29,23 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
     }
     fetchApiKey()
   }, [])
+
+  const bookedDates = bookingData.map((booking) => {
+    return {
+      startDate: new Date(booking.dateFrom),
+      endDate: new Date(booking.dateTo),
+    };
+  });
+
+  const isDateBooked = (date) => {
+    return bookedDates.some((bookedDate) => {
+      return (
+        date >= bookedDate.startDate && date <= bookedDate.endDate
+      );
+    });
+  };
+
+
 
   const handleSubmit = async () => {
     const accessToken = storage.loadToken('accessToken')
@@ -52,7 +71,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
         venueImage: venueImage,
       }
 
-      // const accessToken = storage.loadToken('accessToken')
+
 
       const newBooking = await createBooking(accessToken, bookingData, apiKey)
       onSubmit(newBooking)
@@ -64,42 +83,58 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage }) => {
   }
 
   return (
-    <Card sx={{ '@media (max-width:600px)': { marginBottom: '20px' } }}>
+    <Card sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      width: '90%',
+      maxWidth: '600px',
+      mx: 'auto',
+      mt: 4,
+      p: 2,
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      boxShadow: 3,
+    }}>
       <CardContent>
         <Typography variant='body3'>
           Book your next stay at: {venueName}
         </Typography>
-        <TextField
-          fullWidth
-          label='Check-in Date'
-          type='date'
-          sx={{ marginBottom: '10px', marginTop: '20px' }}
-          value={checkInDate || ''}
-          onChange={(e) => setCheckInDate(e.target.value)}
-          InputLabelProps={{ shrink: true }}
+        <DatePicker
+          selected={checkInDate}
+          onChange={(date) => setCheckInDate(date)}
+          placeholderText='Check-in Date'
+          minDate={new Date()}
+          filterDate={(date) => !isDateBooked(date)}
+          className='date-picker'
+          dateFormat='yyyy-MM-dd'
+          customInput={<TextField fullWidth label='Check-in Date' />}
+          style={{ marginBottom: '20px' }}
         />
-        <TextField
-          fullWidth
-          label='Check-out Date'
-          type='date'
-          sx={{ marginBottom: '20px' }}
-          value={checkOutDate || ''}
-          onChange={(e) => setCheckOutDate(e.target.value)}
-          InputLabelProps={{ shrink: true }}
+        <DatePicker
+          selected={checkOutDate}
+          onChange={(date) => setCheckOutDate(date)}
+          placeholderText='Check-out Date'
+          minDate={checkInDate ? new Date(checkInDate).setDate(checkInDate.getDate() + 1) : new Date()}
+          filterDate={(date) => !isDateBooked(date)}
+          className='date-picker'
+          dateFormat='yyyy-MM-dd'
+          customInput={<TextField fullWidth label='Check-out Date' />}
         />
+       
         <TextField
           fullWidth
           label='Number of Guests'
           type='number'
-          sx={{ marginBottom: '20px' }}
+          sx={{ marginBottom: '20px', marginTop:'20px', maxWidth: '300px' }}
           value={guests}
           onChange={(e) => setGuests(e.target.value)}
         />
+
         <Button variant='contained' fullWidth onClick={handleSubmit}>
           Book now
         </Button>
         {alertError && <AlertError message={alertError} />}
-        {/* Display success alert if bookingSuccess is true */}
         {bookingSuccess && (
           <Alert
             icon={<CheckIcon fontSize='inherit' />}
