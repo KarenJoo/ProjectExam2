@@ -8,6 +8,7 @@ import {
   setUserData,
   setVenueManager,
 } from '../../storage/reducers/authReducer'
+import { createApiKey } from '../../utils/createApiKey'
 import { loginUser, registerUser } from '../../utils/registerFetch'
 import useStorage from '../../utils/useStorage'
 
@@ -33,46 +34,46 @@ const BaseForm = ({ variant }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
-  setFormData((prevFormData) => ({
-    ...prevFormData,
-    [name]: value
-  }));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }))
 
-  setTimeout(() => {
-    switch (name) {
-      case 'createUsername':
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          createUsername:
-            value.length >= 3
-              ? 'Valid username'
-              : 'Username must be at least 3 characters',
-        }));
-        break;
-      case 'createPassword':
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          createPassword:
-            value.length >= 8
-              ? 'Valid password'
-              : 'Password must be at least 8 characters',
-        }));
-        break;
-      case 'email':
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          email:
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) &&
-            value.endsWith('@stud.noroff.no')
-              ? 'Valid email'
-              : 'Email must be a valid @stud.noroff.no email',
-        }));
-        break;
-      default:
-        break;
-    }
-  }, 0);
-};
+    setTimeout(() => {
+      switch (name) {
+        case 'createUsername':
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            createUsername:
+              value.length >= 3
+                ? 'Valid username'
+                : 'Username must be at least 3 characters',
+          }))
+          break
+        case 'createPassword':
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            createPassword:
+              value.length >= 8
+                ? 'Valid password'
+                : 'Password must be at least 8 characters',
+          }))
+          break
+        case 'email':
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email:
+              /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) &&
+              value.endsWith('@stud.noroff.no')
+                ? 'Valid email'
+                : 'Email must be a valid @stud.noroff.no email',
+          }))
+          break
+        default:
+          break
+      }
+    }, 0)
+  }
 
   const validateForm = () => {
     const inputErrors = {}
@@ -141,10 +142,13 @@ const BaseForm = ({ variant }) => {
           })
 
           if (loggedInUser.data.accessToken) {
-            const accessToken = loggedInUser.data.accessToken
+            const { accessToken, apiKey } = await createApiKey(
+              loggedInUser.data.accessToken
+            )
             const isVenueManager = formData.venueManager
 
-            storage.saveToken(accessToken)
+            storage.save(accessToken)
+            storage.saveApiKey(apiKey)
             storage.saveUserData(loggedInUser.data)
 
             storage.saveUserData({

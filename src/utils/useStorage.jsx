@@ -11,10 +11,15 @@ const useStorage = () => {
     localStorage.setItem(key, JSON.stringify(value))
   }
 
-  const load = (key) => {
+  const load = (key) => {    
+    console.log(`'apikey load:'${key}`)
+
     const value = localStorage.getItem(key)
     return JSON.parse(value)
   }
+    
+
+  console.log(load)
 
   const remove = (key) => {
     localStorage.removeItem(key)
@@ -70,12 +75,15 @@ const useStorage = () => {
   }
 
   const saveApiKey = (apiKey) => {
-    localStorage.setItem('apiKey', apiKey)
-  }
+    localStorage.setItem('apiKey', apiKey);
+  };
 
   const loadApiKey = () => {
-    return localStorage.getItem('apiKey')
-  }
+    return localStorage.getItem('apiKey');
+  };
+
+  
+  
 
   useEffect(() => {
     loadUserData()
@@ -87,8 +95,7 @@ const useStorage = () => {
 
   return {
     saveUserData,
-    saveApiKey,
-    loadApiKey,
+    
     loadUserData,
     isUserLoggedIn,
     saveToken,
@@ -100,6 +107,8 @@ const useStorage = () => {
     save,
     load,
     saveVenueManager,
+    saveApiKey,
+    loadApiKey
   }
 }
 
