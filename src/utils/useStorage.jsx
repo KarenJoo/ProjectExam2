@@ -83,7 +83,7 @@ const useStorage = () => {
     if (storedUserData) {
       setUserData(storedUserData)
     }
-  }, [loadUserData])
+  }, [])
 
   return {
     saveUserData,
