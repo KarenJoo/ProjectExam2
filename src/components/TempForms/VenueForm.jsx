@@ -11,7 +11,13 @@ import React, { useState } from 'react'
 import { VENUES_URL } from '../../utils/api'
 import useStorage from '../../utils/useStorage'
 
-const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList, isVenueManager }) => {
+const VenueForm = ({
+  onSubmit,
+  isUpdate,
+  userId,
+  updateVenueList,
+  isVenueManager,
+}) => {
   const storage = useStorage()
   const [successMessage, setSuccessMessage] = useState('')
 
@@ -75,16 +81,15 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList, isVenueManager
         ? storedUserData.isVenueManager
         : false
 
-              console.log(storedUserData)
+      console.log(storedUserData)
       console.log(isVenueManager)
       if (!accessToken) {
         throw new Error('Access token not found')
       }
 
       if (!isVenueManagerValue) {
-  console.log('Only venue managers can create or update venues');
-  throw new Error('Only venue managers can create or update venues');
-}
+        throw new Error('Only venue managers can create or update venues')
+      }
 
       const url = isUpdate ? `${VENUES_URL}/${userId}` : VENUES_URL
       const method = isUpdate ? 'PUT' : 'POST'
