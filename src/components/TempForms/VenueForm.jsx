@@ -16,9 +16,11 @@ const VenueForm = ({
   isUpdate,
   userId,
   updateVenueList,
-  isVenueManager,
+ 
+  
 }) => {
   const storage = useStorage()
+  
   const [successMessage, setSuccessMessage] = useState('')
 
   const [formData, setFormData] = useState({
@@ -76,20 +78,13 @@ const VenueForm = ({
 
       const apiKey = storage.loadApiKey(accessToken)
 
-      const storedUserData = storage.loadUserData()
-      const isVenueManagerValue = storedUserData
-        ? storedUserData.isVenueManager
-        : false
-
-      console.log(storedUserData)
-      console.log(isVenueManager)
+      
+     
       if (!accessToken) {
         throw new Error('Access token not found')
       }
 
-      if (!isVenueManagerValue) {
-        throw new Error('Only venue managers can create or update venues')
-      }
+     
 
       const url = isUpdate ? `${VENUES_URL}/${userId}` : VENUES_URL
       const method = isUpdate ? 'PUT' : 'POST'
