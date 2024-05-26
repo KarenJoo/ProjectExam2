@@ -106,7 +106,7 @@ const useStorage = () => {
     load,
     saveVenueManager,
     saveApiKey,
-    loadApiKey
+    loadApiKey,
   }
 }
 

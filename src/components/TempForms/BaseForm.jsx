@@ -147,7 +147,7 @@ const BaseForm = ({ variant }) => {
             )
             const isVenueManager = formData.venueManager
 
-            storage.save(accessToken)
+            storage.saveToken(accessToken)
             storage.saveApiKey(apiKey)
             storage.saveUserData(loggedInUser.data)
 
