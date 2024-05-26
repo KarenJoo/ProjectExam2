@@ -20,7 +20,7 @@ import Logout from './Logout'
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true'
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn)
   const isVenueManager = useSelector((state) => state.auth.isVenueManager)
   const dispatch = useDispatch()
   const theme = useTheme()
@@ -41,11 +41,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout())
-    localStorage.removeItem('avatarUrl')
-    localStorage.removeItem('userData')
-    localStorage.removeItem('isVenueManager')
-    handleClose()
     navigate('/')
+    handleClose()
   }
 
   return (
