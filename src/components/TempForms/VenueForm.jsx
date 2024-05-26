@@ -8,13 +8,11 @@ import {
   TextField,
 } from '@mui/material'
 import React, { useState } from 'react'
-import useAuth from '../../hooks/useAuth'
 import { VENUES_URL } from '../../utils/api'
 import useStorage from '../../utils/useStorage'
 
-const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
+const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList, isVenueManager }) => {
   const storage = useStorage()
-  const { isVenueManager } = useAuth()
   const [successMessage, setSuccessMessage] = useState('')
 
   const [formData, setFormData] = useState({
@@ -77,15 +75,16 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
         ? storedUserData.isVenueManager
         : false
 
-      console.log(storedUserData)
+              console.log(storedUserData)
       console.log(isVenueManager)
       if (!accessToken) {
         throw new Error('Access token not found')
       }
 
       if (!isVenueManagerValue) {
-        throw new Error('Only venue managers can create or update venues')
-      }
+  console.log('Only venue managers can create or update venues');
+  throw new Error('Only venue managers can create or update venues');
+}
 
       const url = isUpdate ? `${VENUES_URL}/${userId}` : VENUES_URL
       const method = isUpdate ? 'PUT' : 'POST'

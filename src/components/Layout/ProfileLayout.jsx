@@ -7,13 +7,14 @@ import { PROFILE_API } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
 import UpdateAvatarForm from '../TempForms/AvatarForm'
+import VenueForm from '../TempForms/VenueForm'
 
 const ProfileLayout = ({ userData }) => {
   const storage = useStorage()
   const [isUpdateAvatarOpen, setIsUpdateAvatarOpen] = useState(false)
   const { name, bookedVenues, venues, avatar } = userData
   const venuesCount = venues ? venues.length : 0
-  const [isVenueManager, setIsVenueManager] = useState(userData.isVenueManager)
+  const [isVenueManager, setIsVenueManager] = useState(false); 
   const dispatch = useDispatch()
   const reduxAvatarUrl = useSelector((state) => state.avatar.url)
 
@@ -52,10 +53,9 @@ const ProfileLayout = ({ userData }) => {
     }
   }
   useEffect(() => {
-    const storedIsVenueManager = localStorage.getItem('isVenueManager')
-
-    setIsVenueManager(storedIsVenueManager === 'true')
-  }, [])
+    const storedIsVenueManager = localStorage.getItem('isVenueManager');
+    setIsVenueManager(storedIsVenueManager === 'true');
+  }, []); 
   return (
     <Grid container item md={12}>
       <Box
@@ -188,6 +188,7 @@ const ProfileLayout = ({ userData }) => {
           </Grid>
         </Grid>
       </Box>
+      <VenueForm isVenueManager={isVenueManager} />
     </Grid>
   )
 }

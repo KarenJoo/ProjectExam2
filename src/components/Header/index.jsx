@@ -28,7 +28,7 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log('isReallyLoggedIn:', isLoggedIn)
+    console.log('isLoggedIn:', isLoggedIn)
   }, [isLoggedIn])
 
   const handleClick = (event) => {
