@@ -1,72 +1,54 @@
-# Holidaze Project Exam 2
+ ![Screenshot 2024-05-26 at 22 32 29](https://github.com/KarenJoo/ProjectExam2/assets/114563762/c9264106-8a19-400b-a089-836e26eba4ed)
 
-# Getting Started with Create React App
+# Holidaze
+## Description
+Holidaze is the accomodation app where users can view a range of venue bookings from all over the world. 
+A user can filter venues, view the specific venues calendar and if the perfect calendar dates and venue requirement is a match, the user can register as a customer, log in and book their dreamy dayz away.
+As a venue manager you are able to publish your 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Requirements for features
+The client has specified the following requirements in the form of User Stories:
 
-## Available Scripts
+### A user can:
+    - View a list of Venues
+    - Search for a specific Venue
+    - View a specific Venue page by id
+    - View a calendar with available dates for a Venue
 
-In the project directory, you can run:
+### A registered and logged in user can:
+    - Login
+    - Update their avatar
+    - Logout
+    
+### A registered and logged in customer can: 
+    - Only a stud.noroff.no email can register as a customer
+    - Create a booking at a Venue    
+    - View their upcoming bookings
 
-### `npm start`
+### A registered and logged in manager can: 
+    - Only a user with a stud.noroff.no email may register as a Venue manager
+    - Create a Venue
+    - Update a Venue they manage
+    - Delete a Venue they manage
+    - View bookings for a Venue they manage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  ## Built with
+  - React CRA
+  - MUI
+  - React-router-dom
+  - React-hook-form
+  - Noroff API v2 - Holidaze 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Getting Started with Create React App
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Clone the repo:
+ gh repo clone KarenJoo/ProjectExam2
 
-### `npm run build`
+### Install dependencies:
+npm install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Run app locally:
+npm run start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
