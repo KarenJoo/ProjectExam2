@@ -513,7 +513,7 @@ const VenueDetails = () => {
               </Card>
             ))
           ) : (
-            <Typography variant='body2'>
+            <Typography variant='body2' color='secondary'>
               No bookings found for this venue.
             </Typography>
           )}

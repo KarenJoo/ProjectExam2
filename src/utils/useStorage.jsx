@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setVenueManager } from '../storage/reducers/authReducer'
 
 const useStorage = () => {
   const [userData, setUserData] = useState(null)
-  const dispatch = useDispatch();
-  const isVenueManager = useSelector(state => state.auth.isVenueManager); 
+  const dispatch = useDispatch()
+  const isVenueManager = useSelector((state) => state.auth.isVenueManager)
 
   const save = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
@@ -28,27 +28,26 @@ const useStorage = () => {
     remove('userData')
     remove('isVenueManager')
     setUserData(null)
-   
   }
 
   const saveUserData = (userData) => {
     if (userData) {
       save('userData', userData)
-      setUserData(userData);
-      save('isVenueManager', userData.isVenueManager); 
-  
+      setUserData(userData)
+      save('isVenueManager', userData.isVenueManager)
     }
   }
 
   // stores isVenueManager value, name, from register form
-  const loadUserData = () => {
+  const loadUserData = useCallback(() => {
     const loadedUserData = load('userData');
     if (loadedUserData) {
       setUserData(loadedUserData);
       dispatch(setVenueManager(loadedUserData.isVenueManager));
     }
     return loadedUserData;
-  }
+  }, [dispatch]);
+
 
   const saveVenueManager = (venueManager) => {
     save('venueManager', venueManager)
@@ -59,9 +58,8 @@ const useStorage = () => {
   }
 
   const getUserRole = () => {
-  
-    return isVenueManager ? 'isVenueManager' : 'customer';
-  };
+    return isVenueManager ? 'isVenueManager' : 'customer'
+  }
 
   const saveToken = (accessToken) => {
     localStorage.setItem('accessToken', accessToken)
@@ -80,12 +78,12 @@ const useStorage = () => {
   }
 
   useEffect(() => {
-    loadUserData();
-    const storedUserData = loadUserData();
+    loadUserData()
+    const storedUserData = load('userData');
     if (storedUserData) {
-      setUserData(storedUserData);
+      setUserData(storedUserData)
     }
-  }, []);
+  }, [loadUserData])
 
   return {
     saveUserData,

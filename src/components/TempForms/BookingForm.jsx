@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, TextField, Typography, Alert } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState  } from 'react'
 import useAuth from '../../hooks/useAuth'
 import { createBooking } from '../../utils/bookingsApi'
 import { createApiKey } from '../../utils/createApiKey'
@@ -28,7 +28,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage, bookingData }) 
       }
     }
     fetchApiKey()
-  }, [])
+  }, [storage])
 
   const bookedDates = bookingData.map((booking) => {
     return {
