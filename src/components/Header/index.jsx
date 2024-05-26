@@ -20,15 +20,15 @@ import Logout from './Logout'
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn)
-  const isVenueManager = useSelector((state) => state.auth.isVenueManager)
+  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+    const isVenueManager = useSelector((state) => state.auth.isVenueManager)
   const dispatch = useDispatch()
   const theme = useTheme()
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'))
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log('isLoggedIn:', isLoggedIn)
+    console.log('isReallyLoggedIn:', isLoggedIn)
   }, [isLoggedIn])
 
   const handleClick = (event) => {

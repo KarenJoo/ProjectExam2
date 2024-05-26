@@ -33,7 +33,12 @@ const BaseForm = ({ variant }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+  setFormData((prevFormData) => ({
+    ...prevFormData,
+    [name]: value
+  }));
 
+  setTimeout(() => {
     switch (name) {
       case 'createUsername':
         setErrors((prevErrors) => ({
@@ -42,8 +47,8 @@ const BaseForm = ({ variant }) => {
             value.length >= 3
               ? 'Valid username'
               : 'Username must be at least 3 characters',
-        }))
-        break
+        }));
+        break;
       case 'createPassword':
         setErrors((prevErrors) => ({
           ...prevErrors,
@@ -51,8 +56,8 @@ const BaseForm = ({ variant }) => {
             value.length >= 8
               ? 'Valid password'
               : 'Password must be at least 8 characters',
-        }))
-        break
+        }));
+        break;
       case 'email':
         setErrors((prevErrors) => ({
           ...prevErrors,
@@ -61,12 +66,13 @@ const BaseForm = ({ variant }) => {
             value.endsWith('@stud.noroff.no')
               ? 'Valid email'
               : 'Email must be a valid @stud.noroff.no email',
-        }))
-        break
+        }));
+        break;
       default:
-        break
+        break;
     }
-  }
+  }, 0);
+};
 
   const validateForm = () => {
     const inputErrors = {}
