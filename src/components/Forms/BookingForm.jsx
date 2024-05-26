@@ -70,6 +70,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage, bookingData }) 
         venueName: venueName,
         venueImage: venueImage,
       }
+      
 
 
 
