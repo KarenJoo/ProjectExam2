@@ -78,6 +78,14 @@ const useStorage = () => {
     return localStorage.getItem('apiKey');
   };
 
+  const clearToken = () => {
+    localStorage.removeItem('accessToken');
+  };
+
+  const clearApiKey = () => {
+    localStorage.removeItem('apiKey');
+  };
+
   
   
 
@@ -103,6 +111,8 @@ const useStorage = () => {
     remove,
     clear,
     save,
+    clearToken,
+    clearApiKey,
     load,
     saveVenueManager,
     saveApiKey,
