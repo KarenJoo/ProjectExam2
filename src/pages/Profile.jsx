@@ -81,7 +81,7 @@ const Profile = () => {
 
         const userBookingsData = await userBookingsResponse.json()
 
-        setUserBookings(userBookingsData.data)
+        setUserBookings(userBookingsData.data.bookings)
 
         const updatedUserData = {
           ...storedUserData,
@@ -91,7 +91,7 @@ const Profile = () => {
 
         setUserData(updatedUserData)
         setVenues(userVenuesData.data)
-        setUserBookings(userBookingsData.data)
+        setUserBookings(userBookingsData.data.bookings)
       } catch (error) {
         console.error('Error fetching user data:', error)
         setError(error.message)
