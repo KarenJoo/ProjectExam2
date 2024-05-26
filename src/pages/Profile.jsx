@@ -50,7 +50,6 @@ const Profile = () => {
       try {
         const storedUserData = storage.loadUserData()
         const accessToken = storage.loadToken('accessToken')
-        console.log('Access Token:', accessToken)
 
         const apiKey = storage.loadApiKey()
 

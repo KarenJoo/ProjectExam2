@@ -10,7 +10,6 @@ import {
 import React, { useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import { VENUES_URL } from '../../utils/api'
-import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
 
 const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
@@ -71,7 +70,7 @@ const VenueForm = ({ onSubmit, isUpdate, userId, updateVenueList }) => {
       const accessToken = storage.loadToken('accessToken')
       console.log('Access Token:', accessToken)
 
-      const apiKey = await createApiKey(accessToken)
+      const apiKey = storage.loadApiKey(accessToken)
 
       const storedUserData = storage.loadUserData()
       const isVenueManagerValue = storedUserData

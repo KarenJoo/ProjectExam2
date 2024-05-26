@@ -12,14 +12,10 @@ const useStorage = () => {
   }
 
   const load = (key) => {    
-    console.log(`'apikey load:'${key}`)
-
     const value = localStorage.getItem(key)
     return JSON.parse(value)
   }
     
-
-  console.log(load)
 
   const remove = (key) => {
     localStorage.removeItem(key)
