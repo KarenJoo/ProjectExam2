@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react'
 import UserBookingsList from '../components/Layout/Profile/BookingList'
 import UserVenuesList from '../components/Layout/Profile/VenueList'
 import ProfileLayout from '../components/Layout/ProfileLayout'
-import { CREATE_API_KEY, VENUES_URL } from '../utils/api'
-import { createApiKey } from '../utils/createApiKey'
+import { VENUES_URL } from '../utils/api'
 import { getUserBookings, getUserVenues } from '../utils/getUserVenues'
 import useStorage from '../utils/useStorage'
 
@@ -19,7 +18,7 @@ const Profile = () => {
   const handleDelete = async (venueId) => {
     try {
       const accessToken = storage.loadToken('accessToken')
-      const apiKey = await createApiKey(accessToken)
+      const apiKey = storage.loadApiKey()
 
       const url = `${VENUES_URL}/${venueId}`
       const method = 'DELETE'
@@ -51,31 +50,17 @@ const Profile = () => {
       try {
         const storedUserData = storage.loadUserData()
         const accessToken = storage.loadToken('accessToken')
-        console.log('Access Token:', accessToken)
 
-        const getApiKey = await fetch(`${CREATE_API_KEY}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify({ name: 'API_KEY' }),
-        })
+        const apiKey = storage.loadApiKey()
 
-        if (!getApiKey.ok) {
-          throw new Error('Failed to fetch API key')
-        }
-
-        const apiKeyData = await getApiKey.json()
-        const apiKey = apiKeyData.data.key
-
-        const isVenueManager = storedUserData && storedUserData.venueManager
+        const isVenueManager = storedUserData && storedUserData.isVenueManager;
 
         const userVenuesResponse = await getUserVenues(
           storedUserData.name,
           accessToken,
           apiKey,
-          isVenueManager
+          isVenueManager,
+          
         )
 
         if (!userVenuesResponse.ok) {
@@ -184,14 +169,20 @@ const Profile = () => {
                 <UserVenuesList venues={venues} handleDelete={handleDelete} />
               </Box>
             )}
-           
-              <Box sx={{ margin: '10px auto', width: '90%' }}>
-              <Typography variant='h2' sx={{ color: '#fde8c9', margin: '0px auto', textAlign: 'center' }}>
-        Your Bookings
-      </Typography>
-                <UserBookingsList bookings={userBookings} />
-              </Box>
-         
+
+            <Box sx={{ margin: '10px auto', width: '90%' }}>
+              <Typography
+                variant='h2'
+                sx={{
+                  color: '#fde8c9',
+                  margin: '0px auto',
+                  textAlign: 'center',
+                }}
+              >
+                Your Bookings
+              </Typography>
+              <UserBookingsList bookings={userBookings} />
+            </Box>
           </Box>
         </Box>
       </Grid>

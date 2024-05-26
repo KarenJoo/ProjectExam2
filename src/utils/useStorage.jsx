@@ -1,20 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setVenueManager } from '../storage/reducers/authReducer'
 
 const useStorage = () => {
   const [userData, setUserData] = useState(null)
-  const dispatch = useDispatch();
-  const isVenueManager = useSelector(state => state.auth.isVenueManager); 
+  const dispatch = useDispatch()
+  const isVenueManager = useSelector((state) => state.auth.isVenueManager)
 
   const save = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
   }
 
-  const load = (key) => {
+  const load = (key) => {    
     const value = localStorage.getItem(key)
     return JSON.parse(value)
   }
+    
 
   const remove = (key) => {
     localStorage.removeItem(key)
@@ -28,27 +29,26 @@ const useStorage = () => {
     remove('userData')
     remove('isVenueManager')
     setUserData(null)
-   
   }
 
   const saveUserData = (userData) => {
     if (userData) {
       save('userData', userData)
-      setUserData(userData);
+      setUserData(userData)
       save('isVenueManager', userData.isVenueManager); 
-  
     }
   }
 
   // stores isVenueManager value, name, from register form
-  const loadUserData = () => {
+  const loadUserData = useCallback(() => {
     const loadedUserData = load('userData');
     if (loadedUserData) {
       setUserData(loadedUserData);
-      dispatch(setVenueManager(loadedUserData.isVenueManager));
+      dispatch(setVenueManager(loadedUserData.isVenueManager)); 
     }
     return loadedUserData;
-  }
+  }, [dispatch]);
+
 
   const saveVenueManager = (venueManager) => {
     save('venueManager', venueManager)
@@ -59,9 +59,8 @@ const useStorage = () => {
   }
 
   const getUserRole = () => {
-  
-    return isVenueManager ? 'isVenueManager' : 'customer';
-  };
+    return isVenueManager ? 'isVenueManager' : 'customer'
+  }
 
   const saveToken = (accessToken) => {
     localStorage.setItem('accessToken', accessToken)
@@ -72,25 +71,37 @@ const useStorage = () => {
   }
 
   const saveApiKey = (apiKey) => {
-    localStorage.setItem('apiKey', apiKey)
-  }
+    localStorage.setItem('apiKey', apiKey);
+  };
 
   const loadApiKey = () => {
-    return localStorage.getItem('apiKey')
-  }
+    return localStorage.getItem('apiKey');
+  };
+
+  const clearToken = () => {
+    localStorage.removeItem('accessToken');
+  };
+
+  const clearApiKey = () => {
+    localStorage.removeItem('apiKey');
+  };
+
+  
+  
 
   useEffect(() => {
-    loadUserData();
-    const storedUserData = loadUserData();
+    loadUserData()
+    const storedUserData = load('userData');
     if (storedUserData) {
-      setUserData(storedUserData);
+      setUserData(storedUserData)
     }
-  }, []);
+  }, [])
+
+  
 
   return {
     saveUserData,
-    saveApiKey,
-    loadApiKey,
+    
     loadUserData,
     isUserLoggedIn,
     saveToken,
@@ -100,8 +111,12 @@ const useStorage = () => {
     remove,
     clear,
     save,
+    clearToken,
+    clearApiKey,
     load,
     saveVenueManager,
+    saveApiKey,
+    loadApiKey,
   }
 }
 

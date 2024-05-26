@@ -6,14 +6,14 @@ import { updateAvatarUrl } from '../../storage/reducers/avatarReducer'
 import { PROFILE_API } from '../../utils/api'
 import { createApiKey } from '../../utils/createApiKey'
 import useStorage from '../../utils/useStorage'
-import UpdateAvatarForm from '../forms/AvatarForm'
+import UpdateAvatarForm from '../TempForms/AvatarForm'
 
 const ProfileLayout = ({ userData }) => {
   const storage = useStorage()
   const [isUpdateAvatarOpen, setIsUpdateAvatarOpen] = useState(false)
   const { name, bookedVenues, venues, avatar } = userData
   const venuesCount = venues ? venues.length : 0
-  const [isVenueManager, setIsVenueManager] = useState(userData.venueManager)
+  const [isVenueManager, setIsVenueManager] = useState(false)
   const dispatch = useDispatch()
   const reduxAvatarUrl = useSelector((state) => state.avatar.url)
 
@@ -52,9 +52,9 @@ const ProfileLayout = ({ userData }) => {
     }
   }
   useEffect(() => {
-    setIsVenueManager(userData.isVenueManager)
-  }, [userData.isVenueManager])
-
+    const storedIsVenueManager = localStorage.getItem('isVenueManager')
+    setIsVenueManager(storedIsVenueManager === 'true')
+  }, [])
   return (
     <Grid container item md={12}>
       <Box

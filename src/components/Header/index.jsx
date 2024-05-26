@@ -165,7 +165,7 @@ const Navbar = () => {
             </MenuItem>
 
             {/* create venue */}
-            {isVenueManager && (
+            {!isVenueManager && (
               <MenuItem
                 onClick={handleClose}
                 sx={{ fontSize: '12px', color: '#fde8c9' }}

@@ -1,20 +1,19 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Homepage from './pages/Homepage'
 import Layout from './components/Layout/index'
-import VenueDetails from './pages/VenueDetails'
+import Homepage from './pages/Homepage'
 import Login from './pages/Login'
-import Register from './pages/Register'
 import Profile from './pages/Profile'
+import Register from './pages/Register'
+import VenueDetails from './pages/VenueDetails'
 import CreateVenue from './pages/manager/CreateVenue'
 import UpdateVenue from './pages/manager/UpdateVenue'
-
 
 function App() {
   return (
     <div className='App'>
       <Layout>
-        <Routes>
+        <Routes basename='/React'>
           <Route exact path='/' element={<Homepage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />

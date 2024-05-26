@@ -14,7 +14,7 @@ export const createApiKey = async (accessToken) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ name: 'API_KEY' }), // Optional: Provide a name
+      body: JSON.stringify({ name: 'API_KEY' }), 
     });
 
     if (!response.ok) {
@@ -23,9 +23,10 @@ export const createApiKey = async (accessToken) => {
     }
 
     const data = await response.json();
+    console.log('API Key Data:', data);
     const apiKey = data.data.key;
 
-    return apiKey;
+    return { accessToken, apiKey }; 
   } catch (error) {
     console.error('Error creating API key:', error);
     throw new Error(`Failed to create API key: ${error.message}`);

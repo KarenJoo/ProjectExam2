@@ -5,7 +5,7 @@ import { logout, setVenueManager } from '../../storage/reducers/authReducer'
 import useStorage from '../../utils/useStorage'
 
 const Logout = () => {
-  const { clearUserData, save } = useStorage()
+  const { clearUserData, save, clearApiKey, clearToken } = useStorage()
   const dispatch = useDispatch()
 
   const handleLogout = () => {
@@ -14,6 +14,8 @@ const Logout = () => {
     dispatch(logout())
     localStorage.removeItem('avatarUrl')
     dispatch(setVenueManager(false))
+    clearApiKey()
+    clearToken()
     window.location.href = '/login'
   }
 
