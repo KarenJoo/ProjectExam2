@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import VenueForm from '../../components/forms/VenueForm'
+import VenueForm from '../../components/TempForms/VenueForm'
 
 const UpdateVenue = () => {
   const { id } = useParams()

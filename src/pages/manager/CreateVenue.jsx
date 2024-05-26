@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { AlertError } from '../../components/Styles/Errors'
-import VenueForm from '../../components/forms/VenueForm'
+import VenueForm from '../../components/TempForms/VenueForm'
 import useStorage from '../../utils/useStorage'
 
 const CreateVenue = () => {

@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import BaseForm from '../components/forms/BaseForm'
+import BaseForm from '../components/TempForms/BaseForm'
 
 function LoginPage() {
   return (

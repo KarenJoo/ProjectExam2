@@ -28,7 +28,7 @@ import TableRow from '@mui/material/TableRow'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { AlertError } from '../components/Styles/Errors.js'
-import BookingForm from '../components/forms/BookingForm.jsx'
+import BookingForm from '../components/TempForms/BookingForm.jsx'
 import useAuth from '../hooks/useAuth.jsx'
 import useFetch from '../hooks/useFetch'
 import { VENUES_URL } from '../utils/api'
@@ -434,12 +434,12 @@ const VenueDetails = () => {
             width: '90%',
             mb: 3,
             margin: '20px auto',
-           
+
             borderRadius: '4px',
             padding: '20px',
           }}
         >
-          <Typography variant='h1'color={'secondary'} gutterBottom>
+          <Typography variant='h1' color={'secondary'} gutterBottom>
             Bookings:
           </Typography>
           {bookings && bookings.length > 0 ? (
