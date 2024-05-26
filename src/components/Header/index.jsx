@@ -20,8 +20,8 @@ import Logout from './Logout'
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
-    const isVenueManager = useSelector((state) => state.auth.isVenueManager)
+  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true'
+  const isVenueManager = useSelector((state) => state.auth.isVenueManager)
   const dispatch = useDispatch()
   const theme = useTheme()
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'))
