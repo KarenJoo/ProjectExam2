@@ -28,7 +28,7 @@ const BookingForm = ({ venueId, onSubmit, venueName, venueImage, bookingData }) 
       }
     }
     fetchApiKey()
-  }, [storage])
+  }, [])
 
   const bookedDates = bookingData.map((booking) => {
     return {
