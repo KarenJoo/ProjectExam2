@@ -35,7 +35,7 @@ const useStorage = () => {
     if (userData) {
       save('userData', userData)
       setUserData(userData)
-      save('isVenueManager', userData.isVenueManager)
+      save('isVenueManager', userData.isVenueManager); 
     }
   }
 
@@ -44,7 +44,7 @@ const useStorage = () => {
     const loadedUserData = load('userData');
     if (loadedUserData) {
       setUserData(loadedUserData);
-      dispatch(setVenueManager(loadedUserData.isVenueManager));
+      dispatch(setVenueManager(loadedUserData.isVenueManager)); 
     }
     return loadedUserData;
   }, [dispatch]);

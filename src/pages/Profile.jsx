@@ -53,13 +53,14 @@ const Profile = () => {
 
         const apiKey = storage.loadApiKey()
 
-        const isVenueManager = storedUserData && storedUserData.venueManager
+        const isVenueManager = storedUserData && storedUserData.isVenueManager;
 
         const userVenuesResponse = await getUserVenues(
           storedUserData.name,
           accessToken,
           apiKey,
-          isVenueManager
+          isVenueManager,
+          
         )
 
         if (!userVenuesResponse.ok) {

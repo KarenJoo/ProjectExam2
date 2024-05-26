@@ -13,7 +13,7 @@ const ProfileLayout = ({ userData }) => {
   const [isUpdateAvatarOpen, setIsUpdateAvatarOpen] = useState(false)
   const { name, bookedVenues, venues, avatar } = userData
   const venuesCount = venues ? venues.length : 0
-  const [isVenueManager, setIsVenueManager] = useState(userData.venueManager)
+  const [isVenueManager, setIsVenueManager] = useState(userData.isVenueManager)
   const dispatch = useDispatch()
   const reduxAvatarUrl = useSelector((state) => state.avatar.url)
 
@@ -52,9 +52,10 @@ const ProfileLayout = ({ userData }) => {
     }
   }
   useEffect(() => {
-    setIsVenueManager(userData.isVenueManager)
-  }, [userData.isVenueManager])
+    const storedIsVenueManager = localStorage.getItem('isVenueManager')
 
+    setIsVenueManager(storedIsVenueManager === 'true')
+  }, [])
   return (
     <Grid container item md={12}>
       <Box
