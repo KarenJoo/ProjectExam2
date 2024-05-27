@@ -4,7 +4,7 @@
 ## Description
 Holidaze is the accomodation app where users can view a range of venue bookings from all over the world. 
 A user can filter venues, view the specific venues calendar and if the perfect calendar dates and venue requirement is a match, the user can register as a customer, log in and book their dreamy dayz away.
-As a venue manager you are able to publish your 
+As a venue manager you are able to publish your best resort. 
 
 ## Requirements for features
 The client has specified the following requirements in the form of User Stories:
