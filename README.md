@@ -51,4 +51,28 @@ npm install
 ### Run app locally:
 npm run start
 
+# Installing
 
+    Clone the repo:
+
+ gh repo clone KarenJoo/ProjectExam2.git
+
+    Install the dependencies:
+
+npm install
+
+### Dependencies in Visual Studio Code
+- Code Editor 
+- Live Server 
+
+## Running
+
+To run the app, run the following commands:
+
+   npm run start
+
+
+## Authors and Contact
+**Karen Jo**
+
+📫 karenfiksdahl@gmail.com
