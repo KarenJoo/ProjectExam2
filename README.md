@@ -73,6 +73,8 @@ To run the app, run the following commands:
 
    npm run start
 
+## Links
+Style Guide: https://my.corebook.io/hxD0LlqLEGa2ctzBVEmksQ79mKMGo8GM
 
 ## Authors and Contact
 **Karen Jo**
